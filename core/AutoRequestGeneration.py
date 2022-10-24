@@ -1,15 +1,15 @@
-from .RouteModel import RouteModel
-from typing import List, NoReturn
-import validators
-import requests
-from requests import Response
 import json
-from fastapi import FastAPI
-import fastapi
-from warnings import warn
-from fastapi_gateway import route
 import string
+import fastapi
+import requests
+import validators
+from loguru import logger
 from pprint import pprint
+from fastapi import FastAPI
+from requests import Response
+from .RouteModel import RouteModel
+from fastapi_gateway import route
+from typing import List, NoReturn, Union, Tuple
 
 
 class AutoRequestGeneration:
@@ -54,6 +54,9 @@ class AutoRequestGeneration:
                     )
 
                     route_model.query_params, route_model.query_required = self.__get_queries_param(
+                        path=path, method=path_method)
+
+                    route_model.form_params = self.__get_body_multipart_form_data(
                         path=path, method=path_method)
 
                     self.__routes_model.append(route_model)
@@ -108,7 +111,35 @@ class AutoRequestGeneration:
     def __get_tags(self) -> dict:
         return {fruit["name"]: fruit for fruit in self.__response_json["tags"]}
 
-    def __get_queries_param(self, path: str, method: str) -> Union[list, None]:
+    def __get_body_multipart_form_data(self, path: str, method: str) -> Union[list, None]:
+        body = self.__response_json["paths"][path][method].get("requestBody")
+
+        if body is None:
+            return None
+
+        if body["content"].get("multipart/form-data") is None:
+            logger.warning("The body is not a multipart/form-data")
+            return None
+
+        scheme_ref = body["content"].get(
+            "multipart/form-data")["schema"]["$ref"]
+
+        scheme = self.__get_body_scheme(ref=scheme_ref)
+
+        return list(scheme["properties"].keys())
+
+    def __get_body_scheme(self, ref: str) -> dict:
+        # TODO #1: Обработать ошибку если что-то пойдет нитак
+        ref_split = ref.split("/")[1:]
+
+        path = self.__response_json[ref_split[0]]
+
+        for i in ref_split[1:]:
+            path = path[i]
+
+        return path
+
+    def __get_queries_param(self, path: str, method: str) -> Tuple[Union[list, None], Union[list, None]]:
 
         queries = self.__response_json["paths"][path][method].get("parameters")
 
@@ -131,12 +162,15 @@ class AutoRequestGeneration:
         else:
             for tag in tags_path:
                 if not self.__tags_open_api.get(tag):
-                    warn(f"There is no such tag: {tag}")
+                    logger.warning(f"There is no such tag: {tag}")
                     continue
 
                 if not self.__tags_open_api.get(tag).get("auto_generate_in_api_gateway"):
                     return False
                 else:
-                    # TODO #1: Добавить проверку на тип bool
+                    # TODO #2: Добавить проверку на тип bool
 
                     return self.__tags_open_api.get(tag).get("auto_generate_in_api_gateway")
+
+    def __save_open_api_database(self):
+        pass
