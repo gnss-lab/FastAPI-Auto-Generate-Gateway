@@ -9,7 +9,8 @@ class RouteModel():
     gateway_path: str
     service_url: str
     service_path: str
-    # query_params: Optional[List[str]] = None
+    query_params: Optional[List[str]] = None
+    query_required: Optional[List[bool]] = None
     # form_params: Optional[List[str]] = None
     # body_params: Optional[List[str]] = None
     # override_headers: bool = True

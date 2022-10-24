@@ -8,6 +8,8 @@ from fastapi import FastAPI
 import fastapi
 from warnings import warn
 from fastapi_gateway import route
+import string
+from pprint import pprint
 
 
 class AutoRequestGeneration:
@@ -40,17 +42,26 @@ class AutoRequestGeneration:
                     path)].get("tags")
 
                 if self.__check_auto_generate_in_api_gateway(tags_path):
+
+                    path_method = self.__get_path_method(path)
+
                     route_model: RouteModel = RouteModel(
                         request_method=getattr(
-                            self.__fast_api_app, self.__get_path_method(path)),
+                            self.__fast_api_app, path_method),
                         gateway_path=path,
                         service_url=service_url,
                         service_path=path
                     )
 
-                self.__routes_model.append(route_model)
+                    route_model.query_params, route_model.query_required = self.__get_queries_param(
+                        path=path, method=path_method)
 
-            print(route_model)
+                    self.__routes_model.append(route_model)
+                else:
+                    continue
+
+            pprint(self.__routes_model)
+        # # self.__init_functions()
 
     def __get_from_openAPI_service(self, url: str) -> bytes:
         """Get the microservice REST API specification
@@ -96,6 +107,22 @@ class AutoRequestGeneration:
 
     def __get_tags(self) -> dict:
         return {fruit["name"]: fruit for fruit in self.__response_json["tags"]}
+
+    def __get_queries_param(self, path: str, method: str) -> Union[list, None]:
+
+        queries = self.__response_json["paths"][path][method].get("parameters")
+
+        if queries is None:
+            return None, None
+
+        names = []
+        requireds = []
+
+        for query in queries:
+            names.append(query["name"])
+            requireds.append(query["required"])
+
+        return names, requireds
 
     def __check_auto_generate_in_api_gateway(self, tags_path: list) -> bool:
 
