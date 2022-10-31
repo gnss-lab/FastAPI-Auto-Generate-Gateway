@@ -1,32 +1,31 @@
 import json
-import string
-import fastapi
+# import string
 import requests
 import validators
 from loguru import logger
-from pprint import pprint
+# from pprint import pprint
 from fastapi import FastAPI
 from requests import Response
 from .RouteModel import RouteModel
 from fastapi_gateway import route
-from typing import List, NoReturn, Union, Tuple
+from typing import List, Any
 from types import FunctionType
 
 
 class AutoRequestGeneration:
-    def __init__(self, fast_api_app: FastAPI, services_url: list) -> NoReturn:
+    def __init__(self, fast_api_app: FastAPI, services_url: list[str]) -> None:
 
         self.__fast_api_app: FastAPI = fast_api_app
 
         self.__routes_model: List[RouteModel] = []
-        self.__services_url: list = services_url
+        self.__services_url: list[str] = services_url
 
-        self.__response_json: dict = {}
-        self.__tags_open_api: dict = {}
+        self.__response_json: dict[Any, Any] = {}
+        self.__tags_open_api: dict[Any, Any] = {}
         # self.__method: str = ""
         # self.__auto_generate_in_api_gateway: bool = False
 
-    def build_routes(self) -> NoReturn:
+    def build_routes(self) -> None:
         for service_url in self.__services_url:
 
             if validators.url(service_url):
@@ -44,7 +43,7 @@ class AutoRequestGeneration:
 
                 if self.__check_auto_generate_in_api_gateway(tags_path):
 
-                    path_method = self.__get_path_method(path)
+                    path_method: str = self.__get_path_method(path)
 
                     route_model: RouteModel = RouteModel(
                         request_method=getattr(
@@ -110,9 +109,9 @@ class AutoRequestGeneration:
 
             return response.content
         except requests.exceptions.RequestException:
-            print('HTTP Request failed')
+            raise requests.exceptions.RequestException("HTTP Request failed")
 
-    def __get_paths(self) -> list:
+    def __get_paths(self) -> list[str]:
         """Get all paths from microservice
 
         Returns
@@ -120,6 +119,7 @@ class AutoRequestGeneration:
         list
            List of all paths
         """
+
         return self.__response_json["paths"].keys()
 
     def __get_path_method(self, path: str) -> str:
@@ -132,11 +132,12 @@ class AutoRequestGeneration:
         """
         return [*self.__response_json["paths"][path].keys()][0]
 
-    def __get_tags(self) -> dict:
+    def __get_tags(self) -> dict[Any, Any]:
         return {fruit["name"]: fruit for fruit in self.__response_json["tags"]}
 
-    def __get_body_multipart_form_data(self, path: str, method: str) -> Union[list, None]:
-        body = self.__response_json["paths"][path][method].get("requestBody")
+    def __get_body_multipart_form_data(self, path: str, method: str) -> list[str] | None:
+        body: dict[Any, Any] = self.__response_json["paths"][path][method].get(
+            "requestBody")
 
         if body is None:
             return None
@@ -145,33 +146,34 @@ class AutoRequestGeneration:
             logger.warning("The body is not a multipart/form-data")
             return None
 
-        scheme_ref = body["content"].get(
+        scheme_ref: str = body["content"].get(
             "multipart/form-data")["schema"]["$ref"]
 
-        scheme = self.__get_body_scheme(ref=scheme_ref)
+        scheme: dict[Any, Any] = self.__get_body_scheme(ref=scheme_ref)
 
         return list(scheme["properties"].keys())
 
-    def __get_body_scheme(self, ref: str) -> dict:
+    def __get_body_scheme(self, ref: str) -> dict[Any, Any]:
         # TODO #1: Обработать ошибку если что-то пойдет нитак
-        ref_split = ref.split("/")[1:]
+        ref_split: list[str] = ref.split("/")[1:]
 
-        path = self.__response_json[ref_split[0]]
+        path: dict[Any, Any] = self.__response_json[ref_split[0]]
 
         for i in ref_split[1:]:
             path = path[i]
 
         return path
 
-    def __get_queries_param(self, path: str, method: str) -> Tuple[Union[list, None], Union[list, None]]:
+    def __get_queries_param(self, path: str, method: str) -> tuple[None, None] | tuple[list[str], list[bool]]:
 
-        queries = self.__response_json["paths"][path][method].get("parameters")
+        queries: list[dict[Any, Any]] = self.__response_json["paths"][path][method].get(
+            "parameters")
 
         if queries is None:
             return None, None
 
-        names = []
-        requireds = []
+        names: list[str] = []
+        requireds: list[bool] = []
 
         for query in queries:
             names.append(query["name"])
@@ -179,11 +181,9 @@ class AutoRequestGeneration:
 
         return names, requireds
 
-    def __check_auto_generate_in_api_gateway(self, tags_path: list) -> bool:
+    def __check_auto_generate_in_api_gateway(self, tags_path: list[str]) -> bool:
 
-        if not tags_path:
-            return False
-        else:
+        if tags_path:
             for tag in tags_path:
                 if not self.__tags_open_api.get(tag):
                     logger.warning(f"There is no such tag: {tag}")
@@ -196,5 +196,7 @@ class AutoRequestGeneration:
 
                     return self.__tags_open_api.get(tag).get("auto_generate_in_api_gateway")
 
-    def __save_open_api_database(self):
-        pass
+        return False
+
+    # def __save_open_api_database(self) -> None:
+    #     pass
