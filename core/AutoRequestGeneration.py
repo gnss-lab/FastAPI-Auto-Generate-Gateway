@@ -10,6 +10,7 @@ from requests import Response
 from .RouteModel import RouteModel
 from fastapi_gateway import route
 from typing import List, NoReturn, Union, Tuple
+from types import FunctionType
 
 
 class AutoRequestGeneration:
@@ -63,8 +64,31 @@ class AutoRequestGeneration:
                 else:
                     continue
 
-            pprint(self.__routes_model)
-        # # self.__init_functions()
+            # pprint(self.__routes_model)
+        self.__init_functions()
+
+    def __factory_func(self) -> FunctionType:
+        vars: dict[str, function] = {}
+
+        fast_api: str = "import fastapi\n"
+
+        exec(fast_api + "def func(request: fastapi.Request, response: fastapi.Response):\n\tpass", vars)
+
+        return vars["func"]
+
+    def __init_functions(self) -> None:
+
+        for route_model in self.__routes_model[:1]:
+            func: FunctionType = self.__factory_func()
+
+            route(
+                request_method=route_model.request_method,
+                gateway_path=route_model.gateway_path,
+                service_url=route_model.service_url,
+                service_path=route_model.service_path,
+                query_params=route_model.query_params,
+                form_params=route_model.form_params
+            )(f=func)
 
     def __get_from_openAPI_service(self, url: str) -> bytes:
         """Get the microservice REST API specification
