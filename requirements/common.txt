@@ -1,0 +1,7 @@
+datamodel-code-generator==0.13.5
+fastapi==0.86.0
+fastapi-gateway==0.0.3
+loguru==0.6.0
+python-multipart==0.0.5
+requests==2.28.1
+validators==0.20.0

@@ -11,6 +11,13 @@ import json
 import requests
 from requests import Response
 from typing import Any
+from datamodel_code_generator import InputFileType, generate
+from io import StringIO
+from pathlib import Path
+from pprint import pprint
+from pydantic import BaseModel, Field
+
+TAG = "x-auto-generate-in-api-gateway"
 
 
 class OpenApiParser:
@@ -44,7 +51,6 @@ class OpenApiParser:
             )
 
             self.__response_json = json.loads(response.content)
-
             self.__tags_open_api = self.get_tags()
 
         except requests.exceptions.RequestException:
@@ -56,7 +62,11 @@ class OpenApiParser:
             self.__tags_open_api = self.get_tags()
 
     def get_tags(self) -> dict[Any, Any]:
-        return {fruit["name"]: fruit for fruit in self.__response_json["tags"]}
+
+        if self.__response_json.get("tags") is None:
+            return {}
+        else:
+            return {fruit["name"]: fruit for fruit in self.__response_json.get("tags")}
 
     def get_paths(self) -> list[str]:
         """Get all paths from microservice
@@ -138,11 +148,17 @@ class OpenApiParser:
                     # logger.warning(f"There is no such tag: {tag}")
                     continue
 
-                if not self.__tags_open_api.get(tag).get("x-auto-generate-in-api-gateway"):
+                if not self.__tags_open_api.get(tag).get(TAG):
                     return False
                 else:
                     # TODO #2: Добавить проверку на тип bool
 
-                    return self.__tags_open_api.get(tag).get("x-auto-generate-in-api-gateway")
+                    return self.__tags_open_api.get(tag).get(TAG)
 
         return False
+
+    def get_raw_response_in_json(self) -> dict[Any, Any]:
+        return self.__response_json
+
+    def get_raw_resoponse_in_string(self) -> str:
+        return json.dumps(self.__response_json)
