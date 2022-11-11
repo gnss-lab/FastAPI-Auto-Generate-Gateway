@@ -9,7 +9,9 @@ nav:
     - How to use: how-to-use.md
 
 repo_name: fastapi-gateway-auto-generate
-repo_url: https://git.iszf.irk.ru/microservices-kalinka-george/fastapi-gateway-auto-generate
+repo_url: https://github.com/xitowzys/FastAPI-auto-generate-gateway
+edit_uri: edit/master/docs
+docs_dir: docs
 
 plugins:
   - search
@@ -33,9 +35,14 @@ markdown_extensions:
   - pymdownx.emoji:
       emoji_index: !!python/name:materialx.emoji.twemoji
       emoji_generator: !!python/name:materialx.emoji.to_svg
-  - pymdownx.highlight
+  - pymdownx.highlight:
+      anchor_linenums: true
   - pymdownx.inlinehilite
   - pymdownx.keys
+  - pymdownx.magiclink:
+      repo_url_shorthand: true
+      user: squidfunk
+      repo: mkdocs-material
   - pymdownx.mark
   - pymdownx.smartsymbols
   - pymdownx.snippets:
@@ -45,7 +52,8 @@ markdown_extensions:
         - name: mermaid
           class: mermaid
           format: !!python/name:pymdownx.superfences.fence_code_format
-  - pymdownx.tabbed
+  - pymdownx.tabbed:
+      alternate_style: true
   - pymdownx.tasklist:
       custom_checkbox: true
   - pymdownx.tilde
