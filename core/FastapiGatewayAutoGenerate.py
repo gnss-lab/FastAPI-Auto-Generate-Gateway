@@ -20,12 +20,12 @@ from .management import Management
 
 
 class FastapiGatewayAutoGenerate:
-    def __init__(self, fast_api_app: FastAPI, services_url: list[str], management: bool = True) -> None:
+    def __init__(self, fast_api_app: FastAPI, services_url: list[str], service_management: bool = True) -> None:
 
         self.__fast_api_app: FastAPI = fast_api_app
         self.__services_url: list[str] = services_url
 
-        if management:
+        if service_management:
             self.__init_management_urls()
 
         self.__routes_model: List[RouteModel] = []
