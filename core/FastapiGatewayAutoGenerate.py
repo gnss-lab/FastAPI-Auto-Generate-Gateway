@@ -14,32 +14,36 @@ from .RouteModel import RouteModel
 from .OpenApiParser import OpenApiParser
 from datamodel_code_generator import InputFileType, generate
 # from pydantic import BaseModel, Field
+from fastapi.openapi.utils import get_openapi
+
+from .management import Management
 
 
-class AutoRequestGeneration:
-    def __init__(self, fast_api_app: FastAPI, services_url: list[str]) -> None:
+class FastapiGatewayAutoGenerate:
+    def __init__(self, fast_api_app: FastAPI, services_url: list[str], management: bool = True) -> None:
 
         self.__fast_api_app: FastAPI = fast_api_app
+        self.__services_url: list[str] = services_url
+
+        if management:
+            self.__init_management_urls()
 
         self.__routes_model: List[RouteModel] = []
-        self.__services_url: list[str] = services_url
 
         self.__open_api_parser = OpenApiParser()
 
         self.models_routes_vars = None
         self.models_routes: None = None
 
-    def add_service(self):
-        pass
-
-    def remove_service(self):
-        pass
-
-    def update_services(self):
-        pass
+    def __init_management_urls(self):
+        m: Management = Management(app=self.__fast_api_app)
 
     def init_database(self):
         pass
+
+    def __update_openapi_schema(self):
+        self.__fast_api_app.openapi_schema = None
+        self.__fast_api_app.openapi()
 
     def build_routes(self) -> None:
         for service_url in self.__services_url:
@@ -122,14 +126,16 @@ class AutoRequestGeneration:
             func: FunctionType = self.__factory_func(route_model=route_model)
 
             route(
-
                 request_method=route_model.request_method,
                 gateway_path=route_model.gateway_path,
                 service_url=route_model.service_url,
                 service_path=route_model.service_path,
                 query_params=route_model.query_params,
                 form_params=route_model.form_params,
+                tags=["ok"]
             )(f=func)
+
+        self.__update_openapi_schema()
 
     def __generate_models(self):
 

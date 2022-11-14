@@ -1,5 +1,5 @@
-from .AutoRequestGeneration import AutoRequestGeneration
+from .FastapiGatewayAutoGenerate import FastapiGatewayAutoGenerate
 
 __all__: list[str] = [
-    "AutoRequestGeneration"
+    "FastapiGatewayAutoGenerate"
 ]
