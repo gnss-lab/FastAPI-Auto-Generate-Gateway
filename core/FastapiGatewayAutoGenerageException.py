@@ -1,0 +1,2 @@
+class FastapiGatewayAutoGenerageException(Exception):
+    pass

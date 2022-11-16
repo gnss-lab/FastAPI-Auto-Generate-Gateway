@@ -2,7 +2,7 @@ import re
 
 import requests
 # import validators
-from typing import List
+from typing import List, Any
 from pathlib import Path
 from loguru import logger
 from pprint import pprint
@@ -17,15 +17,15 @@ from datamodel_code_generator import InputFileType, generate
 from fastapi.openapi.utils import get_openapi
 
 from .management import Management
+from .Config import Config
 
 
-class FastapiGatewayAutoGenerate:
-    def __init__(self, fast_api_app: FastAPI, services_url: list[str], service_management: bool = True) -> None:
+class AutoGenerate:
+    def __init__(self, config: Config) -> None:
 
-        self.__fast_api_app: FastAPI = fast_api_app
-        self.__services_url: list[str] = services_url
+        self.__config = config
 
-        if service_management:
+        if self.__config.service_management:
             self.__init_management_urls()
 
         self.__routes_model: List[RouteModel] = []
@@ -36,17 +36,17 @@ class FastapiGatewayAutoGenerate:
         self.models_routes: None = None
 
     def __init_management_urls(self):
-        m: Management = Management(app=self.__fast_api_app)
+        m: Management = Management(app=self.__config.fast_api_app)
 
     def init_database(self):
         pass
 
     def __update_openapi_schema(self):
-        self.__fast_api_app.openapi_schema = None
-        self.__fast_api_app.openapi()
+        self.__config.fast_api_app.openapi_schema = None
+        self.__config.fast_api_app.openapi()
 
     def build_routes(self) -> None:
-        for service_url in self.__services_url:
+        for service_url in self.__config.services_url:
 
             # if validators.url(service_url):
             #     pass
@@ -62,7 +62,7 @@ class FastapiGatewayAutoGenerate:
 
                     route_model: RouteModel = RouteModel(
                         request_method=getattr(
-                            self.__fast_api_app, path_method),
+                            self.__config.fast_api_app, path_method),
                         gateway_path=path,
                         service_url=service_url,
                         service_path=path

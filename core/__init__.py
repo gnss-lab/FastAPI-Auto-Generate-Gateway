@@ -1,5 +1,7 @@
-from .FastapiGatewayAutoGenerate import FastapiGatewayAutoGenerate
+from .FastapiGatewayAutoGenerate import AutoGenerate
+from .FastapiGatewayAutoGenerate import Config
 
 __all__: list[str] = [
-    "FastapiGatewayAutoGenerate"
+    "AutoGenerate",
+    "Config"
 ]

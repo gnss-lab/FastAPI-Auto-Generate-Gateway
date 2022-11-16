@@ -16,8 +16,20 @@ services_url_dict = {
     "healrinex": "http://10.0.5.93:5577"
 }
 
-autoRG: FastapiGatewayAutoGenerate = FastapiGatewayAutoGenerate(
-    fast_api_app=app, services_url=services_url)
+config = FastapiGatewayAutoGenerate.Config(
+    fast_api_app=app,
+    db_settings={
+        "db_host": "localhost",
+        "db_database": "fastapi_db",
+        "db_username": "root",
+        "db_password": "1234"
+    },
+    services_url=services_url
+)
+
+autoRG = FastapiGatewayAutoGenerate.AutoGenerate(
+    config=config
+)
 # print("OK")
 # autoRG.build_routes()
 
