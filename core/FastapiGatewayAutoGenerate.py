@@ -18,12 +18,17 @@ from fastapi.openapi.utils import get_openapi
 
 from .management import Management
 from .Config import Config
+import os.path
+from alembic.config import Config as alembic_config
+from alembic import command
 
 
 class AutoGenerate:
     def __init__(self, config: Config) -> None:
 
         self.__config = config
+
+        self.__init_database()
 
         if self.__config.service_management:
             self.__init_management_urls()
@@ -37,9 +42,15 @@ class AutoGenerate:
 
     def __init_management_urls(self):
         m: Management = Management(app=self.__config.fast_api_app)
+    def __init_database(self):
+        if not os.path.exists(self.__config.db_path):
+            logger.debug("Миграция")
 
-    def init_database(self):
-        pass
+            alembic_cfg = alembic_config("./alembic.ini")
+            alembic_cfg.set_main_option(
+                "sqlalchemy.url", self.__config.db_url)
+            logger.debug(self.__config.db_url)
+            command.upgrade(alembic_cfg, "head")
 
     def __update_openapi_schema(self):
         self.__config.fast_api_app.openapi_schema = None

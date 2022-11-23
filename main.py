@@ -1,9 +1,10 @@
 from core import FastapiGatewayAutoGenerate
 from fastapi import FastAPI
 import uvicorn
-import time
 
-from uvicorn.supervisors.statreload import StatReload
+
+from loguru import logger
+
 
 app = FastAPI()
 
@@ -18,18 +19,13 @@ services_url_dict = {
 
 config = FastapiGatewayAutoGenerate.Config(
     fast_api_app=app,
-    db_settings={
-        "db_host": "localhost",
-        "db_database": "fastapi_db",
-        "db_username": "root",
-        "db_password": "1234"
-    },
-    services_url=services_url
+    db_path="./testdb.db"
 )
 
 autoRG = FastapiGatewayAutoGenerate.AutoGenerate(
     config=config
 )
+
 # print("OK")
 # autoRG.build_routes()
 
@@ -46,7 +42,6 @@ autoRG = FastapiGatewayAutoGenerate.AutoGenerate(
 #     url_list = [{"path": route.path, "name": route.name}
 #                 for route in app.routes]
 #     return url_list
-
 
 if __name__ == "__main__":
     # reload()
