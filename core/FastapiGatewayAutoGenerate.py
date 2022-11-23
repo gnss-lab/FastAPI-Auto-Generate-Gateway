@@ -24,8 +24,8 @@ from alembic import command
 
 
 class AutoGenerate:
-    def __init__(self, config: Config) -> None:
 
+    def __init__(self, config: Config) -> None:
         self.__config = config
 
         self.__init_database()
@@ -41,7 +41,8 @@ class AutoGenerate:
         self.models_routes: None = None
 
     def __init_management_urls(self):
-        m: Management = Management(app=self.__config.fast_api_app)
+        m: Management = Management(config=self.__config)
+
     def __init_database(self):
         if not os.path.exists(self.__config.db_path):
             logger.debug("Миграция")

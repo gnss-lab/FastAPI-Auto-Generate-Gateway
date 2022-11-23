@@ -1,11 +1,11 @@
-from .add_service import add_service_router
-from .delete_service import delete_service_router
-from .get_all_info_services import get_all_info_services_router
-from .refresh_services import refresh_services_router
+from .AddServiceRoute import AddServiceRoute
+from .DeleteServiceRoute import DeleteServiceRoute
+from .GetAllInfoServicesRoute import GetAllInfoServicesRoute
+from .RefreshServicesRoute import RefreshServicesRoute
 
 __all__: list[str] = [
-    "add_service_router",
-    "delete_service_router",
-    "get_all_info_services_router",
-    "refresh_services_router"
+    "AddServiceRoute",
+    "DeleteServiceRoute",
+    "GetAllInfoServicesRoute",
+    "RefreshServicesRoute"
 ]
