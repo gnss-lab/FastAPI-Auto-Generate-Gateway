@@ -9,6 +9,7 @@ from pprint import pprint
 import json
 import math
 from sqlalchemy import create_engine
+from .Errors import Errors
 
 
 class GetAllServices():
@@ -17,23 +18,24 @@ class GetAllServices():
         Session: sessionmaker = sessionmaker(bind=create_engine(db_url))
         self.__session = Session()
 
-    def get_all_services_json(self, get_all_info_services_model: get_all_info_services_model) -> dict[Any, Any]:
+    def get_all_services(self, get_all_info_services_model: get_all_info_services_model) -> tuple[None, dict[str, int | str]] | tuple[dict[str, list[Any]], None]:
 
         # Добавить проверку существование сервиса [Error Code 1]
         try:
+            rows_count: int = self.__session.query(Services).count()
+
+            if rows_count == 0:
+                return None, Errors.no_services_found()
+
             start = 0 + (get_all_info_services_model.page - 1) * 10
 
-            rows_count: int = self.__session.query(Services).count()
             count_page = math.ceil(rows_count / 10)
 
             if count_page < 0 or count_page < get_all_info_services_model.page:
-                return {"data": " Такой страницы не существует"}
+                return None, Errors.page_not_found()
 
             services = self.__session.query(
                 Services).limit(10).offset(start).all()
-
-            if not services:
-                return {"data": "Ничего не найдено"}
 
             result = {"services": [item.obj_to_dict() for item in services]}
 
@@ -53,7 +55,6 @@ class GetAllServices():
             # self.__session.commit()
 
             # self.__session.close()
-            return result
+            return result, None
         except Exception as e:
-            logger.debug(f"Ошибка: {str(e)}")
-            return {}
+            return None, Errors.any_error(str(e))
