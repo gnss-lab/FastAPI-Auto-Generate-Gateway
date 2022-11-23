@@ -1,47 +1,65 @@
-from loguru import logger
-from ...utils.OpenApiParser import OpenApiParser
 from ..models import RouteModel
+from types import FunctionType
+from fastapi_gateway import route
+from .UpdateOpenApiSchemaUsecase import UpdateOpenApiSchemaUsecase
 from fastapi import FastAPI
 
 
 class BuildRoutesUsecase:
     def __init__(self) -> None:
-        self.__open_api_parser: OpenApiParser = OpenApiParser()
+        self.models_routes_vars = {}
+        self.models_routes = {}
 
-    def execute(self, services_url: list[str], fast_api_app: FastAPI) -> list[RouteModel]:
+    def execute(self, route_model_list: list[RouteModel], fast_api_app: FastAPI) -> None:
+        for route_model in route_model_list:
+            # logger.debug(route_model)
+            func: FunctionType = self.__factory_func(route_model=route_model)
 
-        routes_model: list[RouteModel] = []
+            route(
+                request_method=route_model.request_method,
+                gateway_path=route_model.gateway_path,
+                service_url=route_model.service_url,
+                service_path=route_model.service_path,
+                query_params=route_model.query_params,
+                form_params=route_model.form_params,
+                tags=["ok"]
+            )(f=func)
 
-        for service_url in services_url:
+        UpdateOpenApiSchemaUsecase().execute(fast_api_app=fast_api_app)
 
-            # if validators.url(service_url):
-            #     pass
+    def __factory_func(self, route_model: RouteModel) -> FunctionType:
+        vars: dict[str, function] = {}
 
-            self.__open_api_parser.parse_from_service(url=service_url)
+        import_fast_api: str = "import fastapi\n"
 
-            for path in self.__open_api_parser.get_paths():
+        queries = ""
+        files = ""
 
-                if self.__open_api_parser.check_auto_generate_in_api_gateway(path=path):
+        # Queries
+        if not route_model.query_params is None:
+            for query in route_model.query_params:
 
-                    path_method: str = self.__open_api_parser.get_path_method(
-                        path)
-
-                    route_model: RouteModel = RouteModel(
-                        request_method=getattr(
-                            fast_api_app, path_method),
-                        gateway_path=path,
-                        service_url=service_url,
-                        service_path=path
-                    )
-
-                    route_model.query_params, route_model.query_required = self.__open_api_parser.get_queries_param(
-                        path=path, method=path_method)
-
-                    route_model.form_params = self.__open_api_parser.get_body_multipart_form_data(
-                        path=path, method=path_method)
-
-                    routes_model.append(route_model)
+                if query in route_model.query_params[-1]:
+                    queries = queries + \
+                        f"{query}: str,"
                 else:
-                    continue
+                    queries = queries + f"{query}: str,"
 
-        return routes_model
+        # Files
+        if not route_model.form_params is None:
+            for file in route_model.form_params:
+                if file in route_model.form_params[-1]:
+                    files = files + \
+                        f"{file}: fastapi.UploadFile = fastapi.File(),"
+                else:
+                    files = files + \
+                        f"{file}: fastapi.UploadFile = fastapi.File(),"
+
+        # Forms
+        # -
+
+        result: str = f"{import_fast_api}\n\ndef func(request: fastapi.Request, response: fastapi.Response, {queries if not None else ''} {files if not None else ''}):\n\tpass"
+
+        exec(result, self.models_routes_vars)
+
+        return self.models_routes_vars["func"]
