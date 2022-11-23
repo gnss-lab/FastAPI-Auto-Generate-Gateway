@@ -18,7 +18,7 @@
 
 from .management import Management
 from .Config import Config
-# import os.path
+import os.path
 # from alembic.config import Config as alembic_config
 # from alembic import command
 from core.domain.usecases import *
@@ -30,7 +30,8 @@ class AutoGenerate:
     def __init__(self, config: Config) -> None:
         self.__config = config
 
-        InitDatabaseUsecase().execute(db_url=config.db_url)
+        if not os.path.isfile(self.__config.db_path):
+            InitDatabaseUsecase().execute(db_url=config.db_url)
 
         if self.__config.service_management:
             self.__init_management_urls()
