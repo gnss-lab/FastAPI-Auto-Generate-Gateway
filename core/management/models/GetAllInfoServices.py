@@ -2,4 +2,4 @@ from pydantic import BaseModel
 
 
 class GetAllInfoServices(BaseModel):
-    page: int
+    page: int = 1
