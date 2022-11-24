@@ -20,7 +20,7 @@ class AddService():
 
         try:
             service: Services = Services(
-                ip=str(add_service_model.ip),
+                domain=str(add_service_model.domain),
                 port=add_service_model.port,
                 name=add_service_model.name_service
             )
