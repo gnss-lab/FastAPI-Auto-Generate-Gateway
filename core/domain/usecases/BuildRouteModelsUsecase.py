@@ -67,7 +67,7 @@ class BuildRouteModelsUsecase:
                             route_model: RouteModel = RouteModel(
                                 request_method=getattr(
                                     config.fast_api_app, path_method),
-                                gateway_path=path,
+                                gateway_path=f"/{service['name']}{path}",
                                 service_url=url,
                                 service_path=path
                             )
