@@ -39,9 +39,9 @@ class GetAllServices():
 
             result = {"services": [item.obj_to_dict() for item in services]}
 
-            result["metadata"] = [{
+            result["metadata"] = {
                 "page": get_all_info_services_model.page,
-                "count_page": math.ceil(rows_count / 10)}]
+                "count_page": math.ceil(rows_count / 10)}
 
             # pprint(result)
             # logger.debug(services)

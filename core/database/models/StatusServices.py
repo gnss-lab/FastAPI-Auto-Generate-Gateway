@@ -8,5 +8,5 @@ class StatusServices(Base):
 
     id: Column = Column(INTEGER, primary_key=True, autoincrement=True)
     id_service: Column = Column(
-        INTEGER, ForeignKey("services.id", onupdate="RESTRICT", ondelete="RESTRICT"), unique=True)
-    status_code: Column = Column(INTEGER, nullable=False, unique=True)
+        INTEGER, ForeignKey("services.id", onupdate="CASCADE", ondelete="CASCADE"), unique=True)
+    status_code: Column = Column(INTEGER, nullable=False)

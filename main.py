@@ -19,7 +19,7 @@ services_url_dict = {
 
 config = FastapiGatewayAutoGenerate.Config(
     fast_api_app=app,
-    db_path="./testdb.db"
+    # db_path="./testdb.db"
 )
 
 autoRG = FastapiGatewayAutoGenerate.AutoGenerate(

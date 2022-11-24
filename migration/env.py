@@ -15,6 +15,7 @@ config = context.config
 
 # Interpret the config file for Python logging.
 # This line sets up loggers basically.
+
 if config.config_file_name is not None:
     fileConfig(config.config_file_name)
 
@@ -47,6 +48,10 @@ def run_migrations_offline():
     script output.
     """
     url = config.get_main_option("sqlalchemy.url")
+
+    if url is None:
+        url = "sqlite:///database.db"
+
     context.configure(url=url)
 
     with context.begin_transaction():
@@ -58,8 +63,16 @@ def run_migrations_online():
     In this scenario we need to create an Engine
     and associate a connection with the context.
     """
+
+    config_ini_section = config.get_section(config.config_ini_section)
+
+    if config_ini_section.get("sqlalchemy.url") is None:
+        config_ini_section["sqlalchemy.url"] = "sqlite:///database.db"
+
+    logger.debug(config_ini_section)
+
     engine = engine_from_config(
-        config.get_section(config.config_ini_section),
+        config_ini_section,
         prefix='sqlalchemy.',
         poolclass=pool.NullPool)
 

@@ -4,7 +4,6 @@ from ..models import AddService
 
 from loguru import logger
 from ...Config import Config
-
 add_service_router: APIRouter = APIRouter()
 
 
@@ -14,7 +13,7 @@ class AddServiceRoute:
         self.route: APIRouter = APIRouter()
 
         @self.route.post("/service", tags=["Service management"])
-        async def add_service(add_service: AddService = Depends()) -> bool:
+        async def add_service(add_service: AddService) -> bool:
             result = add_service_database(db_url=self.__config.db_url).add_service(
                 add_service_model=add_service)
             return result

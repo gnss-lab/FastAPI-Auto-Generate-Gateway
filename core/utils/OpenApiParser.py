@@ -16,6 +16,7 @@ from io import StringIO
 from pathlib import Path
 from pprint import pprint
 from pydantic import BaseModel, Field
+from loguru import logger
 
 TAG = "x-auto-generate-in-api-gateway"
 
@@ -32,7 +33,7 @@ class OpenApiParser:
         self.__response_json: dict[Any, Any] = {}
         self.__tags_open_api: dict[Any, Any] = {}
 
-    def parse_from_service(self, url: str) -> None:
+    def parse_from_service(self, url: str) -> tuple[bool, int]:
         """Get the microservice REST API specification
 
         Parameters
@@ -45,16 +46,21 @@ class OpenApiParser:
         bytes
             Open API json
         """
+
         try:
             response: Response = requests.get(
                 url=f"{url}/openapi.json",
             )
 
-            self.__response_json = json.loads(response.content)
-            self.__tags_open_api = self.get_tags()
+            if response.status_code == 200:
+                self.__response_json = json.loads(response.content)
+                self.__tags_open_api = self.get_tags()
+            else:
+                return True, response.status_code
 
+            return False, response.status_code
         except requests.exceptions.RequestException:
-            raise requests.exceptions.RequestException("HTTP Request failed")
+            return True, -1
 
     def parse_from_file(self, file_path: str) -> None:
         with open(file_path) as json_file:

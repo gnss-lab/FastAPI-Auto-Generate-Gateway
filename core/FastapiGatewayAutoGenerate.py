@@ -43,8 +43,6 @@ class AutoGenerate:
         # self.models_routes_vars = {}
         # self.models_routes: None = {}
 
-        self.services_url = ["http://127.0.0.1:7200"]
-
         self.build()
 
     def __init_management_urls(self):
@@ -52,8 +50,7 @@ class AutoGenerate:
 
     def build(self) -> None:
         routes_model = BuildRouteModelsUsecase().execute(
-            services_url=self.services_url,
-            fast_api_app=self.__config.fast_api_app
+            config=self.__config
         )
 
         # logger.debug(self.__routes_model)
