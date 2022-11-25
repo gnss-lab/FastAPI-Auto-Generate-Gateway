@@ -2,7 +2,7 @@
 from ...utils.OpenApiParser import OpenApiParser
 from ..models import RouteModel
 from fastapi import FastAPI
-from core.database import GetAllServices, StatusService
+from core.database import GetAllServices, StatusService, UrlService
 from ...Config import Config
 from loguru import logger
 from core.management.models import GetAllInfoServices
@@ -28,6 +28,7 @@ class BuildRouteModelsUsecase:
         count_page: int = services["metadata"]["count_page"]
 
         StatusService(db_url=config.db_url).delete_all_rows()
+        UrlService(db_url=config.db_url).delete_all_rows()
 
         if err is None:
             for _ in range(0, count_page):
@@ -60,6 +61,11 @@ class BuildRouteModelsUsecase:
                     for path in self.__open_api_parser.get_paths():
 
                         if self.__open_api_parser.check_auto_generate_in_api_gateway(path=path):
+
+                            UrlService(db_url=config.db_url).set_url_service(
+                                id_service=service["id"],
+                                url=path
+                            )
 
                             path_method: str = self.__open_api_parser.get_path_method(
                                 path)
