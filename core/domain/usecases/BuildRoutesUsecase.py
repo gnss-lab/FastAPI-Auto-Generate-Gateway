@@ -22,7 +22,7 @@ class BuildRoutesUsecase:
                 service_path=route_model.service_path,
                 query_params=route_model.query_params,
                 form_params=route_model.form_params,
-                tags=["ok"]
+                tags=route_model.tags
             )(f=func)
 
         UpdateOpenApiSchemaUsecase().execute(fast_api_app=fast_api_app)

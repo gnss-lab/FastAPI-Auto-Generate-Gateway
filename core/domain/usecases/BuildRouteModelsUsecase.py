@@ -75,7 +75,8 @@ class BuildRouteModelsUsecase:
                                     config.fast_api_app, path_method),
                                 gateway_path=f"/{service['name']}{path}",
                                 service_url=url,
-                                service_path=path
+                                service_path=path,
+                                tags=[service["name"]]
                             )
 
                             route_model.query_params, route_model.query_required = self.__open_api_parser.get_queries_param(

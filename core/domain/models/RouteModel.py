@@ -16,7 +16,7 @@ class RouteModel():
     # override_headers: bool = True
     # response_model: Optional[Type[Any]] = None
     # status_code: Optional[int] = None
-    # tags: Optional[List[str]] = None
+    tags: Optional[List[str]] = None
     # dependencies: Optional[Sequence[params.Depends]] = None,
     # summary: Optional[str] = None
     # description: Optional[str] = None
