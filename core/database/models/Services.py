@@ -2,6 +2,9 @@ from dataclasses import dataclass
 from ..SQLAlchemy.declarative_base import Base
 
 from sqlalchemy import Column, INTEGER, TEXT
+from sqlalchemy.orm import relationship, backref
+from typing import Any
+from loguru import logger
 
 
 class Services(Base):
@@ -12,10 +15,30 @@ class Services(Base):
     port: Column = Column(INTEGER, nullable=False)
     name: Column = Column(TEXT, nullable=False, unique=True)
 
+    urls: Any = relationship(
+        "UrlServices", backref=backref("services"))
+
+    status: Any = relationship(
+        "StatusServices", backref=backref("services"))
+
     def obj_to_dict(self) -> dict[str, Column]:
+
+        urls: list[str] = []
+        status_code: int = 0
+
+        for url in self.urls:
+            urls.append(url.url)
+
+        # for status in self.status:
+        #     status_code
+        for service in self.status:
+            status_code = service.status_code
+
         return {
             "id": self.id,
             "domain": self.domain,
             "port": self.port,
-            "name": self.name
+            "name": self.name,
+            "urls": urls,
+            "status-code": status_code
         }

@@ -50,6 +50,7 @@ class OpenApiParser:
         try:
             response: Response = requests.get(
                 url=f"{url}/openapi.json",
+                timeout=5
             )
 
             if response.status_code == 200:

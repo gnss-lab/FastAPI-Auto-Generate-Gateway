@@ -1,5 +1,7 @@
-from fastapi import APIRouter
+from fastapi import APIRouter,  Request
 from ...Config import Config
+from loguru import logger
+from core.domain.usecases import RefreshServicesUsecase
 
 
 class RefreshServicesRoute:
@@ -8,5 +10,6 @@ class RefreshServicesRoute:
         self.route: APIRouter = APIRouter()
 
         @self.route.patch("/services", tags=["Service management"])
-        async def refresh_services() -> dict[str, str]:
-            return {"data": "Hello World"}
+        async def refresh_services(request: Request) -> bool:
+            RefreshServicesUsecase().execute(config=self.__config)
+            return True
