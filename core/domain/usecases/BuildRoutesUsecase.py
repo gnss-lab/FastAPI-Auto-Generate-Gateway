@@ -3,6 +3,9 @@ from types import FunctionType
 from fastapi_gateway import route
 from .UpdateOpenApiSchemaUsecase import UpdateOpenApiSchemaUsecase
 from fastapi import FastAPI
+from makefun import create_function
+from loguru import logger
+import fastapi
 
 
 class BuildRoutesUsecase:
@@ -28,38 +31,53 @@ class BuildRoutesUsecase:
         UpdateOpenApiSchemaUsecase().execute(fast_api_app=fast_api_app)
 
     def __factory_func(self, route_model: RouteModel) -> FunctionType:
-        vars: dict[str, function] = {}
 
-        import_fast_api: str = "import fastapi\n"
+        def func_impl(*args, **kwargs):
+            pass
+
+        arguments: list[dict[str, str]] = []
 
         queries = ""
         files = ""
 
         # Queries
         if not route_model.query_params is None:
-            for query in route_model.query_params:
+            for i, query in enumerate(route_model.query_params):
 
-                if query in route_model.query_params[-1]:
-                    queries = queries + \
-                        f"{query}: str,"
-                else:
-                    queries = queries + f"{query}: str,"
+                argument = {}
+                argument["name"] = query
+                argument["type"] = "str"
+
+                if not route_model.query_required[i]:
+                    argument["value"] = "None"
+                    argument["type"] = "str | None"
+
+                arguments.append(argument)
 
         # Files
         if not route_model.form_params is None:
             for file in route_model.form_params:
-                if file in route_model.form_params[-1]:
-                    files = files + \
-                        f"{file}: fastapi.UploadFile = fastapi.File(),"
-                else:
-                    files = files + \
-                        f"{file}: fastapi.UploadFile = fastapi.File(),"
+                argument = {}
+                argument["name"] = file
+                argument["type"] = "fastapi.UploadFile"
+                argument["value"] = "fastapi.File()"
+                arguments.append(argument)
 
-        # Forms
-        # -
+        func_sig: str = "func(request: fastapi.Request, response: fastapi.Response, "
+        for argument in arguments:
+            func_sig += f"{argument['name']}: {argument['type']}"
 
-        result: str = f"{import_fast_api}\n\ndef func(request: fastapi.Request, response: fastapi.Response, {queries if not None else ''} {files if not None else ''}):\n\tpass"
+            if not argument.get("value") is None:
+                func_sig += f" = {argument['value']}, "
+            else:
+                func_sig += ", "
 
-        exec(result, self.models_routes_vars)
+        func_sig += ")"
 
-        return self.models_routes_vars["func"]
+        # Cookie
+
+        test = create_function(func_sig, func_impl)
+
+        logger.debug(func_sig)
+
+        return test

@@ -1,7 +1,8 @@
 datamodel-code-generator==0.13.5
 fastapi==0.86.0
-fastapi-gateway==0.0.3
+fastapi-gateway @ git+https://github.com/xitowzys-ISZF/fastapi-gateway.git@7c3eeaa724d7e5070c9f3c4e8ffddf921df617db
 loguru==0.6.0
+makefun==1.15.0
 python-multipart==0.0.5
 requests==2.28.1
 validators==0.20.0
