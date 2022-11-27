@@ -33,6 +33,8 @@ class UrlService():
             logger.error(str(e))
             return False
 
+    
+
     def delete_all_rows(self):
         try:
             self.__session.query(UrlServices).delete()

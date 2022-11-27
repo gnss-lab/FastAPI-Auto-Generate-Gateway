@@ -16,6 +16,8 @@ class Management():
         self.__init_routes()
 
     def __init_routes(self):
+
+
         self.__app.include_router(
             router=AddServiceRoute(config=self.config).route)
         self.__app.include_router(
