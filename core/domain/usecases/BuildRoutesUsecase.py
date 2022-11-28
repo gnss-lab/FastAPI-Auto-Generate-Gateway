@@ -52,6 +52,9 @@ class BuildRoutesUsecase:
                     argument["value"] = "None"
                     argument["type"] = "str | None"
 
+                if route_model.query_is_cookie[i]:
+                    argument["value"] = "fastapi.Cookie(default=None)"
+
                 arguments.append(argument)
 
         # Files
@@ -76,8 +79,7 @@ class BuildRoutesUsecase:
 
         # Cookie
 
-        test = create_function(func_sig, func_impl)
-
         logger.debug(func_sig)
+        test = create_function(func_sig, func_impl)
 
         return test

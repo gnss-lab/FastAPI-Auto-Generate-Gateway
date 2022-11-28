@@ -79,7 +79,7 @@ class BuildRouteModelsUsecase:
                                 tags=[service["name"]]
                             )
 
-                            route_model.query_params, route_model.query_required = self.__open_api_parser.get_queries_param(
+                            route_model.query_params, route_model.query_required, route_model.query_is_cookie = self.__open_api_parser.get_queries_param(
                                 path=path, method=path_method)
 
                             route_model.form_params = self.__open_api_parser.get_body_multipart_form_data(
