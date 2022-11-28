@@ -11,8 +11,9 @@ class RouteModel():
     service_path: str
     query_params: Optional[List[str]] = None
     query_required: Optional[List[bool]] = None
+    query_is_cookie: Optional[List[bool]] = None
     form_params: Optional[List[str]] = None
-    # body_params: Optional[List[str]] = None
+    body_params: Optional[List[str]] = None
     # override_headers: bool = True
     # response_model: Optional[Type[Any]] = None
     # status_code: Optional[int] = None

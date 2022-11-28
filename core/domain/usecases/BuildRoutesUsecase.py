@@ -6,6 +6,9 @@ from fastapi import FastAPI
 from makefun import create_function
 from loguru import logger
 import fastapi
+from typing import Any
+import importlib
+import tmp.models.bwjrqvnn
 
 
 class BuildRoutesUsecase:
@@ -13,24 +16,38 @@ class BuildRoutesUsecase:
         self.models_routes_vars = {}
         self.models_routes = {}
 
-    def execute(self, route_model_list: list[RouteModel], fast_api_app: FastAPI) -> None:
-        for route_model in route_model_list:
-            # logger.debug(route_model)
-            func: FunctionType = self.__factory_func(route_model=route_model)
+    def execute(self, services_result: list[dict[str, Any]], fast_api_app: FastAPI) -> None:
 
-            route(
-                request_method=route_model.request_method,
-                gateway_path=route_model.gateway_path,
-                service_url=route_model.service_url,
-                service_path=route_model.service_path,
-                query_params=route_model.query_params,
-                form_params=route_model.form_params,
-                tags=route_model.tags
-            )(f=func)
+        for service_result in services_result:
+            for route_model in service_result["route_models"]:
 
-        UpdateOpenApiSchemaUsecase().execute(fast_api_app=fast_api_app)
+                _import: str = f"tmp.models.{service_result['models']}"
 
-    def __factory_func(self, route_model: RouteModel) -> FunctionType:
+                importlib.import_module(_import)
+
+                # print(
+                #     exec(f"tmp.models.{service_result['models']}.ConversionParams()"))
+
+                # exit()
+
+                # logger.debug(route_model)
+                func, body_list = self.__factory_func(
+                    route_model=route_model, _import=_import)
+
+                route(
+                    request_method=route_model.request_method,
+                    gateway_path=route_model.gateway_path,
+                    service_url=route_model.service_url,
+                    service_path=route_model.service_path,
+                    query_params=route_model.query_params,
+                    form_params=route_model.form_params,
+                    tags=route_model.tags,
+                    body_params=body_list
+                )(f=func)
+
+            UpdateOpenApiSchemaUsecase().execute(fast_api_app=fast_api_app)
+
+    def __factory_func(self, route_model: RouteModel, _import: str) -> FunctionType:
 
         def func_impl(*args, **kwargs):
             pass
@@ -39,6 +56,26 @@ class BuildRoutesUsecase:
 
         queries = ""
         files = ""
+
+        body_list = []
+
+        # Body
+        if not route_model.body_params is None:
+            for i, body in enumerate(route_model.body_params):
+
+                argument = {}
+                argument["name"] = body + f"{i}"
+                argument["type"] = f"{_import}.{body}"
+
+                # if not route_model.query_required[i]:
+                #     argument["value"] = "None"
+                #     argument["type"] = "str | None"
+
+                # if route_model.query_is_cookie[i]:
+                #     argument["value"] = "fastapi.Cookie(default=None)"
+
+                body_list.append(body + f"{i}")
+                arguments.append(argument)
 
         # Queries
         if not route_model.query_params is None:
@@ -80,6 +117,7 @@ class BuildRoutesUsecase:
         # Cookie
 
         logger.debug(func_sig)
+
         test = create_function(func_sig, func_impl)
 
-        return test
+        return test, body_list

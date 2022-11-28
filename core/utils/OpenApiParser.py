@@ -117,6 +117,27 @@ class OpenApiParser:
 
         return list(scheme["properties"].keys())
 
+    def get_body_application_json(self, path: str, method: str) -> list[str] | None:
+        body: dict[Any, Any] = self.__response_json["paths"][path][method].get(
+            "requestBody")
+
+        if body is None:
+            return None
+
+        if body["content"].get("application/json") is None:
+            # logger.warning("The body is not a multipart/form-data")
+            return None
+
+        scheme_ref: str = body["content"].get(
+            "application/json")["schema"]["$ref"]
+
+        scheme: dict[Any, Any] = self.get_body_scheme(ref=scheme_ref)
+
+        result: list[str] = []
+        result.append(scheme["title"])
+
+        return result
+
     def get_body_scheme(self, ref: str) -> dict[Any, Any]:
         # TODO #1: Обработать ошибку если что-то пойдет нитак
         ref_split: list[str] = ref.split("/")[1:]
@@ -128,22 +149,24 @@ class OpenApiParser:
 
         return path
 
-    def get_queries_param(self, path: str, method: str) -> tuple[None, None] | tuple[list[str], list[bool]]:
+    def get_queries_param(self, path: str, method: str) -> tuple[None, None, None] | tuple[list[str], list[bool], list[bool]]:
 
         queries: list[dict[Any, Any]] = self.__response_json["paths"][path][method].get(
             "parameters")
 
         if queries is None:
-            return None, None
+            return None, None, None
 
         names: list[str] = []
         requireds: list[bool] = []
+        is_cookie: list[bool] = []
 
         for query in queries:
             names.append(query["name"])
             requireds.append(query["required"])
+            is_cookie.append(query["in"] == "cookie")
 
-        return names, requireds
+        return names, requireds, is_cookie
 
     def check_auto_generate_in_api_gateway(self, path: str) -> bool:
 
@@ -156,13 +179,13 @@ class OpenApiParser:
                     continue
 
                 if not self.__tags_open_api.get(tag).get(TAG):
-                    return False
+                    return True
                 else:
                     # TODO #2: Добавить проверку на тип bool
 
                     return self.__tags_open_api.get(tag).get(TAG)
 
-        return False
+        return True
 
     def get_raw_response_in_json(self) -> dict[Any, Any]:
         return self.__response_json
