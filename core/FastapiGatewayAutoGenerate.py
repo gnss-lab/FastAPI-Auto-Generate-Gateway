@@ -1,5 +1,5 @@
 import re
-import fs
+# import fs
 # import requests
 # import validators
 # from typing import List, Any
@@ -22,11 +22,11 @@ import os.path
 # from alembic.config import Config as alembic_config
 # from alembic import command
 from core.domain.usecases import *
-import uuid
+# import uuid
 # from core.domain.models import RouteModel
 
 
-class AutoGenerate:
+class FastapiGatewayAutoGenerate:
 
     def __init__(self, config: Config) -> None:
         self.__config = config

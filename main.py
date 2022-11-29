@@ -22,9 +22,10 @@ config = FastapiGatewayAutoGenerate.Config(
     # db_path="./testdb.db"
 )
 
-autoRG = FastapiGatewayAutoGenerate.AutoGenerate(
+autoRG = FastapiGatewayAutoGenerate.FastapiGatewayAutoGenerate(
     config=config
 )
+
 
 # print("OK")
 # autoRG.build_routes()

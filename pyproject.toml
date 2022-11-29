@@ -1,0 +1,28 @@
+[tool.poetry]
+name = "fastapi-gateway-auto-generate"
+version = "0.1-a"
+description = ""
+authors = ["Kalinka George <xitowzys@gmail.com>"]
+license = "MIT License"
+readme = "README.md"
+packages = []
+
+[tool.poetry.dependencies]
+python = "^3.11"
+datamodel-code-generator = "^0.14.0"
+loguru = "^0.6.0"
+fastapi = "^0.88.0"
+sqlalchemy = "^1.4.44"
+validators = "^0.20.0"
+alembic = "^1.8.1"
+makefun = "^1.15.0"
+fastapi-gateway = {git = "https://github.com/xitowzys-ISZF/fastapi-gateway"}
+
+
+[tool.poetry.group.dev.dependencies]
+uvicorn = "^0.20.0"
+autopep8 = "^2.0.0"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
