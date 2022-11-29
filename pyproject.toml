@@ -1,11 +1,18 @@
 [tool.poetry]
-name = "fastapi-gateway-auto-generate"
+name = "fastapi_gateway_auto_generate"
 version = "0.1-a"
-description = ""
+description = "This library allows you to automatically generate requests for the API Gateway."
 authors = ["Kalinka George <xitowzys@gmail.com>"]
 license = "MIT License"
+keywords = ["python", "fastapi", "gateway", "api", "microservice", "microservices"]
+homepage = "https://github.com/xitowzys-ISZF/FastAPI-auto-generate-gateway"
+repository = "https://github.com/xitowzys-ISZF/FastAPI-auto-generate-gateway"
 readme = "README.md"
-packages = []
+packages = [
+    { include = "core" }
+]
+
+
 
 [tool.poetry.dependencies]
 python = "^3.11"
