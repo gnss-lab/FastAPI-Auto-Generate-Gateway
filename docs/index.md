@@ -2,12 +2,12 @@
 
 This library allows you to automatically generate API gateway requests based on your implemented microservices.
 
-## Installing
+## Installation
 
 
 To install `fastapi-gateway-auto-generate`:
 
-```bash
-pip install fastapi-gateway-auto-generate
-```
 
+```bash
+pip install git+https://github.com/xitowzys-ISZF/FastAPI-auto-generate-gateway.git
+```

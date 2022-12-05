@@ -3,36 +3,35 @@ theme:
   name: "material"
   features:
     - content.code.annotate
+    - toc.integrate
+    - navigation.tabs
   palette:
-
-    # Palette toggle for automatic mode
-    - media: "(prefers-color-scheme)"
+    - scheme: slate
+      primary: red
       toggle:
-        icon: material/brightness-auto
-        name: Switch to light mode
-
-    # Palette toggle for light mode
-    - media: "(prefers-color-scheme: light)"
-      scheme: default 
+        icon: material/toggle-switch-off-outline
+        name: Switch to Dark Mode
+    - scheme: default
+      primary: red
       toggle:
-        icon: material/brightness-7
-        name: Switch to dark mode
-
-    # Palette toggle for dark mode
-    - media: "(prefers-color-scheme: dark)"
-      scheme: slate
-      toggle:
-        icon: material/brightness-4
-        name: Switch to system preference
-
+        icon: material/toggle-switch
+        name: Switch to Light Mode
 nav:
-    - How to use: how-to-use.md
-    - Service managemnt: service-management.md
+    - Home: index.md
+    - Usage:
+      - Getting started: Usage/getting-started.md
+      - Service management:
+        - API: Usage/service-management.md
+        - Using as module: Usage/using-as-module.md
+    - FAQ: FAQ.md
 
 repo_name: fastapi-gateway-auto-generate
-repo_url: https://github.com/xitowzys/FastAPI-auto-generate-gateway
+repo_url: https://github.com/xitowzys-ISZF/FastAPI-auto-generate-gateway
 edit_uri: edit/master/docs
 docs_dir: docs
+
+# extra:
+#   homepage: /installing
 
 extra_css:
   - stylesheets/extra.css

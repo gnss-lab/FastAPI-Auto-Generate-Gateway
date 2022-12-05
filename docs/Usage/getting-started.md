@@ -1,6 +1,6 @@
-# How to use
+# Getting started
 
-## 1. Additional metadata for tags
+## Additional metadata for tags
 
 In order for the url from the microservice to be transferred to the API Gateway, 
 you need to add additional metadata for your tags. In our case, this is `x-auto-generate-in-api-gateway`. 
@@ -100,6 +100,50 @@ Now who has the tag `users` and `items` will be automatically transferred to the
 !!! question
     If you suddenly change the tag for some reason, then you can do this when creating an object in the API Gateway
 
-## 2. Initializing an object in the API Gateway
+## Initializing an object in the API Gateway
+
+### Create Config object
+
+When creating an object, first we need to configure our generator. There is a "Config" class for this.
+
+```python
+from fastapi_gateway_auto_generate import Config
+from fastapi import FastAPI
+
+app = FastAPI()
+
+config = Config(
+    fast_api_app=app,
+)
+```
+
+- `fast_api_app` → The object of your app.
+- `service_management_api` → Enable service management using the API interface. **Enabled by default.**
+
+    !!! warning
+        This parameter temporarily does not work and will always be enabled.
+
+- `db_path` → The path to the database. **By default, creates a database in the root directory of the project.**
 
 > Documentation in development
+
+### Example creating a simple generator
+
+```python
+from fastapi_gateway_auto_generate import Generator, Config
+from fastapi import FastAPI
+import uvicorn
+
+app = FastAPI()
+
+config = Config(
+    fast_api_app=app,
+)
+
+Generator(
+    config=config
+)
+
+if __name__ == "__main__":
+    uvicorn.run(app=app, port=5000, log_level="info")
+```
