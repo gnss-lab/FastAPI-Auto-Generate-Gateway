@@ -1,32 +1,7 @@
-import re
-# import fs
-# import requests
-# import validators
-# from typing import List, Any
-from pathlib import Path
-from loguru import logger
-# from pprint import pprint
-# from fastapi import FastAPI
-# from requests import Response
-# from types import FunctionType
-# from fastapi_gateway import route
-# from .RouteModel import RouteModel
-# from .utils.OpenApiParser import OpenApiParser
-from datamodel_code_generator import InputFileType, generate
-# from pydantic import BaseModel, Field
-# from fastapi.openapi.utils import get_openapi
-
-from .management import Management
-from .Config import Config
 import os.path
-# from alembic.config import Config as alembic_config
-# from alembic import command
+from .Config import Config
+from .management import Management
 from fastapi_gateway_auto_generate.domain.usecases import *
-# import uuid
-# from fastapi_gateway_auto_generate.domain.models import RouteModel
-import os
-import glob
-import sys
 
 
 class Generator:
@@ -40,17 +15,10 @@ class Generator:
         if self.__config.service_management:
             self.__init_management_urls()
 
-        # self.__routes_model: List[RouteModel] = []
-
-        # self.__open_api_parser = OpenApiParser()
-
-        # self.models_routes_vars = {}
-        # self.models_routes: None = {}
-
         self.build()
 
     def __init_management_urls(self):
-        m: Management = Management(config=self.__config)
+        Management(config=self.__config)
 
     def build(self) -> None:
         services_result = BuildRouteModelsUsecase().execute(

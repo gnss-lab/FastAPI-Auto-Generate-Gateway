@@ -1,22 +1,19 @@
-# from loguru import logger
-from ...utils.OpenApiParser import OpenApiParser
-from ..models import RouteModel
-from fastapi import FastAPI
-from fastapi_gateway_auto_generate.database import GetAllServices, StatusService, UrlService
-from ...Config import Config
-from loguru import logger
-from fastapi_gateway_auto_generate.management.models import GetAllInfoServices
-from datamodel_code_generator import InputFileType, generate
 import re
-from pathlib import Path
-import uuid
-from typing import Any
-from pprint import pprint
 import os
 import sys
-import random
 import string
 import shortuuid
+from typing import Any
+from pathlib import Path
+from pprint import pprint
+from loguru import logger
+from fastapi import FastAPI
+from ...Config import Config
+from ..models import RouteModel
+from ...utils.OpenApiParser import OpenApiParser
+from fastapi_gateway_auto_generate.management.models import GetAllInfoServices
+from datamodel_code_generator import InputFileType, generate
+from fastapi_gateway_auto_generate.database import GetAllServices, StatusService, UrlService
 
 
 class BuildRouteModelsUsecase:
@@ -26,7 +23,7 @@ class BuildRouteModelsUsecase:
     def execute(self, config: Config) -> list[dict[str, Any]]:
 
         routes_model: list[RouteModel] = []
-        # models: dict[str, str] | None = {}
+
         services_result: list[dict[str, Any]] = []
 
         get_all_info_services_model: GetAllInfoServices = GetAllInfoServices(
@@ -52,9 +49,6 @@ class BuildRouteModelsUsecase:
                 for service in services["services"]:
                     routes_model = []
                     service_result = {}
-
-                    # if validators.url(service_url):
-                    #     pass
 
                     url = f"{service['domain']}:{service['port']}"
 
@@ -132,15 +126,9 @@ class BuildRouteModelsUsecase:
         letters = string.ascii_lowercase
         _uuid = f"model_{shortuuid.ShortUUID().random(length=10)}"
 
-        # temporary_directory = Path(
-        #     Path.home() / "Documents/xitowzys/ISZF/fastapi-gateway-auto-generate")
-
         output = Path(f'{project_root}/tmp/models/{_uuid}.py')
 
         dir = Path(f'{project_root}/tmp/models/')
-
-        # for f in os.listdir(dir):
-        #     os.remove(os.path.join(dir, f))
 
         generate(
             input_=self.__open_api_parser.get_raw_resoponse_in_string(),
@@ -149,13 +137,7 @@ class BuildRouteModelsUsecase:
             output=output
         )
 
-        # vars = {}
         model: str = output.read_text()
         classes: list[str] = re.findall(r"class\s([A-Za-z0-91]*)", model)
-
-        # print(classes)
-        # exit()
-        # # exec(model, vars)
-        # output.unlink()
 
         return _uuid, classes

@@ -1,8 +1,8 @@
-from alembic.config import Config as alembic_config
-from alembic import command
-from loguru import logger
 import os
 import sys
+from loguru import logger
+from alembic import command
+from alembic.config import Config as alembic_config
 
 
 class InitDatabaseUsecase:

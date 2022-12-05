@@ -5,6 +5,9 @@ from loguru import logger
 
 
 class DeleteTmpModelsFilesUsecase:
+    def __init__(self) -> None:
+        pass
+
     def execute(self):
         project_root = os.path.dirname(
             sys.modules['fastapi_gateway_auto_generate'].__file__)
