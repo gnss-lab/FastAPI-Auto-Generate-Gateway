@@ -8,10 +8,6 @@ keywords = ["python", "fastapi", "gateway", "api", "microservice", "microservice
 homepage = "https://github.com/xitowzys-ISZF/FastAPI-auto-generate-gateway"
 repository = "https://github.com/xitowzys-ISZF/FastAPI-auto-generate-gateway"
 readme = "README.md"
-packages = [
-    { include = "core" }
-]
-
 
 
 [tool.poetry.dependencies]
@@ -24,6 +20,8 @@ validators = "^0.20.0"
 alembic = "^1.8.1"
 makefun = "^1.15.0"
 fastapi-gateway = {git = "https://github.com/xitowzys-ISZF/fastapi-gateway"}
+python-multipart = "^0.0.5"
+shortuuid = "^1.0.11"
 
 
 [tool.poetry.group.dev.dependencies]

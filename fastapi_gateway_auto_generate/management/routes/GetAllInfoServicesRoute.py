@@ -1,6 +1,6 @@
 from fastapi import APIRouter, Depends, HTTPException
 from ..models import GetAllInfoServices
-from core.database import GetAllServices
+from fastapi_gateway_auto_generate.database import GetAllServices
 from ...Config import Config
 
 get_all_info_services_router: APIRouter = APIRouter()

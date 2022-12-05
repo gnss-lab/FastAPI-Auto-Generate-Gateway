@@ -3,7 +3,7 @@ from typing import Any
 from fastapi import FastAPI
 from loguru import logger
 # from pydantic.dataclasses import dataclass
-from .FastapiGatewayAutoGenerageException import FastapiGatewayAutoGenerageException
+from .GeneratorException import FastapiGatewayAutoGenerageException
 
 from typing import Optional
 import os

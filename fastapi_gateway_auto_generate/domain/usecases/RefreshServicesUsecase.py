@@ -1,9 +1,9 @@
-from core.database import StatusService, UrlService, GetAllServices
+from fastapi_gateway_auto_generate.database import StatusService, UrlService, GetAllServices
 from . import *
 from ...Config import Config
 from loguru import logger
 from ..models import RouteModel
-from core.management.models import GetAllInfoServices
+from fastapi_gateway_auto_generate.management.models import GetAllInfoServices
 
 
 class RefreshServicesUsecase:

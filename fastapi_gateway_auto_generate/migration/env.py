@@ -1,5 +1,5 @@
-from core.database.SQLAlchemy import Base
-from core.database.models import *
+from fastapi_gateway_auto_generate.database.SQLAlchemy import Base
+from fastapi_gateway_auto_generate.database.models import *
 from logging.config import fileConfig
 
 from sqlalchemy import engine_from_config

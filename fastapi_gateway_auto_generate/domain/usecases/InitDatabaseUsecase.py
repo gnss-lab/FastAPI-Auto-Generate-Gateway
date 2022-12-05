@@ -1,6 +1,8 @@
 from alembic.config import Config as alembic_config
 from alembic import command
 from loguru import logger
+import os
+import sys
 
 
 class InitDatabaseUsecase:
@@ -8,7 +10,12 @@ class InitDatabaseUsecase:
         pass
 
     def execute(self, db_url: str) -> None:
-        alembic_cfg = alembic_config("./alembic.ini")
+        project_root = os.path.dirname(
+            sys.modules['fastapi_gateway_auto_generate'].__file__)
+
+        logger.debug(project_root)
+
+        alembic_cfg = alembic_config(f"{project_root}/alembic.ini")
         alembic_cfg.set_main_option("sqlalchemy.url", db_url)
         logger.debug(db_url)
         command.upgrade(alembic_cfg, "head")

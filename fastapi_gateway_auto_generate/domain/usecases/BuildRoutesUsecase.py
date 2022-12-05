@@ -8,7 +8,10 @@ from loguru import logger
 import fastapi
 from typing import Any
 import importlib
-import tmp.models.bwjrqvnn
+import os
+import sys
+from pathlib import Path
+import fastapi_gateway_auto_generate
 
 
 class BuildRoutesUsecase:
@@ -21,16 +24,16 @@ class BuildRoutesUsecase:
         for service_result in services_result:
             for route_model in service_result["route_models"]:
 
-                _import: str = f"tmp.models.{service_result['models']}"
-
-                importlib.import_module(_import)
-
                 # print(
                 #     exec(f"tmp.models.{service_result['models']}.ConversionParams()"))
 
                 # exit()
 
                 # logger.debug(route_model)
+
+                _import: str = self.__import_model(
+                    service_model_name=service_result['models'])
+
                 func, body_list = self.__factory_func(
                     route_model=route_model, _import=_import)
 
@@ -46,6 +49,12 @@ class BuildRoutesUsecase:
                 )(f=func)
 
             UpdateOpenApiSchemaUsecase().execute(fast_api_app=fast_api_app)
+
+    def __import_model(self, service_model_name: str) -> str:
+        _import: str = f"fastapi_gateway_auto_generate.tmp.models.{service_model_name}"
+        importlib.import_module(_import)
+
+        return _import
 
     def __factory_func(self, route_model: RouteModel, _import: str) -> FunctionType:
 
@@ -120,4 +129,5 @@ class BuildRoutesUsecase:
 
         test = create_function(func_sig, func_impl)
 
+        # exit()
         return test, body_list

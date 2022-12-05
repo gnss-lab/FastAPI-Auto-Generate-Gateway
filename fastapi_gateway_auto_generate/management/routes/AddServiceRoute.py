@@ -1,4 +1,4 @@
-from core.database import AddService as add_service_database
+from fastapi_gateway_auto_generate.database import AddService as add_service_database
 from fastapi import APIRouter, Depends
 from ..models import AddService
 

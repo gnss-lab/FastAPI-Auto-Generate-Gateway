@@ -4,7 +4,7 @@ import re
 # import validators
 # from typing import List, Any
 from pathlib import Path
-# from loguru import logger
+from loguru import logger
 # from pprint import pprint
 # from fastapi import FastAPI
 # from requests import Response
@@ -21,12 +21,15 @@ from .Config import Config
 import os.path
 # from alembic.config import Config as alembic_config
 # from alembic import command
-from core.domain.usecases import *
+from fastapi_gateway_auto_generate.domain.usecases import *
 # import uuid
-# from core.domain.models import RouteModel
+# from fastapi_gateway_auto_generate.domain.models import RouteModel
+import os
+import glob
+import sys
 
 
-class FastapiGatewayAutoGenerate:
+class Generator:
 
     def __init__(self, config: Config) -> None:
         self.__config = config
@@ -58,3 +61,15 @@ class FastapiGatewayAutoGenerate:
             services_result=services_result,
             fast_api_app=self.__config.fast_api_app
         )
+
+        self.__delete_tmp_files()
+
+    def __delete_tmp_files(self):
+        project_root = os.path.dirname(
+            sys.modules['fastapi_gateway_auto_generate'].__file__)
+
+        filelist = glob.glob(os.path.join(
+            f"{project_root}/tmp/models", "model_*"))
+        for f in filelist:
+            logger.debug(f)
+            os.remove(f)

@@ -2,10 +2,10 @@
 from ...utils.OpenApiParser import OpenApiParser
 from ..models import RouteModel
 from fastapi import FastAPI
-from core.database import GetAllServices, StatusService, UrlService
+from fastapi_gateway_auto_generate.database import GetAllServices, StatusService, UrlService
 from ...Config import Config
 from loguru import logger
-from core.management.models import GetAllInfoServices
+from fastapi_gateway_auto_generate.management.models import GetAllInfoServices
 from datamodel_code_generator import InputFileType, generate
 import re
 from pathlib import Path
@@ -13,8 +13,10 @@ import uuid
 from typing import Any
 from pprint import pprint
 import os
+import sys
 import random
 import string
+import shortuuid
 
 
 class BuildRouteModelsUsecase:
@@ -121,17 +123,21 @@ class BuildRouteModelsUsecase:
 
     def __generate_models(self):
 
+        shortuuid.set_alphabet(
+            "ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz")
+
+        project_root = os.path.dirname(
+            sys.modules['fastapi_gateway_auto_generate'].__file__)
+
         letters = string.ascii_lowercase
-        _uuid = ''.join(random.choice(letters) for _ in range(8))
+        _uuid = f"model_{shortuuid.ShortUUID().random(length=10)}"
 
-        temporary_directory = Path(
-            Path.home() / "Documents/xitowzys/ISZF/fastapi-gateway-auto-generate")
+        # temporary_directory = Path(
+        #     Path.home() / "Documents/xitowzys/ISZF/fastapi-gateway-auto-generate")
 
-        output = Path(temporary_directory /
-                      f'tmp/models/{_uuid}.py')
+        output = Path(f'{project_root}/tmp/models/{_uuid}.py')
 
-        dir = Path(temporary_directory /
-                   f'tmp/models/')
+        dir = Path(f'{project_root}/tmp/models/')
 
         # for f in os.listdir(dir):
         #     os.remove(os.path.join(dir, f))

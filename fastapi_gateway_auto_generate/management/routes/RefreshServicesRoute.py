@@ -1,7 +1,7 @@
 from fastapi import APIRouter,  Request
 from ...Config import Config
 from loguru import logger
-from core.domain.usecases import RefreshServicesUsecase
+from fastapi_gateway_auto_generate.domain.usecases import RefreshServicesUsecase
 
 
 class RefreshServicesRoute:
