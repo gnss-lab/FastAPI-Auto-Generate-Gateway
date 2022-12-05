@@ -33,14 +33,13 @@ class RefreshServicesUsecase:
                             del config.fast_api_app.routes[i]
                             logger.debug(r)
 
-        route_model_list: list[RouteModel] = BuildRouteModelsUsecase().execute(
-            config=config)
+        services_result = BuildRouteModelsUsecase().execute(
+            config=config
+        )
 
         BuildRoutesUsecase().execute(
-            route_model_list=route_model_list,
+            services_result=services_result,
             fast_api_app=config.fast_api_app
         )
 
-        UpdateOpenApiSchemaUsecase().execute(fast_api_app=config.fast_api_app)
-
-        logger.info("Services have been successfully updated")
+        logger.success("Services have been successfully updated")

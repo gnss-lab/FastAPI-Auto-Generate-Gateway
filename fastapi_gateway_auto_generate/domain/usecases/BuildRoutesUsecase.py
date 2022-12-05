@@ -2,6 +2,7 @@ from ..models import RouteModel
 from types import FunctionType
 from fastapi_gateway import route
 from .UpdateOpenApiSchemaUsecase import UpdateOpenApiSchemaUsecase
+from .DeleteTmpModelsFilesUsecase import DeleteTmpModelsFilesUsecase
 from fastapi import FastAPI
 from makefun import create_function
 from loguru import logger
@@ -49,6 +50,7 @@ class BuildRoutesUsecase:
                 )(f=func)
 
             UpdateOpenApiSchemaUsecase().execute(fast_api_app=fast_api_app)
+            DeleteTmpModelsFilesUsecase().execute()
 
     def __import_model(self, service_model_name: str) -> str:
         _import: str = f"fastapi_gateway_auto_generate.tmp.models.{service_model_name}"
