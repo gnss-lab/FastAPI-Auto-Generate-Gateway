@@ -1,6 +1,6 @@
 from ast import List
 from typing import Any
-from core.OpenApiParser import OpenApiParser
+from fastapi_gateway_auto_generate.utils.OpenApiParser import OpenApiParser
 from tests.openApiParser.schemas.tags import Tag
 from runtime_type_checker import check_type
 

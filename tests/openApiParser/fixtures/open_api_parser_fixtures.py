@@ -1,5 +1,5 @@
 import pytest
-from core.OpenApiParser import OpenApiParser
+from fastapi_gateway_auto_generate.utils.OpenApiParser import OpenApiParser
 
 
 @pytest.fixture
