@@ -9,14 +9,8 @@
 
 import json
 import requests
-from requests import Response
 from typing import Any
-from datamodel_code_generator import InputFileType, generate
-from io import StringIO
-from pathlib import Path
-from pprint import pprint
-from pydantic import BaseModel, Field
-from loguru import logger
+from requests import Response
 
 TAG = "x-auto-generate-in-api-gateway"
 

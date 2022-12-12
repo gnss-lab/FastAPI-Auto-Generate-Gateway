@@ -2,6 +2,7 @@ import os
 from typing import Optional
 from fastapi import FastAPI
 from .GeneratorException import FastapiGatewayAutoGenerageException
+from loguru import logger
 
 
 class Config:
