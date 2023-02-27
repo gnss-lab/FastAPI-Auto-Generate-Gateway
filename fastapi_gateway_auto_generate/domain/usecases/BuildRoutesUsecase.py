@@ -46,7 +46,8 @@ class BuildRoutesUsecase:
                     query_params=route_model.query_params,
                     form_params=route_model.form_params,
                     tags=route_model.tags,
-                    body_params=body_list
+                    body_params=body_list,
+                    dependencies=route_model.dependencies,
                 )(f=func)
 
             UpdateOpenApiSchemaUsecase().execute(fast_api_app=fast_api_app)

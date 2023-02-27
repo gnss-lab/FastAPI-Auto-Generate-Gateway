@@ -7,7 +7,7 @@ from typing import Any
 from pathlib import Path
 from pprint import pprint
 from loguru import logger
-from fastapi import FastAPI
+from fastapi import FastAPI, Depends
 from ...Config import Config
 from ..models import RouteModel
 from ...utils.OpenApiParser import OpenApiParser
@@ -79,13 +79,19 @@ class BuildRouteModelsUsecase:
                             path_method: str = self.__open_api_parser.get_path_method(
                                 path)
 
+                            dependencies = []
+
+                            if not config.jwt is None:
+                                dependencies.append(Depends(config.jwt(service["name"])))
+
                             route_model: RouteModel = RouteModel(
                                 request_method=getattr(
                                     config.fast_api_app, path_method),
                                 gateway_path=f"/{service['name']}{path}",
                                 service_url=url,
                                 service_path=path,
-                                tags=[service["name"]]
+                                tags=[service["name"]],
+                                dependencies=dependencies
                             )
 
                             route_model.query_params, route_model.query_required, route_model.query_is_cookie = self.__open_api_parser.get_queries_param(
