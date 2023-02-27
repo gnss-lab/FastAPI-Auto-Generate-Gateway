@@ -50,7 +50,8 @@ class BuildRoutesUsecase:
                 )(f=func)
 
             UpdateOpenApiSchemaUsecase().execute(fast_api_app=fast_api_app)
-            DeleteTmpModelsFilesUsecase().execute()
+
+        DeleteTmpModelsFilesUsecase().execute()
 
     def __import_model(self, service_model_name: str) -> str:
         _import: str = f"fastapi_gateway_auto_generate.tmp.models.{service_model_name}"
