@@ -50,7 +50,7 @@ class BuildRoutesUsecase:
                     dependencies=route_model.dependencies,
                 )(f=func)
 
-            UpdateOpenApiSchemaUsecase().execute(fast_api_app=fast_api_app)
+        UpdateOpenApiSchemaUsecase().execute(fast_api_app=fast_api_app)
 
         DeleteTmpModelsFilesUsecase().execute()
 
