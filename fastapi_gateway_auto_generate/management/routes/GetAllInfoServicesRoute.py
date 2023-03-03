@@ -15,7 +15,7 @@ class GetAllInfoServicesRoute:
         self.__dependencies = []
 
         if not self.__config.jwt is None:
-            self.__dependencies.append(Depends(self.__config.jwt(self.__config.service_name, "/services")))
+            self.__dependencies.append(Depends(self.__config.jwt(self.__config.service_name, "/services", "get")))
 
         @self.route.get("/services", tags=["Service management"],
                          dependencies=self.__dependencies)

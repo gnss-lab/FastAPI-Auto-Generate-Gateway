@@ -86,7 +86,7 @@ class BuildRouteModelsUsecase:
                             if not (config.jwt is None) and self.__open_api_parser.check_enable_auth_in_api_gateway(
                                     path=path):
                                 dependencies.append(
-                                    Depends(config.jwt(service["name"], path)))
+                                    Depends(config.jwt(service["name"], path, path_method)))
 
                             route_model: RouteModel = RouteModel(
                                 request_method=getattr(
