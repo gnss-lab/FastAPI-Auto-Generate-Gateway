@@ -12,8 +12,8 @@ import requests
 from typing import Any
 from requests import Response
 
-TAG = "x-auto-generate-in-api-gateway"
-
+TAG_AUTO_GENERATE = "x-auto-generate-in-api-gateway"
+TAG_ENABLE_AUTH = "x-enable-auth-in-api-gateway"
 
 class OpenApiParser:
     def __init__(self):
@@ -172,14 +172,33 @@ class OpenApiParser:
                     # logger.warning(f"There is no such tag: {tag}")
                     continue
 
-                if not self.__tags_open_api.get(tag).get(TAG):
+                if not self.__tags_open_api.get(tag).get(TAG_AUTO_GENERATE):
                     return True
                 else:
                     # TODO #2: Добавить проверку на тип bool
 
-                    return self.__tags_open_api.get(tag).get(TAG)
+                    return self.__tags_open_api.get(tag).get(TAG_AUTO_GENERATE)
 
         return True
+
+    def check_enable_auth_in_api_gateway(self, path: str) -> bool:
+
+        tags_path: list[str] = self.get_path_tags(path=path)
+
+        if tags_path:
+            for tag in tags_path:
+                if not self.__tags_open_api.get(tag):
+                    # logger.warning(f"There is no such tag: {tag}")
+                    continue
+
+                if not self.__tags_open_api.get(tag).get(TAG_ENABLE_AUTH):
+                    return False
+                else:
+                    # TODO #2: Добавить проверку на тип bool
+
+                    return self.__tags_open_api.get(tag).get(TAG_ENABLE_AUTH)
+
+        return False
 
     def get_raw_response_in_json(self) -> dict[Any, Any]:
         return self.__response_json
