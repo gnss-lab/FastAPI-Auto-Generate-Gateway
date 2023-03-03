@@ -23,6 +23,7 @@ class Config:
         self.fast_api_app: FastAPI = fast_api_app
         self.service_management: bool = service_management
         self.jwt = jwt
+        self.service_name = "API-Gateway"
 
         if db_path is None:
             self.db_path: str = "./database.db"

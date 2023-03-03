@@ -12,8 +12,13 @@ class GetAllInfoServicesRoute:
 
         self.__config: Config = config
         self.route: APIRouter = APIRouter()
+        self.__dependencies = []
 
-        @self.route.get("/services", tags=["Service management"])
+        if not self.__config.jwt is None:
+            self.__dependencies.append(Depends(self.__config.jwt(self.__config.service_name, "/services")))
+
+        @self.route.get("/services", tags=["Service management"],
+                         dependencies=self.__dependencies)
         async def get_all_services(get_all_info_service: GetAllInfoServices = Depends()) -> dict[str, str]:
 
             result, err = GetAllServices(db_url=self.__config.db_url).get_all_services(
