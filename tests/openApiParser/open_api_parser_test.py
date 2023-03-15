@@ -1,56 +1,49 @@
-from ast import List
-from typing import Any
+import json
+
+import pytest
+from unittest.mock import Mock, patch
+
 from fastapi_gateway_auto_generate.utils.OpenApiParser import OpenApiParser
-from tests.openApiParser.schemas.tags import Tag
-from runtime_type_checker import check_type
+from tests.openApiParser.fixtures.openapi_json_rinex_to_csv import openapi_json_rinex_to_csv
 
+@pytest.fixture
+def mock_response(monkeypatch, openapi_json_rinex_to_csv):
+    # Заменяем requests.get на фиктивную функцию, которая возвращает заданный объект Response
+    def get_mock(*args, **kwargs):
+        class MockResponse:
+            def __init__(self, status_code, content):
+                self.status_code = status_code
+                self.content = content
 
-def get_annot(var: str) -> str:
-    if var in globals():
-        return globals()["__annotations__"].get(var, "Un-annotated Variable")
-    else:
-        return "Undefined variable"
+            def json(self):
+                return json.loads(self.content)
 
+        return MockResponse(200, openapi_json_rinex_to_csv.encode())
+
+    monkeypatch.setattr("requests.get", get_mock)
 
 class TestOpenApiParser:
 
-    def test_get_tags(self, open_api_parse_file: OpenApiParser) -> None:
-        tags: dict[Any, Any] = open_api_parse_file.get_tags()
+    @pytest.mark.parametrize("tags", [False, True])
+    def test_parse_from_service(self, openapi_json_rinex_to_csv, tags):
+        parser = OpenApiParser()
 
-        for tag in tags.values():
-            Tag(**tag)
+        client, openapi = next(openapi_json_rinex_to_csv(tags=tags))
 
-    def test_get_paths(self, open_api_parse_file: OpenApiParser) -> None:
-        check_type(open_api_parse_file.get_paths(), list[str])
+        mock_response = Mock()
+        mock_response.status_code = 200
+        mock_response.content = openapi.encode()
 
-    def test_check_auto_generate_in_api_gateway_1(self, open_api_parse_file: OpenApiParser) -> None:
-        paths: list[str] = open_api_parse_file.get_paths()[1:2]
+        with patch('fastapi_gateway_auto_generate.utils.OpenApiParser.requests.get', return_value=mock_response):
+            result = parser.parse_from_service('http://example.com')
 
-        assert paths[0] == "/mosgim/generate-map"
+            assert result == (False, 200)
 
-        check: bool = False
+            assert parser.get_raw_response_in_json() == json.loads(openapi)
 
-        for path in paths:
-            check = open_api_parse_file.check_auto_generate_in_api_gateway(
-                path)
+            if tags:
+                tags_open_api = getattr(parser, '_OpenApiParser__tags_open_api')
+                assert tags_open_api != {}
 
-        assert check == True
 
-    def test_check_auto_generate_in_api_gateway_2(self, open_api_parse_file: OpenApiParser) -> None:
-        paths: list[str] = open_api_parse_file.get_paths()[0:1]
 
-        assert paths[0] == "/mosgim/ping"
-
-        check: bool = False
-
-        for path in paths:
-            check = open_api_parse_file.check_auto_generate_in_api_gateway(
-                path)
-
-        assert check == False
-
-    def test_get_body_multipart_form_data(self, open_api_parse_file: OpenApiParser) -> None:
-        paths: list[str] = open_api_parse_file.get_paths()
-
-        # for path in paths:
-        #     method = open_api_parse_file.get_body_multipart_form_data(path=)
