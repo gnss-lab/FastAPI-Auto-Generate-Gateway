@@ -69,7 +69,7 @@ class BuildRouteModelsUsecase:
 
                     for path in self.__open_api_parser.get_paths():
 
-                        if self.__open_api_parser.check_auto_generate_in_api_gateway(path=path):
+                        if self.__open_api_parser.auto_generate_enabled(path=path):
 
                             UrlService(db_url=config.db_url).set_url_service(
                                 id_service=service["id"],
