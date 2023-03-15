@@ -14,6 +14,7 @@ from requests import Response
 
 TAG_AUTO_GENERATE = "x-auto-generate-in-api-gateway"
 TAG_ENABLE_AUTH = "x-enable-auth-in-api-gateway"
+TAG_LARGE_FILE = "x-large-file"
 
 class OpenApiParser:
     def __init__(self):
@@ -162,7 +163,22 @@ class OpenApiParser:
 
         return names, requireds, is_cookie
 
-    def check_auto_generate_in_api_gateway(self, path: str) -> bool:
+    def check_api_gateway_tags(self, path: str, tag_key: str) -> bool:
+        """
+        Check if a specific tag is enabled for a given path in the API Gateway.
+
+        Parameters
+        ----------
+        path : str
+            The path in the API Gateway to check for the tag.
+        tag_key : str
+            The tag key to check for.
+
+        Returns
+        -------
+        bool
+            True if the tag is enabled for the path, False otherwise.
+        """
 
         tags_path: list[str] = self.get_path_tags(path=path)
 
@@ -172,33 +188,23 @@ class OpenApiParser:
                     # logger.warning(f"There is no such tag: {tag}")
                     continue
 
-                if not self.__tags_open_api.get(tag).get(TAG_AUTO_GENERATE):
-                    return True
-                else:
-                    # TODO #2: Добавить проверку на тип bool
-
-                    return self.__tags_open_api.get(tag).get(TAG_AUTO_GENERATE)
-
-        return True
-
-    def check_enable_auth_in_api_gateway(self, path: str) -> bool:
-
-        tags_path: list[str] = self.get_path_tags(path=path)
-
-        if tags_path:
-            for tag in tags_path:
-                if not self.__tags_open_api.get(tag):
-                    # logger.warning(f"There is no such tag: {tag}")
-                    continue
-
-                if not self.__tags_open_api.get(tag).get(TAG_ENABLE_AUTH):
+                if not self.__tags_open_api.get(tag).get(tag_key):
                     return False
                 else:
                     # TODO #2: Добавить проверку на тип bool
-
-                    return self.__tags_open_api.get(tag).get(TAG_ENABLE_AUTH)
+                    return self.__tags_open_api.get(tag).get(tag_key)
 
         return False
+
+    def auto_generate_enabled(self, path: str) -> bool:
+        return self.check_api_gateway_tags(path=path, tag_key=TAG_AUTO_GENERATE)
+
+    def auth_enabled(self, path: str) -> bool:
+        return self.check_api_gateway_tags(path=path, tag_key=TAG_ENABLE_AUTH)
+
+    def large_file_enabled(self, path: str) -> bool:
+        return self.check_api_gateway_tags(path=path, tag_key=TAG_LARGE_FILE)
+
 
     def get_raw_response_in_json(self) -> dict[Any, Any]:
         return self.__response_json
