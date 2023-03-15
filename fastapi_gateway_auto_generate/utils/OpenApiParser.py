@@ -57,12 +57,6 @@ class OpenApiParser:
             return False, response.status_code
         except requests.exceptions.RequestException:
             return True, -1
-
-    def parse_from_file(self, file_path: str) -> None:
-        with open(file_path) as json_file:
-            self.__response_json = json.load(json_file)
-            self.__tags_open_api = self.get_tags()
-
     def get_tags(self) -> dict[Any, Any]:
 
         if self.__response_json.get("tags") is None:
