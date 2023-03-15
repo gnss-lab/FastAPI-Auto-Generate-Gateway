@@ -22,7 +22,8 @@ class AddService():
             service: Services = Services(
                 domain=str(add_service_model.domain),
                 port=add_service_model.port,
-                name=add_service_model.name_service
+                name=add_service_model.name_service,
+                allow_large_files=add_service_model.allow_large_files
             )
 
             self.__session.add(service)

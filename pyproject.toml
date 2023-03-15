@@ -23,6 +23,8 @@ fastapi-gateway = {git = "https://github.com/xitowzys-ISZF/fastapi-gateway"}
 python-multipart = "^0.0.5"
 shortuuid = "^1.0.11"
 rich = "^13.3.2"
+celery = "^5.2.7"
+kombu = "^5.2.4"
 
 
 [tool.poetry.group.dev.dependencies]

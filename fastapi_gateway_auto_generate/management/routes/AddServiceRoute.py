@@ -1,5 +1,5 @@
 from fastapi_gateway_auto_generate.database import AddService as add_service_database
-from fastapi import APIRouter, Depends
+from fastapi import APIRouter, Depends, HTTPException
 from ..models import AddService
 
 from loguru import logger
@@ -20,6 +20,12 @@ class AddServiceRoute:
         @self.route.post("/service", tags=["Service management"],
                          dependencies=self.__dependencies)
         async def add_service(add_service: AddService) -> bool:
+
+            # print(self.__config.celery_app)
+            #
+            # if self.__config.celery_app is None:
+            #     raise HTTPException(status_code=404, detail="Celery app was not specified")
+
             result = add_service_database(db_url=self.__config.db_url).add_service(
                 add_service_model=add_service)
             return result

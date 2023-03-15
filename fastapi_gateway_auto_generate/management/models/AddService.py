@@ -8,6 +8,7 @@ class AddService(BaseModel):
     domain: str
     name_service: str
     port: int = 80
+    allow_large_files: bool = False
 
     @validator('domain')
     def domain_validation(cls, v):

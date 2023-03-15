@@ -1,5 +1,7 @@
 import os
 from typing import Optional, Callable, Type, TypeVar
+
+from celery import Celery
 from fastapi import FastAPI
 from fastapi_gateway_auto_generate.exceptions import ConfigException
 from loguru import logger
@@ -22,8 +24,8 @@ class Config:
             service_management: bool = True,
             db_path: Optional[str] = None,
             jwt: Optional[Type[T]] = None,
-            allow_large_files: bool = False,
-            broker_url: str = ""
+            celery_app: Optional[Celery] = None,
+
     ) -> None:
         self.fast_api_app: FastAPI = fast_api_app
         self.service_management: bool = service_management
@@ -33,13 +35,17 @@ class Config:
         self.db_path = "./database.db" if db_path is None else db_path
         self.db_url = f"sqlite:///{os.path.abspath(self.db_path)}"
 
-        try:
-            if not (allow_large_files and broker_url):
-                raise ConfigException("Broker URL was not specified")
-        except Exception as e:
-            RichTraceback().console_call_exception()
+        self.celery_app: Optional[Celery] = celery_app
+        # try:
+        #     # if not (allow_large_files and broker_url):
+        #     #     raise ConfigException("Broker URL was not specified")
+        #     if not (allow_large_files and celery_app):
+        #         raise ConfigException("Celery app was not specified")
+        #
+        # except Exception as e:
+        #     RichTraceback().console_call_exception()
 
-        self.allow_large_files: bool = allow_large_files
+        # self.allow_large_files: bool = allow_large_files
 
         self.__validation_parameters()
 

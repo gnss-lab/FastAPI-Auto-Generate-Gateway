@@ -1,0 +1,2 @@
+class BuildCeleryTaskUsecase:
+    pass

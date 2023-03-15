@@ -15,9 +15,14 @@ class Services(Base):
     port: Column = Column(INTEGER, nullable=False)
     name: Column = Column(TEXT, nullable=False, unique=True)
     delete: Column = Column(BOOLEAN, nullable=False, default=False)
+    allow_large_files: Column = Column(BOOLEAN, nullable=False, default=False)
 
     urls: Any = relationship(
         "UrlServices", cascade='all,delete', backref=backref("services"))
+
+    queue_list: Any = relationship(
+        "QueueList", cascade='all,delete', backref=backref("services"))
+
 
     status: Any = relationship(
         "StatusServices", cascade='all,delete', backref=backref("services"))
