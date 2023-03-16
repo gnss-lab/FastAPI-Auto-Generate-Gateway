@@ -69,7 +69,7 @@ class BuildRouteModelsUsecase:
 
                     for path in self.__open_api_parser.get_paths():
 
-                        if self.__open_api_parser.check_auto_generate_in_api_gateway(path=path):
+                        if self.__open_api_parser.auto_generate_enabled(path=path):
 
                             UrlService(db_url=config.db_url).set_url_service(
                                 id_service=service["id"],
@@ -83,7 +83,7 @@ class BuildRouteModelsUsecase:
 
                             logger.debug(self.__open_api_parser.get_paths())
 
-                            if not (config.jwt is None) and self.__open_api_parser.check_enable_auth_in_api_gateway(
+                            if not (config.jwt is None) and self.__open_api_parser.auth_enabled(
                                     path=path):
                                 dependencies.append(
                                     Depends(config.jwt(service["name"], path, path_method)))

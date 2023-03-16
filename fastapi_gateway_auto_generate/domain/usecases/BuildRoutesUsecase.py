@@ -1,17 +1,19 @@
-import importlib
 from types import FunctionType
 from typing import Any, Tuple
 
+import fastapi
+import importlib
+from typing import Any
+from loguru import logger
 from fastapi import FastAPI
 from fastapi_gateway import route
-from loguru import logger
+import fastapi_gateway_auto_generate
 from makefun import create_function
 
 from .DeleteTmpModelsFilesUsecase import DeleteTmpModelsFilesUsecase
 from .UpdateOpenApiSchemaUsecase import UpdateOpenApiSchemaUsecase
 from ..models import RouteModel
 from ... import Config
-
 
 class BuildRoutesUsecase:
     def __init__(self, config: Config) -> None:
@@ -52,8 +54,8 @@ class BuildRoutesUsecase:
         return _import
 
     def __factory_func(self, route_model: RouteModel, _import: str) -> Tuple[FunctionType, list[str]]:
-
-        func_impl = None
+        #
+        # func_impl = None
 
         def func_impl(*args, **kwargs):
             pass
