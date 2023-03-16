@@ -1,3 +1,4 @@
+from fastapi_gateway_auto_generate.database import SetMarkDeleteService as set_mark_delete_service_database
 from fastapi import APIRouter, Depends
 from ..models import DeleteService
 from ...Config import Config
@@ -10,4 +11,6 @@ class DeleteServiceRoute:
 
         @self.route.delete("/service", tags=["Service management"])
         async def delete_service(delete_service: DeleteService = Depends()) -> dict[str, str]:
-            return {"data": "Hello World"}
+            result = set_mark_delete_service_database(db_url=self.__config.db_url).set_mark_delete_service(
+                delete_service_model=delete_service)
+            return result

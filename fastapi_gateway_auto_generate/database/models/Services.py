@@ -1,7 +1,7 @@
 from dataclasses import dataclass
 from ..SQLAlchemy.declarative_base import Base
 
-from sqlalchemy import Column, INTEGER, TEXT
+from sqlalchemy import Column, INTEGER, TEXT, BOOLEAN
 from sqlalchemy.orm import relationship, backref
 from typing import Any
 from loguru import logger
@@ -14,12 +14,13 @@ class Services(Base):
     domain: Column = Column(TEXT, nullable=False)
     port: Column = Column(INTEGER, nullable=False)
     name: Column = Column(TEXT, nullable=False, unique=True)
+    delete: Column = Column(BOOLEAN, nullable=False, default=False)
 
     urls: Any = relationship(
-        "UrlServices", backref=backref("services"))
+        "UrlServices", cascade='all,delete', backref=backref("services"))
 
     status: Any = relationship(
-        "StatusServices", backref=backref("services"))
+        "StatusServices", cascade='all,delete', backref=backref("services"))
 
     def obj_to_dict(self) -> dict[str, Column]:
 
@@ -40,5 +41,6 @@ class Services(Base):
             "port": self.port,
             "name": self.name,
             "urls": urls,
-            "status-code": status_code
+            "status-code": status_code,
+            "delete": self.delete
         }

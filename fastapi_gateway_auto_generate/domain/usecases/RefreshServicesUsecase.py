@@ -1,9 +1,10 @@
-from fastapi_gateway_auto_generate.database import StatusService, UrlService, GetAllServices
+from fastapi_gateway_auto_generate.database import StatusService, UrlService, GetAllServices, DeleteService
 from . import *
 from ...Config import Config
 from loguru import logger
 from ..models import RouteModel
 from fastapi_gateway_auto_generate.management.models import GetAllInfoServices
+from fastapi_gateway_auto_generate.management.models import DeleteService as delete_service_model
 
 
 class RefreshServicesUsecase:
@@ -14,6 +15,7 @@ class RefreshServicesUsecase:
 
         get_all_info_services_model: GetAllInfoServices = GetAllInfoServices(
             page=1)
+
 
         services, err = GetAllServices(db_url=config.db_url).get_all_services(
             get_all_info_services_model=get_all_info_services_model)
@@ -32,6 +34,12 @@ class RefreshServicesUsecase:
                         if r.path == f"/{service['name']}{url}":
                             del config.fast_api_app.routes[i]
                             logger.debug(r)
+
+                if service['delete']:
+                    # print(service['id'])
+                    DeleteService(db_url=config.db_url).delete_service(
+                        delete_service_model=delete_service_model(id_service=service['id'])
+                    )
 
         services_result = BuildRouteModelsUsecase().execute(
             config=config

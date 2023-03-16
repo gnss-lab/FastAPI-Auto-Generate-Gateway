@@ -168,3 +168,4 @@ test.py
 *.ipynb
 
 allureress/
+main.py
