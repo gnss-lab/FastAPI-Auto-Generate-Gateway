@@ -25,7 +25,7 @@ class Generator:
             config=self.__config
         )
 
-        BuildRoutesUsecase().execute(
+        BuildRoutesUsecase(config=self.__config).execute(
             services_result=services_result,
             fast_api_app=self.__config.fast_api_app
         )
