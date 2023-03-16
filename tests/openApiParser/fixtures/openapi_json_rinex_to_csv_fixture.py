@@ -3,11 +3,10 @@ import pytest
 from ..microservices import rinex_to_csv, rinex_to_csv_with_tags
 from fastapi.testclient import TestClient
 
+
 @pytest.fixture(scope='module')
-def openapi_json_rinex_to_csv():
-
-    def _openapi_json_rinex_to_csv(tags=False):
-
+def openapi_json_rinex_to_csv_fixture():
+    def _openapi_json_rinex_to_csv_fixture(tags=False):
         app = rinex_to_csv.app
 
         if tags:
@@ -22,4 +21,4 @@ def openapi_json_rinex_to_csv():
 
         yield client, openapi
 
-    return _openapi_json_rinex_to_csv
+    return _openapi_json_rinex_to_csv_fixture

@@ -16,6 +16,11 @@ tags_metadata = [
         },
         "x-auto-generate-in-api-gateway": True,
     },
+    {
+        "name": "default2",
+        "x-auto-generate-in-api-gateway": False,
+        "x-enable-auth-in-api-gateway": False,
+    },
 ]
 
 
@@ -45,19 +50,19 @@ async def upload_rinex(response: Response,
     pass
 
 
-@app.post("/rinex_to_csv/upload_nav")
+@app.post("/rinex_to_csv/upload_nav", tags=["default"])
 async def upload_nav(response: Response,
                      rinex: UploadFile = File(description="Load NAV file"),
                      rinex_to_csv_processing_id: str | None = Cookie(default=None)
                      ):
     pass
 
-@app.post("/rinex_to_csv/run")
+@app.post("/rinex_to_csv/run", tags=["default2"])
 async def run_processing(params: ConversionParams,
                          rinex_to_csv_processing_id: str | None = Cookie(default=None)):
     pass
 
 
-@app.get("/rinex_to_csv/get_result")
+@app.get("/rinex_to_csv/get_result", tags=["default"])
 async def get_result(rinex_to_csv_processing_id: str | None = Cookie(default=None)):
     pass
