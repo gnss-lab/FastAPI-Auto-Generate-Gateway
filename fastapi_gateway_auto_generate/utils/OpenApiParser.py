@@ -28,7 +28,7 @@ class OpenApiParser:
         self.__response_json: dict[Any, Any] = {}
         self.__tags_open_api: dict[Any, Any] = {}
 
-    def parse_from_service(self, url: str) -> tuple[bool, int]:
+    def parse_from_service(self, url: str) -> int:
         """Get the microservice REST API specification
 
         Parameters
@@ -38,25 +38,20 @@ class OpenApiParser:
 
         Returns
         -------
-        bytes
-            Open API json
+        int
+            Status code
         """
-
         try:
-            response: Response = requests.get(
-                url=f"{url}/openapi.json",
-                timeout=5
-            )
+            response: Response = requests.get(f"{url}/openapi.json", timeout=5)
+            self.__response_json = json.loads(response.content)
+            self.__tags_open_api = self.get_tags()
 
-            if response.status_code == 200:
-                self.__response_json = json.loads(response.content)
-                self.__tags_open_api = self.get_tags()
-            else:
-                return True, response.status_code
-
-            return False, response.status_code
+            return response.status_code
         except requests.exceptions.RequestException:
-            return True, -1
+            return -1
+        except json.JSONDecodeError:
+            return -2
+
     def get_tags(self) -> dict[Any, Any]:
 
         if self.__response_json.get("tags") is None:

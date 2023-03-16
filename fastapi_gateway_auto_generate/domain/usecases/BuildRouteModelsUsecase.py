@@ -54,7 +54,7 @@ class BuildRouteModelsUsecase:
 
                     logger.debug(url)
 
-                    err, status_code = self.__open_api_parser.parse_from_service(
+                    status_code = self.__open_api_parser.parse_from_service(
                         url=url)
 
                     logger.debug(status_code)
@@ -64,7 +64,7 @@ class BuildRouteModelsUsecase:
                         status_code=status_code
                     )
 
-                    if err:
+                    if status_code != 200:
                         continue
 
                     for path in self.__open_api_parser.get_paths():
