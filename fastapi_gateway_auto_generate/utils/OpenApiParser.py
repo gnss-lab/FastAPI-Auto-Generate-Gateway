@@ -15,6 +15,7 @@ from requests import Response
 TAG_AUTO_GENERATE = "x-auto-generate-in-api-gateway"
 TAG_ENABLE_AUTH = "x-enable-auth-in-api-gateway"
 TAG_LARGE_FILE = "x-large-file"
+TAG_LARGE_FILE_QUEUES = "x-large-file-queues"
 
 class OpenApiParser:
     def __init__(self):
@@ -163,7 +164,7 @@ class OpenApiParser:
 
         return names, requireds, is_cookie
 
-    def check_api_gateway_tags(self, path: str, tag_key: str) -> bool:
+    def check_api_gateway_tags(self, path: str, tag_key: str) -> Any:
         """
         Check if a specific tag is enabled for a given path in the API Gateway.
 
@@ -205,6 +206,8 @@ class OpenApiParser:
     def large_file_enabled(self, path: str) -> bool:
         return self.check_api_gateway_tags(path=path, tag_key=TAG_LARGE_FILE)
 
+    def get_large_file_queues_tag(self, path: str) -> list:
+        return self.check_api_gateway_tags(path=path, tag_key=TAG_LARGE_FILE_QUEUES)
 
     def get_raw_response_in_json(self) -> dict[Any, Any]:
         return self.__response_json

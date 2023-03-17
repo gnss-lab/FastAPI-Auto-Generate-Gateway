@@ -96,7 +96,8 @@ class BuildRouteModelsUsecase:
                                 service_path=path,
                                 tags=[service["name"]],
                                 dependencies=dependencies,
-                                allow_large_file=self.__open_api_parser.large_file_enabled(path=path)
+                                allow_large_file=self.__open_api_parser.large_file_enabled(path=path),
+                                broker_queues=self.__open_api_parser.get_large_file_queues_tag(path=path)
                             )
 
                             route_model.query_params, route_model.query_required, route_model.query_is_cookie = self.__open_api_parser.get_queries_param(
