@@ -19,6 +19,7 @@ class RouteModel():
     # status_code: Optional[int] = None
     tags: Optional[List[str]] = None
     dependencies: str = None,
+    allow_large_file: bool = False,
     # summary: Optional[str] = None
     # description: Optional[str] = None
     # response_description: str = "Successful Response"

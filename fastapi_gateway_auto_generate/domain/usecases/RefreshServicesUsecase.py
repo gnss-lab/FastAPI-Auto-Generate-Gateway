@@ -45,7 +45,7 @@ class RefreshServicesUsecase:
             config=config
         )
 
-        BuildRoutesUsecase().execute(
+        BuildRoutesUsecase(config=config).execute(
             services_result=services_result,
             fast_api_app=config.fast_api_app
         )

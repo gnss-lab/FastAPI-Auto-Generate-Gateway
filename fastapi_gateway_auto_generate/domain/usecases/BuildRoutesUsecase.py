@@ -10,6 +10,7 @@ from fastapi_gateway import route
 import fastapi_gateway_auto_generate
 from makefun import create_function
 
+from .BuildCeleryTaskUsecase import BuildCeleryTaskUsecase
 from .DeleteTmpModelsFilesUsecase import DeleteTmpModelsFilesUsecase
 from .UpdateOpenApiSchemaUsecase import UpdateOpenApiSchemaUsecase
 from ..models import RouteModel
@@ -25,23 +26,30 @@ class BuildRoutesUsecase:
 
         for service_result in services_result:
             for route_model in service_result["route_models"]:
+                route_model: RouteModel
+
                 _import: str = self.__import_model(
                     service_model_name=service_result['models'])
 
-                func, body_list = self.__factory_func(
+                func_sig, body_list = self.__factory_func_sign(
                     route_model=route_model, _import=_import)
 
-                route(
-                    request_method=route_model.request_method,
-                    gateway_path=route_model.gateway_path,
-                    service_url=route_model.service_url,
-                    service_path=route_model.service_path,
-                    query_params=route_model.query_params,
-                    form_params=route_model.form_params,
-                    tags=route_model.tags,
-                    body_params=body_list,
-                    dependencies=route_model.dependencies,
-                )(f=func)
+                self.__build_func(func_sig, body_list, route_model)
+
+                # if (route_model.form_params is not None and route_model.allow_large_file):
+                #     BuildCeleryTaskUsecase.execute()
+
+                # route(
+                #     request_method=route_model.request_method,
+                #     gateway_path=route_model.gateway_path,
+                #     service_url=route_model.service_url,
+                #     service_path=route_model.service_path,
+                #     query_params=route_model.query_params,
+                #     form_params=route_model.form_params,
+                #     tags=route_model.tags,
+                #     body_params=body_list,
+                #     dependencies=route_model.dependencies,
+                # )(f=func)
 
         UpdateOpenApiSchemaUsecase().execute(fast_api_app=fast_api_app)
 
@@ -53,7 +61,31 @@ class BuildRoutesUsecase:
 
         return _import
 
-    def __factory_func(self, route_model: RouteModel, _import: str) -> Tuple[FunctionType, list[str]]:
+    def __build_func(self, func_sig, body_list, route_model: RouteModel):
+
+        def func_impl(*args, **kwargs):
+            pass
+
+        if (route_model.form_params is not None and route_model.allow_large_file):
+            # BuildCeleryTaskUsecase.execute()
+            BuildCeleryTaskUsecase(config=self.__config).execute(func_sig, self.__config.fast_api_app, route_model)
+            print("OK")
+        else:
+            func: FunctionType = create_function(func_sig, func_impl)
+
+            route(
+                request_method=route_model.request_method,
+                gateway_path=route_model.gateway_path,
+                service_url=route_model.service_url,
+                service_path=route_model.service_path,
+                query_params=route_model.query_params,
+                form_params=route_model.form_params,
+                tags=route_model.tags,
+                body_params=body_list,
+                dependencies=route_model.dependencies,
+            )(f=func)
+
+    def __factory_func_sign(self, route_model: RouteModel, _import: str) -> Tuple[str, list[str]]:
         #
         # func_impl = None
 
@@ -121,7 +153,7 @@ class BuildRoutesUsecase:
         func_sig += ")"
         logger.debug(func_sig)
 
-        # Create the function
-        func: FunctionType = create_function(func_sig, func_impl)
+        # # Create the function
+        # func: FunctionType = create_function(func_sig, func_impl)
 
-        return func, body_list
+        return func_sig, body_list

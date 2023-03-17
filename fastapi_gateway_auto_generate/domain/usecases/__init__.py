@@ -4,6 +4,7 @@ from .BuildRouteModelsUsecase import BuildRouteModelsUsecase
 from .BuildRoutesUsecase import BuildRoutesUsecase
 from .RefreshServicesUsecase import RefreshServicesUsecase
 from .DeleteTmpModelsFilesUsecase import DeleteTmpModelsFilesUsecase
+from .BuildCeleryTaskUsecase import BuildCeleryTaskUsecase
 
 __all__: list[str] = [
     "UpdateOpenApiSchemaUsecase",
@@ -11,5 +12,6 @@ __all__: list[str] = [
     "BuildRouteModelsUsecase",
     "BuildRoutesUsecase",
     "RefreshServicesUsecase",
-    "DeleteTmpModelsFilesUsecase"
+    "DeleteTmpModelsFilesUsecase",
+    "BuildCeleryTaskUsecase"
 ]
