@@ -1,20 +1,11 @@
-
-# DATA_TYPES = {
-#     "integer": "int",
-#     "number": "float",
-#     "string": "str",
-#     "boolean": "bool",
-
-# }
-
 import json
+
 import requests
 from typing import Any
 from requests import Response
 
-TAG_AUTO_GENERATE = "x-auto-generate-in-api-gateway"
-TAG_ENABLE_AUTH = "x-enable-auth-in-api-gateway"
-TAG_LARGE_FILE = "x-large-file"
+from fastapi_gateway_auto_generate.utils.APITags import APITags
+
 
 class OpenApiParser:
     def __init__(self):
@@ -133,7 +124,8 @@ class OpenApiParser:
 
         return path
 
-    def get_queries_param(self, path: str, method: str) -> tuple[None, None, None] | tuple[list[str], list[bool], list[bool]]:
+    def get_queries_param(self, path: str, method: str) -> tuple[None, None, None] | tuple[
+        list[str], list[bool], list[bool]]:
 
         queries: list[dict[Any, Any]] = self.__response_json["paths"][path][method].get(
             "parameters")
@@ -186,14 +178,13 @@ class OpenApiParser:
         return False
 
     def auto_generate_enabled(self, path: str) -> bool:
-        return self.check_api_gateway_tags(path=path, tag_key=TAG_AUTO_GENERATE)
+        return self.check_api_gateway_tags(path=path, tag_key=APITags.AUTO_GENERATE)
 
     def auth_enabled(self, path: str) -> bool:
-        return self.check_api_gateway_tags(path=path, tag_key=TAG_ENABLE_AUTH)
+        return self.check_api_gateway_tags(path=path, tag_key=APITags.ENABLE_AUTH)
 
     def large_file_enabled(self, path: str) -> bool:
-        return self.check_api_gateway_tags(path=path, tag_key=TAG_LARGE_FILE)
-
+        return self.check_api_gateway_tags(path=path, tag_key=APITags.LARGE_FILE)
 
     def get_raw_response_in_json(self) -> dict[Any, Any]:
         return self.__response_json

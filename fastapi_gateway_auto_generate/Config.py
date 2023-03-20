@@ -33,11 +33,11 @@ class Config:
         self.db_path = "./database.db" if db_path is None else db_path
         self.db_url = f"sqlite:///{os.path.abspath(self.db_path)}"
 
-        try:
-            if not (allow_large_files and broker_url):
-                raise ConfigException("Broker URL was not specified")
-        except Exception as e:
-            RichTraceback().console_call_exception()
+        # try:
+        #     if not (allow_large_files and broker_url):
+        #         raise ConfigException("Broker URL was not specified")
+        # except Exception as e:
+        #     RichTraceback().console_call_exception()
 
         self.allow_large_files: bool = allow_large_files
 
