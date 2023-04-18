@@ -17,10 +17,20 @@ from fastapi_gateway_auto_generate.database import GetAllServices, StatusService
 
 
 class BuildRouteModelsUsecase:
+    """The use case is responsible for creating an instance of the 'RouteModel' model and Pydantic models.
+    """
+
     def __init__(self) -> None:
         self.__open_api_parser: OpenApiParser = OpenApiParser()
 
     def execute(self, config: Config) -> list[dict[str, Any]]:
+        """The class responsible for adding automatic service connections to the FastAPI object.
+        Args:
+            config (Config): The Config object with its configuration.
+
+        Returns:
+            services_result (list[dict[str, Any]]): The product of `a` and `b`.
+        """
 
         routes_model: list[RouteModel] = []
 
@@ -126,6 +136,12 @@ class BuildRouteModelsUsecase:
         return services_result
 
     def __generate_models(self):
+        """Pydantic model generator from openapi.json."
+
+        Returns:
+            _uuid (str): Unique identifier as the file name.
+            classes (list[str]): List of class names.
+        """
 
         shortuuid.set_alphabet(
             "ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz")
