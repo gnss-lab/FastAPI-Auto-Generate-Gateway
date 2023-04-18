@@ -26,6 +26,16 @@ nav:
     - FAQ: FAQ.md
     - Code Reference:
         - Main: CodeReference/index.md
+        - Domain:
+            - Models:
+                - RouteModel: CodeReference/domain/models/RouteModel.md
+            - Usecases:
+                - BuildRouteModelsUsecase: CodeReference/domain/usecases/BuildRouteModelsUsecase.md
+                - BuildRoutesUsecase: CodeReference/domain/usecases/BuildRoutesUsecase.md
+                - DeleteTmpModelsFilesUsecase: CodeReference/domain/usecases/DeleteTmpModelsFilesUsecase.md
+                - InitDatabaseUsecase: CodeReference/domain/usecases/InitDatabaseUsecase.md
+                - RefreshServicesUsecase: CodeReference/domain/usecases/RefreshServicesUsecase.md
+                - UpdateOpenApiSchemaUsecase: CodeReference/domain/usecases/UpdateOpenApiSchemaUsecase.md
 
 repo_name: fastapi-gateway-auto-generate
 repo_url: https://github.com/xitowzys-ISZF/FastAPI-auto-generate-gateway
