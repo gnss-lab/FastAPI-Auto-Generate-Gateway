@@ -5,6 +5,10 @@ from fastapi_gateway_auto_generate.domain.usecases import *
 
 
 class Generator:
+    """The class responsible for adding automatic service connections to the FastAPI object.
+    Args:
+        config (Config): The Config object with its configuration.
+    """
 
     def __init__(self, config: Config) -> None:
         self.__config = config
@@ -18,9 +22,14 @@ class Generator:
         self.build()
 
     def __init_management_urls(self):
+        """Service management initialization.
+        """
         Management(config=self.__config)
 
     def build(self) -> None:
+        """Adding services to the FastAPI object.
+        """
+
         services_result = BuildRouteModelsUsecase().execute(
             config=self.__config
         )

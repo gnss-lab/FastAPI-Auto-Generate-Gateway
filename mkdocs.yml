@@ -3,7 +3,7 @@ theme:
   name: "material"
   features:
     - content.code.annotate
-    - toc.integrate
+
     - navigation.tabs
   palette:
     - scheme: slate
@@ -24,6 +24,8 @@ nav:
         - API: Usage/service-management.md
         - Using as module: Usage/using-as-module.md
     - FAQ: FAQ.md
+    - Code Reference:
+        - Main: CodeReference/index.md
 
 repo_name: fastapi-gateway-auto-generate
 repo_url: https://github.com/xitowzys-ISZF/FastAPI-auto-generate-gateway
@@ -38,6 +40,16 @@ extra_css:
 
 plugins:
   - search
+  - mkdocstrings:
+      handlers:
+        python:
+#          paths: [ fastapi_gateway_auto_generate ]
+          selection:
+            docstring_style: google
+            docstring_options:
+              ignore_init_summary: yes
+          rendering:
+            merge_init_into_class: yes
 
 markdown_extensions:
   - abbr

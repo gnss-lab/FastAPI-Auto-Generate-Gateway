@@ -30,7 +30,8 @@ uvicorn = "^0.20.0"
 autopep8 = "^2.0.0"
 mkdocs-material = "^8.5.11"
 termynal = "^0.2.0"
-mkdocstrings = "^0.19.0"
+#mkdocstrings = "^0.21.2"
+mkdocstrings = {extras = ["python"], version = "^0.21.2"}
 
 
 [tool.poetry.group.tests.dependencies]

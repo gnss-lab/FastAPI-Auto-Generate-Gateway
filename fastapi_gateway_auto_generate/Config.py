@@ -10,17 +10,20 @@ T = TypeVar('T')
 
 
 class Config:
-    """The configuration class is intended for configuring auto-generat ion of services for the API Gateway.
+    """The Configuration class is intended for configuring the auto-generation of services for the API Gateway.
     Args:
         fast_api_app (FastAPI): Pointer to your FastAPI application.
         service_management (bool): Enable the built-in service manager.
+        db_path (str): The path to the SQLite database.
+        jwt (Optional[Type[T]]): The class responsible for protecting the routers.
+        celery_app (Optional[Celery]): The Celery object responsible for transferring large files.
     """
 
     def __init__(
             self,
             fast_api_app: FastAPI,
             service_management: bool = True,
-            db_path: Optional[str] = None,
+            db_path: str = "./database.db",
             jwt: Optional[Type[T]] = None,
             allow_large_files: bool = False,
             broker_url: str = ""
@@ -30,7 +33,12 @@ class Config:
         self.jwt = jwt
         self.service_name = "API-Gateway"
 
-        self.db_path = "./database.db" if db_path is None else db_path
+        if db_path != "./database.db":
+            self.db_path = db_path
+        else:
+            self.db_path = "./database.db"
+
+        # self.db_path = "./database.db" if db_path is None else db_path
         self.db_url = f"sqlite:///{os.path.abspath(self.db_path)}"
 
         # try:
@@ -41,9 +49,9 @@ class Config:
 
         self.allow_large_files: bool = allow_large_files
 
-        self.__validation_parameters()
+        # self.__validation_parameters()
 
-    def __validation_parameters(self) -> None:
-        """_summary_
-        """
-        logger.debug("Validation config parameters")
+    # def __validation_parameters(self) -> None:
+    #     """_summary_
+    #     """
+    #     logger.debug("Validation config parameters")
