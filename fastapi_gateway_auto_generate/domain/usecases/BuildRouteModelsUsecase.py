@@ -24,12 +24,12 @@ class BuildRouteModelsUsecase:
         self.__open_api_parser: OpenApiParser = OpenApiParser()
 
     def execute(self, config: Config) -> list[dict[str, Any]]:
-        """The class responsible for adding automatic service connections to the FastAPI object.
+        """Launch execution of usecase
         Args:
             config (Config): The Config object with its configuration.
 
         Returns:
-            services_result (list[dict[str, Any]]): The product of `a` and `b`.
+            services_result (list[dict[str, Any]]): Return a list of services, each of which stores a list of RouteModel,Pydantic models, and the service URL.
         """
 
         routes_model: list[RouteModel] = []

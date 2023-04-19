@@ -2,7 +2,7 @@
 
 The library has built-in urls for managing services. Service management is enabled by default. If desired, you can disable the built-in service management system if you do not need it. There is a `service_management` parameter for this.
 
-## URLS
+## URLs
 
 
 
@@ -16,18 +16,28 @@ The library has built-in urls for managing services. Service management is enabl
 
 Adds a service to the database.
 
-#### Parameters
+#### Body
 
-1. `ip` - IP address of the service.
-2. `port` - The service port.
-   
-    !!! info
-        By default 80
+```json
+{
+  "domain": "string",
+  "name_service": "string",
+  "port": 80
+}
+```
 
-3. `name_service` - The name of the service.
+- domain - The domain of your service. **It is mandatory** to specify the protocol. For example, `http://127.0.0.1`
+- name_service - The name of the service. It must be unique.
+After specifying the name, the URL will look like this: `https://127.0.0.1:80/{name_service}/...`
+- port - The port of the service.
 
-    !!! note
-        It is needed to avoid duplication of paths if several services have the same path.<br>Example: `https://127.0.0.1:5000/{name_service}/{path_service}`
+!!! failure
+    You cannot specify the port in the domain. For example: `http://127.0.0.1:8080`<br>
+    You need to specify them separately.
+
+#### Response
+
+True if the addition was successful, otherwise False.
 
 #### Example (*Python requests*)
 

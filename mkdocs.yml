@@ -23,6 +23,10 @@ nav:
       - Service management:
         - API: Usage/service-management.md
         - Using as module: Usage/using-as-module.md
+      - File Manipulation:
+          HTTP/HTTPS: Usage/FileManipulation/http-https.md
+          Broker: index.md
+
     - FAQ: FAQ.md
     - Code Reference:
         - Main: CodeReference/index.md
