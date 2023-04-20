@@ -17,7 +17,8 @@ theme:
         icon: material/toggle-switch
         name: Switch to Light Mode
 nav:
-    - Home: index.md
+    - Home:
+      - Overview: index.md
     - Usage:
       - Getting started: Usage/getting-started.md
       - Service management:
@@ -25,8 +26,7 @@ nav:
         - Using as module: Usage/using-as-module.md
       - File Manipulation:
           HTTP/HTTPS: Usage/FileManipulation/http-https.md
-          Broker: index.md
-
+#          Broker: index.md
     - FAQ: FAQ.md
     - Code Reference:
         - Main: CodeReference/index.md

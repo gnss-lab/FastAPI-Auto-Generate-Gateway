@@ -1,5 +1,15 @@
 # File retrieval from the services
 
+## Service
+
+In this example, a service implemented through FastAPI will be used. 
+If you have a service implemented in another programming language, 
+the main requirement is to transfer the file in binary format with the header (application/octet-stream). 
+To pass a file through FastAPI, you can use FileResponse 
+(more details can be found in the official documentation: https://fastapi.tiangolo.com/advanced/custom-response/#fileresponse)."
+
+## API-Gateway
+
 !!! bug
     It is not possible to download a file through Swagger, as when sending a request, 
     the API-Gateway starts streaming byte streams, which can cause the page or the entire browser to crash.

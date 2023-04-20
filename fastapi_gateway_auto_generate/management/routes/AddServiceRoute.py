@@ -9,6 +9,14 @@ add_service_router: APIRouter = APIRouter()
 
 
 class AddServiceRoute:
+    """Router for adding a service
+        Args:
+            config (Config): The Config object with its configuration.
+
+        Returns:
+            result (bool): True if the addition was successful, otherwise False.
+    """
+
     def __init__(self, config: Config) -> None:
         self.__config: Config = config
         self.route: APIRouter = APIRouter()
