@@ -21,11 +21,13 @@ nav:
       - Overview: index.md
     - Usage:
       - Getting started: Usage/getting-started.md
+      - Tags for service: Usage/tags_for_service.md
       - Service management:
         - API: Usage/service-management.md
         - Using as module: Usage/using-as-module.md
       - File Manipulation:
           HTTP/HTTPS: Usage/FileManipulation/http-https.md
+      - Security: Usage/security.md
 #          Broker: index.md
     - FAQ: FAQ.md
     - Code Reference:

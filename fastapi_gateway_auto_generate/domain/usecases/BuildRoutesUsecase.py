@@ -16,7 +16,7 @@ import fastapi_gateway_auto_generate
 
 
 class BuildRoutesUsecase:
-    """Use case responsible for adding services to the FastAPI object.
+    """The usecase responsible for adding services to the FastAPI object.
     """
 
     def __init__(self) -> None:

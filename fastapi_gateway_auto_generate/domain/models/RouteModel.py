@@ -4,7 +4,7 @@ from typing import List, Optional, Sequence, Dict, Union, Any, Type
 
 
 @dataclass
-class RouteModel():
+class RouteModel:
     """A data class for storing data about a microservice.
     Args:
         request_method (Any): Is a callable (like app.get, app.post and so on.)
@@ -29,11 +29,11 @@ class RouteModel():
     query_is_cookie: Optional[List[bool]] = None
     form_params: Optional[List[str]] = None
     body_params: Optional[List[str]] = None
+    tags: Optional[List[str]] = None
+    dependencies: Optional[str] = None
     # override_headers: bool = True
     # response_model: Optional[Type[Any]] = None
     # status_code: Optional[int] = None
-    tags: Optional[List[str]] = None
-    dependencies: Optional[str] = None,
     # summary: Optional[str] = None
     # description: Optional[str] = None
     # response_description: str = "Successful Response"

@@ -1,6 +1,6 @@
 # Getting started
 
-## Additional metadata for tags
+## 1. Additional metadata for tags
 
 In order for the url from the microservice to be transferred to the API Gateway, 
 you need to add additional metadata for your tags. In our case, this is `x-auto-generate-in-api-gateway`. 
@@ -97,10 +97,11 @@ Adds an additional tag `x-auto-generate-in-api-gateway` in order for it to be tr
 
 Now who has the tag `users` and `items` will be automatically transferred to the API Gateway.
 
-!!! question
-    If you suddenly change the tag for some reason, then you can do this when creating an object in the API Gateway
+[//]: # (!!! question)
 
-## Initializing an object in the API Gateway
+[//]: # (    If you suddenly change the tag for some reason, then you can do this when creating an object in the API Gateway)
+
+## 2. Initializing an object in the API Gateway
 
 ### Create Config object
 
@@ -117,33 +118,32 @@ config = Config(
 )
 ```
 
-- `fast_api_app` → The object of your app.
-- `service_management_api` → Enable service management using the API interface. **Enabled by default.**
+!!! info
+    You can find more information about the 
+    Config class in the [Code Reference.](/CodeReference/#fastapi_gateway_auto_generate.Config)
 
-    !!! warning
-        This parameter temporarily does not work and will always be enabled.
+#### Example creating a simple generator
 
-- `db_path` → The path to the database. **By default, creates a database in the root directory of the project.**
+=== "app.py"
 
-> Documentation in development
+    ```python
+    from fastapi_gateway_auto_generate import Generator, Config
+    from fastapi import FastAPI
+    import uvicorn
+    
+    app = FastAPI()
+    
+    config = Config(
+        fast_api_app=app,
+    )
+    
+    Generator(
+        config=config
+    )
+    
+    if __name__ == "__main__":
+        uvicorn.run(app=app, port=5000, log_level="info")
+    ```
 
-### Example creating a simple generator
-
-```python
-from fastapi_gateway_auto_generate import Generator, Config
-from fastapi import FastAPI
-import uvicorn
-
-app = FastAPI()
-
-config = Config(
-    fast_api_app=app,
-)
-
-Generator(
-    config=config
-)
-
-if __name__ == "__main__":
-    uvicorn.run(app=app, port=5000, log_level="info")
-```
+After all the manipulations, you will have urls in Swagger for managing services. 
+You can read more details about Service management [here](/Usage/service-management/).

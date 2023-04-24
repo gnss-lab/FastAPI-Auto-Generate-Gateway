@@ -17,7 +17,7 @@ from fastapi_gateway_auto_generate.database import GetAllServices, StatusService
 
 
 class BuildRouteModelsUsecase:
-    """The use case is responsible for creating an instance of the 'RouteModel' model and Pydantic models.
+    """The usecase is responsible for creating an instance of the 'RouteModel' model and Pydantic models.
     """
 
     def __init__(self) -> None:
