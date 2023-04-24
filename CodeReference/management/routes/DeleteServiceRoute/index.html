@@ -201,11 +201,15 @@
   
 
 
-  <li class="md-tabs__item">
-    <a href="../../../.." class="md-tabs__link">
-      Home
-    </a>
-  </li>
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../.." class="md-tabs__link">
+        Home
+      </a>
+    </li>
+  
 
       
         
@@ -305,10 +309,43 @@
   
   
   
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_1" type="checkbox" id="__nav_1" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_1">
+          Home
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Home" data-md-level="1">
+        <label class="md-nav__title" for="__nav_1">
+          <span class="md-nav__icon md-icon"></span>
+          Home
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
     <li class="md-nav__item">
       <a href="../../../.." class="md-nav__link">
-        Home
+        Overview
       </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
     </li>
   
 
@@ -360,22 +397,36 @@
   
   
   
+    <li class="md-nav__item">
+      <a href="../../../../Usage/tags_for_service/" class="md-nav__link">
+        Tags for service
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
     
     <li class="md-nav__item md-nav__item--nested">
       
       
-        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2_2" type="checkbox" id="__nav_2_2" >
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2_3" type="checkbox" id="__nav_2_3" >
       
       
       
       
-        <label class="md-nav__link" for="__nav_2_2">
+        <label class="md-nav__link" for="__nav_2_3">
           Service management
           <span class="md-nav__icon md-icon"></span>
         </label>
       
       <nav class="md-nav" aria-label="Service management" data-md-level="2">
-        <label class="md-nav__title" for="__nav_2_2">
+        <label class="md-nav__title" for="__nav_2_3">
           <span class="md-nav__icon md-icon"></span>
           Service management
         </label>
@@ -411,6 +462,67 @@
           
         </ul>
       </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2_4" type="checkbox" id="__nav_2_4" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_2_4">
+          File Manipulation
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="File Manipulation" data-md-level="2">
+        <label class="md-nav__title" for="__nav_2_4">
+          <span class="md-nav__icon md-icon"></span>
+          File Manipulation
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../Usage/FileManipulation/http-https/" class="md-nav__link">
+        HTTP/HTTPS
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../Usage/security/" class="md-nav__link">
+        Security
+      </a>
     </li>
   
 
@@ -802,6 +914,19 @@
     DeleteServiceRoute
   </a>
   
+    <nav class="md-nav" aria-label="DeleteServiceRoute">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#fastapi_gateway_auto_generate.management.routes.DeleteServiceRoute.DeleteServiceRoute" class="md-nav__link">
+    DeleteServiceRoute
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
 </li>
       
     </ul>
@@ -1026,6 +1151,19 @@
     DeleteServiceRoute
   </a>
   
+    <nav class="md-nav" aria-label="DeleteServiceRoute">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#fastapi_gateway_auto_generate.management.routes.DeleteServiceRoute.DeleteServiceRoute" class="md-nav__link">
+    DeleteServiceRoute
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
 </li>
       
     </ul>
@@ -1072,6 +1210,116 @@
 
 
 
+
+<div class="doc doc-object doc-class">
+
+
+
+<h3 id="fastapi_gateway_auto_generate.management.routes.DeleteServiceRoute.DeleteServiceRoute" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">DeleteServiceRoute</span><span class="p">(</span><span class="n">config</span><span class="p">)</span></code>
+
+<a href="#fastapi_gateway_auto_generate.management.routes.DeleteServiceRoute.DeleteServiceRoute" class="headerlink" title="Permanent link">&para;</a></h3>
+
+
+  <div class="doc doc-contents ">
+
+  
+      <p>Router for deleting a service</p>
+
+  <p><strong>Parameters:</strong></p>
+  <table>
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Type</th>
+        <th>Description</th>
+        <th>Default</th>
+      </tr>
+    </thead>
+    <tbody>
+        <tr>
+          <td><code>config</code></td>
+          <td>
+                <code><a class="autorefs autorefs-internal" title="fastapi_gateway_auto_generate.Config.Config" href="../../../#fastapi_gateway_auto_generate.Config.Config">Config</a></code>
+          </td>
+          <td><p>The Config object with its configuration.</p></td>
+          <td>
+              <em>required</em>
+          </td>
+        </tr>
+    </tbody>
+  </table>
+
+  <p><strong>Returns:</strong></p>
+  <table>
+    <thead>
+      <tr>
+<th>Name</th>        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+        <tr>
+<td><code>result</code></td>          <td>
+                <code>bool</code>
+          </td>
+          <td><p>True if the service was successfully marked as deleted, False in case of an error.</p></td>
+        </tr>
+    </tbody>
+  </table>
+
+
+          <details class="quote">
+            <summary>Source code in <code>fastapi_gateway_auto_generate/management/routes/DeleteServiceRoute.py</code></summary>
+            <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-0-16">16</a></span>
+<span class="normal"><a href="#__codelineno-0-17">17</a></span>
+<span class="normal"><a href="#__codelineno-0-18">18</a></span>
+<span class="normal"><a href="#__codelineno-0-19">19</a></span>
+<span class="normal"><a href="#__codelineno-0-20">20</a></span>
+<span class="normal"><a href="#__codelineno-0-21">21</a></span>
+<span class="normal"><a href="#__codelineno-0-22">22</a></span>
+<span class="normal"><a href="#__codelineno-0-23">23</a></span>
+<span class="normal"><a href="#__codelineno-0-24">24</a></span>
+<span class="normal"><a href="#__codelineno-0-25">25</a></span>
+<span class="normal"><a href="#__codelineno-0-26">26</a></span>
+<span class="normal"><a href="#__codelineno-0-27">27</a></span>
+<span class="normal"><a href="#__codelineno-0-28">28</a></span>
+<span class="normal"><a href="#__codelineno-0-29">29</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-0-16" name="__codelineno-0-16"></a><span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">config</span><span class="p">:</span> <span class="n">Config</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<a id="__codelineno-0-17" name="__codelineno-0-17"></a>    <span class="bp">self</span><span class="o">.</span><span class="n">__config</span><span class="p">:</span> <span class="n">Config</span> <span class="o">=</span> <span class="n">config</span>
+<a id="__codelineno-0-18" name="__codelineno-0-18"></a>    <span class="bp">self</span><span class="o">.</span><span class="n">route</span><span class="p">:</span> <span class="n">APIRouter</span> <span class="o">=</span> <span class="n">APIRouter</span><span class="p">()</span>
+<a id="__codelineno-0-19" name="__codelineno-0-19"></a>    <span class="bp">self</span><span class="o">.</span><span class="n">__dependencies</span> <span class="o">=</span> <span class="p">[]</span>
+<a id="__codelineno-0-20" name="__codelineno-0-20"></a>
+<a id="__codelineno-0-21" name="__codelineno-0-21"></a>    <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">__config</span><span class="o">.</span><span class="n">jwt</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+<a id="__codelineno-0-22" name="__codelineno-0-22"></a>        <span class="bp">self</span><span class="o">.</span><span class="n">__dependencies</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">Depends</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__config</span><span class="o">.</span><span class="n">jwt</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__config</span><span class="o">.</span><span class="n">service_name</span><span class="p">,</span> <span class="s2">&quot;/service&quot;</span><span class="p">,</span> <span class="s2">&quot;delete&quot;</span><span class="p">)))</span>
+<a id="__codelineno-0-23" name="__codelineno-0-23"></a>
+<a id="__codelineno-0-24" name="__codelineno-0-24"></a>    <span class="nd">@self</span><span class="o">.</span><span class="n">route</span><span class="o">.</span><span class="n">delete</span><span class="p">(</span><span class="s2">&quot;/service&quot;</span><span class="p">,</span> <span class="n">tags</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;Service management&quot;</span><span class="p">],</span>
+<a id="__codelineno-0-25" name="__codelineno-0-25"></a>                       <span class="n">dependencies</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">__dependencies</span><span class="p">)</span>
+<a id="__codelineno-0-26" name="__codelineno-0-26"></a>    <span class="k">async</span> <span class="k">def</span> <span class="nf">delete_service</span><span class="p">(</span><span class="n">delete_service</span><span class="p">:</span> <span class="n">DeleteService</span> <span class="o">=</span> <span class="n">Depends</span><span class="p">())</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+<a id="__codelineno-0-27" name="__codelineno-0-27"></a>        <span class="n">result</span> <span class="o">=</span> <span class="n">set_mark_delete_service_database</span><span class="p">(</span><span class="n">db_url</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">__config</span><span class="o">.</span><span class="n">db_url</span><span class="p">)</span><span class="o">.</span><span class="n">set_mark_delete_service</span><span class="p">(</span>
+<a id="__codelineno-0-28" name="__codelineno-0-28"></a>            <span class="n">delete_service_model</span><span class="o">=</span><span class="n">delete_service</span><span class="p">)</span>
+<a id="__codelineno-0-29" name="__codelineno-0-29"></a>        <span class="k">return</span> <span class="n">result</span>
+</code></pre></div></td></tr></table></div>
+          </details>
+
+  
+
+  <div class="doc doc-children">
+
+
+
+
+
+
+
+
+
+
+
+  </div>
+
+  </div>
+
+</div>
 
 
 
