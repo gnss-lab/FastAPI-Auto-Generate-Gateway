@@ -2,6 +2,7 @@ import re
 import os
 import sys
 import string
+import json
 import shortuuid
 from typing import Any
 from pathlib import Path
@@ -10,7 +11,9 @@ from loguru import logger
 from fastapi import FastAPI, Depends
 from ...Config import Config
 from ..models import RouteModel
-from ...utils.OpenApiParser import OpenApiParser
+from fastapi_gateway_auto_generate.utils.APITags import APITags
+
+from openapi_parser import OpenApiParser
 from fastapi_gateway_auto_generate.management.models import GetAllInfoServices
 from datamodel_code_generator import InputFileType, generate
 from fastapi_gateway_auto_generate.database import GetAllServices, StatusService, UrlService
@@ -79,7 +82,7 @@ class BuildRouteModelsUsecase:
 
                     for path in self.__open_api_parser.get_paths():
 
-                        if self.__open_api_parser.auto_generate_enabled(path=path):
+                        if self.__open_api_parser.check_api_gateway_tags(path=path, tag_key=APITags.AUTO_GENERATE):
 
                             UrlService(db_url=config.db_url).set_url_service(
                                 id_service=service["id"],
@@ -93,8 +96,8 @@ class BuildRouteModelsUsecase:
 
                             logger.debug(self.__open_api_parser.get_paths())
 
-                            if not (config.jwt is None) and self.__open_api_parser.check_enable_auth_in_api_gateway(
-                                    path=path):
+                            if not (config.jwt is None) and self.__open_api_parser.check_api_gateway_tags(
+                                    path=path, tag_key=APITags.ENABLE_AUTH):
                                 dependencies.append(
                                     Depends(config.jwt(service["name"], path, path_method)))
 
@@ -157,7 +160,7 @@ class BuildRouteModelsUsecase:
         dir = Path(f'{project_root}/tmp/models/')
 
         generate(
-            input_=self.__open_api_parser.get_raw_resoponse_in_string(),
+            input_=json.dumps(self.__open_api_parser.get_raw_response_in_json()),
             input_file_type=InputFileType.OpenAPI,
             input_filename="example.json",
             output=output

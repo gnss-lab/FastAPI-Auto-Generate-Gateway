@@ -1411,6 +1411,25 @@ files = [
 ]
 
 [[package]]
+name = "openapi-parser"
+version = "0.1.0"
+description = ""
+category = "main"
+optional = false
+python-versions = "^3.11"
+files = []
+develop = false
+
+[package.dependencies]
+requests = "^2.28.2"
+
+[package.source]
+type = "git"
+url = "https://github.com/xitowzys-ISZF/OpenAPI-Parser.git"
+reference = "1.0.0-SNAPSHOT"
+resolved_reference = "3f9188d816401da9ce7057a36cf63d90ef65fc62"
+
+[[package]]
 name = "openapi-schema-validator"
 version = "0.3.4"
 description = "OpenAPI schema validation for Python"
@@ -1747,18 +1766,6 @@ files = [
 
 [package.dependencies]
 six = ">=1.4.0"
-
-[[package]]
-name = "pytz"
-version = "2023.3"
-description = "World timezone definitions, modern and historical"
-category = "main"
-optional = false
-python-versions = "*"
-files = [
-    {file = "pytz-2023.3-py2.py3-none-any.whl", hash = "sha256:a151b3abb88eda1d4e34a9814df37de2a80e301e68ba0fd856fb9b46bfbbbffb"},
-    {file = "pytz-2023.3.tar.gz", hash = "sha256:1d8ce29db189191fb55338ee6d0387d82ab59f3d00eac103412d64e0ebd0c588"},
-]
 
 [[package]]
 name = "pyyaml"
@@ -2393,4 +2400,4 @@ multidict = ">=4.0"
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.11"
-content-hash = "0006861a0d2d6a6b20b05927e456c1f8c08ab521e1902c519503feb2e6e8e083"
+content-hash = "a3cd44ffe564408c4918e47997f8de41ecaf69b9e44f83deb99fe92370d9e07c"
