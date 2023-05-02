@@ -15,15 +15,29 @@ class Errors:
         }
 
     @staticmethod
-    def no_services_found() -> dict[str, int | str]:
+    def not_single_service() -> dict[str, int | str]:
         return {
             "code": 2,
-            "msg": f"Not a single service has been created yet"
+            "msg": f"Not a single service has been created yet."
+        }
+
+    @staticmethod
+    def no_services_found(id: int) -> dict[str, int | str]:
+        return {
+            "code": 3,
+            "msg": f"The service with id {id} was not found."
         }
 
     @staticmethod
     def page_not_found() -> dict[str, int | str]:
         return {
-            "code": 3,
-            "msg": f"Page not found"
+            "code": 4,
+            "msg": f"Page not found."
+        }
+
+    @staticmethod
+    def deletion_already_marked(id: int) -> dict[str, int | str]:
+        return {
+            "code": 5,
+            "msg": f"Service {id} has already been marked as deleted."
         }

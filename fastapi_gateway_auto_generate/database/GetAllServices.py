@@ -21,7 +21,7 @@ class GetAllServices():
             rows_count: int = self.__session.query(Services).count()
 
             if rows_count == 0:
-                return None, Errors.no_services_found()
+                return None, Errors.not_single_service()
 
             start = 0 + (get_all_info_services_model.page - 1) * 10
 

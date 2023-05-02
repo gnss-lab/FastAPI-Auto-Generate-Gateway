@@ -1,4 +1,8 @@
+from typing import Tuple, Dict
+
 from loguru import logger
+
+from .Errors import Errors
 from ..management.models import DeleteService as delete_service_model
 from .models import Services
 
@@ -14,7 +18,8 @@ class SetMarkDeleteService():
             bind=create_engine(db_url))
         self.__session = Session()
 
-    def set_mark_delete_service(self, delete_service_model: delete_service_model) -> bool:
+    def set_mark_delete_service(self, delete_service_model: delete_service_model) -> tuple[bool, dict[str, int | str]] | \
+                                                                                     tuple[bool, None]:
 
         # Добавить проверку существование сервиса [Error Code 1]
 
@@ -26,13 +31,21 @@ class SetMarkDeleteService():
             # )
 
             service = self.__session.query(Services).filter_by(id=delete_service_model.id_service).first()
+
+            if service is None:
+                return False, Errors.no_services_found(id=delete_service_model.id_service)
+
+            if service.delete == True:
+                return False, Errors.deletion_already_marked(id=delete_service_model.id_service)
+
+            print(service)
             service.delete = True
             # print(delete_service_model.id_service)
             # self.__session.delete(service)
             self.__session.commit()
 
             self.__session.close()
-            return True
+            return True, None
         except Exception as e:
-            logger.debug(f"Ошибка: {str(e)}")
-            return False
+            logger.error(str(e))
+            return False, Errors.any_error(msg=str(e))
