@@ -25,7 +25,6 @@ shortuuid = "^1.0.11"
 rich = "^13.3.2"
 openapi-parser = {git = "https://github.com/xitowzys-ISZF/OpenAPI-Parser.git", rev = "1.0.0-SNAPSHOT"}
 
-
 [tool.poetry.group.dev.dependencies]
 uvicorn = "^0.20.0"
 autopep8 = "^2.0.0"
@@ -36,6 +35,8 @@ mkdocstrings = {extras = ["python"], version = "^0.21.2"}
 
 
 [tool.poetry.group.tests.dependencies]
+faker = "^18.6.0"
+httpx = "^0.24.0"
 runtime-type-checker = "^0.5.0"
 coverage = "^6.5.0"
 allure-pytest = "^2.12.0"
