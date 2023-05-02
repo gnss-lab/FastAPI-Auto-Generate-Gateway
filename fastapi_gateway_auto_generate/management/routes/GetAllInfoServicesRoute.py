@@ -25,7 +25,7 @@ class GetAllInfoServicesRoute:
                 get_all_info_services_model=get_all_info_service)
 
             if not err is None:
-                raise HTTPException(status_code=400, detail={
+                raise HTTPException(status_code=409, detail={
                                     "code": err["code"], "err_msg": err["msg"]})
 
             return result
