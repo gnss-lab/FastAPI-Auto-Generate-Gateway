@@ -8,10 +8,10 @@ class Errors:
         }
 
     @staticmethod
-    def service_exists(ip: str, port: str) -> dict[str, int | str]:
+    def service_exists(name: str) -> dict[str, int | str]:
         return {
             "code": 1,
-            "msg": f"Service {ip}:{port} already exists"
+            "msg": f"The \"{name}\" service already exists."
         }
 
     @staticmethod
