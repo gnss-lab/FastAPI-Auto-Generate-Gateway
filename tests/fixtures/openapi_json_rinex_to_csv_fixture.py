@@ -1,6 +1,6 @@
 import json
 import pytest
-from ..microservices import rinex_to_csv, rinex_to_csv_with_tags
+from ..services.rinex_to_csv import rinex_to_csv, rinex_to_csv_with_tags
 from fastapi.testclient import TestClient
 
 

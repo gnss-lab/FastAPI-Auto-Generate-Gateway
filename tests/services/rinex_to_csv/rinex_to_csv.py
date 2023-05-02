@@ -4,25 +4,9 @@ from fastapi import (FastAPI,
                      Response,
                      Cookie)
 
-from pydantic import BaseModel
+from .domain.entity.ConversionParams import ConversionParams
 
 app = FastAPI()
-
-class ConversionParams(BaseModel):
-    g_signals: list[str] = ['L1C', 'C1C']
-    e_signals: list[str] = ['L1C', 'C1C']
-    c_signals: list[str] = ['L2I', 'C2I']
-    r_signals: list[str] = ['L1C', 'C1C']
-    s_signals: list[str] = []
-    timestep: int = 30
-
-    def get_signal_by_system(self):
-        signal = {'G': self.g_signals,
-                  'R': self.r_signals,
-                  'E': self.e_signals,
-                  'C': self.c_signals,
-                  'S': self.s_signals}
-        return signal
 
 
 @app.post("/rinex_to_csv/upload_rinex")
@@ -38,6 +22,7 @@ async def upload_nav(response: Response,
                      rinex_to_csv_processing_id: str | None = Cookie(default=None)
                      ):
     pass
+
 
 @app.post("/rinex_to_csv/run")
 async def run_processing(params: ConversionParams,
