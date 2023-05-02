@@ -16,9 +16,9 @@ ServiceResult = Tuple[Optional[bool], Optional[dict[str, Union[int, str]]]]
 class AddService():
 
     def __init__(self, db_url: str) -> None:
-        Session: sessionmaker = sessionmaker(
+        self.__session_maker: sessionmaker = sessionmaker(
             bind=create_engine(db_url))
-        self.__session = Session()
+        self.__session = self.__session_maker()
 
     def add_service(self, add_service_model: add_service_model) -> ServiceResult:
 

@@ -13,19 +13,20 @@ def test_add_service(get_db_session):
 
     InitDatabaseUsecase().execute(db_url=db_url)
 
-    data = next(get_db_session(db_url=db_url))
+    data = next(get_db_session(db_url=db_url)).query(Services)
 
     add_service = AddService(db_url=db_url)
 
     count_services = 10
 
     for i in range(count_services):
-
-        fake_service = FakeServices() \
-            .with_domain() \
-            .with_name() \
-            .with_port() \
+        fake_service = (
+            FakeServices()
+            .with_domain()
+            .with_name()
+            .with_port()
             .build()
+        )
 
         add_service_model = AddServiceModel(
             domain=fake_service["domain"],
@@ -33,11 +34,6 @@ def test_add_service(get_db_session):
             port=fake_service["port"]
         )
 
-
         add_service.add_service(add_service_model=add_service_model)
 
-    assert count_services == data.query(Services).count()
-
-    # print(FakeServices().with_domain().with_port().with_name().build().domain)
-    # print(FakeServices().with_domain().with_port().with_name().build().port)
-    # print(FakeServices().with_domain().with_port().with_name().build().name)
+    assert count_services == data.count()
