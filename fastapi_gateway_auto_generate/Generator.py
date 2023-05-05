@@ -14,7 +14,7 @@ class Generator:
         self.__config = config
 
         if not os.path.isfile(self.__config.db_path):
-            InitDatabaseUsecase().execute(db_url=config.db_url)
+            InitDatabaseUsecase().execute(db_url=config.db_url, db_path=config.db_path)
 
         if self.__config.service_management:
             self.__init_management_urls()

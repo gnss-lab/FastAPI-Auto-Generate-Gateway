@@ -11,15 +11,13 @@ def test_init_database_usecase(openapi_json_rinex_to_csv_fixture):
     config = Config(
         fast_api_app=rinex_to_csv_with_tags.app,
         # celery_app=celery,
-        db_path="/tmp/testdb.db"
+        db_path="./tmp/"
     )
 
-    InitDatabaseUsecase().execute(db_url=config.db_url)
+    InitDatabaseUsecase().execute(db_url=config.db_url, db_path=config.db_path)
 
-
-
-    if os.path.isfile(config.db_path):
-        os.remove(config.db_path)
+    if os.path.isfile(config.get_database_absolute_path()):
+        os.remove(config.get_database_absolute_path())
 
         assert True
     else:

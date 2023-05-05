@@ -23,7 +23,8 @@ class Config:
             self,
             fast_api_app: FastAPI,
             service_management: bool = True,
-            db_path: str = "./database.db",
+            db_path: str = "./",
+            db_name: str = "database",
             jwt: Optional[Type[T]] = None,
             allow_large_files: bool = False,
             broker_url: str = ""
@@ -33,13 +34,18 @@ class Config:
         self.jwt = jwt
         self.service_name = "API-Gateway"
 
-        if db_path != "./database.db":
+        if db_name != "database":
+            self.db_name = db_name
+        else:
+            self.db_name = "database"
+
+        if db_path != "./":
             self.db_path = db_path
         else:
-            self.db_path = "./database.db"
+            self.db_path = "./"
 
         # self.db_path = "./database.db" if db_path is None else db_path
-        self.db_url = f"sqlite:///{os.path.abspath(self.db_path)}"
+        self.db_url = f"sqlite:///{self.get_database_absolute_path()}"
 
         # try:
         #     if not (allow_large_files and broker_url):
@@ -51,6 +57,8 @@ class Config:
 
         # self.__validation_parameters()
 
+    def get_database_absolute_path(self):
+        return f"{os.path.abspath(self.db_path)}/{self.db_name}.db"
     # def __validation_parameters(self) -> None:
     #     """_summary_
     #     """

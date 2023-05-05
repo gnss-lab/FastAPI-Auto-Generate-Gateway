@@ -9,9 +9,11 @@ from tests.fixtures.get_db_session import get_db_session
 
 
 def test_add_service(get_db_session):
-    db_url: str = f"sqlite:///{os.path.abspath('/tmp/testdb.db')}"
+    db_name = "testdb"
+    db_path = os.path.abspath('./tmp/database/')
+    db_url: str = f"sqlite:///{db_path}/{db_name}.db"
 
-    InitDatabaseUsecase().execute(db_url=db_url)
+    InitDatabaseUsecase().execute(db_url=db_url, db_path=db_path)
 
     data = next(get_db_session(db_url=db_url)).query(Services)
 
@@ -37,3 +39,10 @@ def test_add_service(get_db_session):
         add_service.add_service(add_service_model=add_service_model)
 
     assert count_services == data.count()
+
+    if os.path.isfile(f"{db_path}/{db_name}.db"):
+        os.remove(f"{db_path}/{db_name}.db")
+        os.rmdir(db_path)
+        assert True
+    else:
+        assert False
