@@ -8,6 +8,7 @@
 
 <a href="https://github.com/xitowzys-ISZF/FastAPI-auto-generate-gateway/blob/dev/LICENSE)" target="_blank">
     <img src="https://img.shields.io/github/license/xitowzys-ISZF/FastAPI-auto-generate-gateway" alt="Supported Python versions">
+    <img src="./raw/coverage.svg" alt="Supported Python versions">
 </a>
 
 </p>
