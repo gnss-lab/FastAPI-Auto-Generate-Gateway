@@ -1,7 +1,6 @@
 import re
 import os
 import sys
-import string
 import json
 import shortuuid
 from typing import Any
@@ -35,8 +34,6 @@ class BuildRouteModelsUsecase:
             services_result (list[dict[str, Any]]): Return a list of services, each of which stores a list of RouteModel,Pydantic models, and the service URL.
         """
 
-        routes_model: list[RouteModel] = []
-
         services_result: list[dict[str, Any]] = []
 
         get_all_info_services_model: GetAllInfoServices = GetAllInfoServices(
@@ -46,6 +43,7 @@ class BuildRouteModelsUsecase:
             get_all_info_services_model=get_all_info_services_model)
 
         if not err is None:
+            logger.warning(err)
             return services_result
 
         count_page: int = services["metadata"]["count_page"]
@@ -77,7 +75,14 @@ class BuildRouteModelsUsecase:
                         status_code=status_code
                     )
 
+                    if status_code == -1:
+                        logger.warning(f"Failed to establish connection with the \"{service['name']}\" service.")
+                        continue
+
+                    ## TODO: -2
+
                     if status_code != 200:
+                        logger.warning(f"Code error with the \"{service['name']}\" service.")
                         continue
 
                     for path in self.__open_api_parser.get_paths():
@@ -134,8 +139,6 @@ class BuildRouteModelsUsecase:
 
                 get_all_info_services_model.page += 1
 
-        pprint(services_result)
-
         return services_result
 
     def __generate_models(self):
@@ -152,12 +155,9 @@ class BuildRouteModelsUsecase:
         project_root = os.path.dirname(
             sys.modules['fastapi_gateway_auto_generate'].__file__)
 
-        letters = string.ascii_lowercase
         _uuid = f"model_{shortuuid.ShortUUID().random(length=10)}"
 
         output = Path(f'{project_root}/tmp/models/{_uuid}.py')
-
-        dir = Path(f'{project_root}/tmp/models/')
 
         generate(
             input_=json.dumps(self.__open_api_parser.get_raw_response_in_json()),
