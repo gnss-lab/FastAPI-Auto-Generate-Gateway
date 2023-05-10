@@ -15,6 +15,7 @@ tags_metadata = [
             "url": "https://fastapi.tiangolo.com/"
         },
         "x-auto-generate-in-api-gateway": True,
+        "x-enable-auth-in-api-gateway": True
     },
     {
         "name": "default2",
@@ -28,7 +29,7 @@ tags_metadata = [
 app = FastAPI(openapi_tags=tags_metadata)
 
 
-@app.post("/rinex_to_csv/upload_rinex")
+@app.post("/rinex_to_csv/upload_rinex", tags=["default"])
 async def upload_rinex(response: Response,
                        rinex: UploadFile = File(description="Load RINEX file"),
                        rinex_to_csv_processing_id: str | None = Cookie(default=None)):
@@ -44,12 +45,16 @@ async def upload_nav(response: Response,
     pass
 
 
-@app.post("/rinex_to_csv/run", tags=["default2"])
+@app.post("/rinex_to_csv/run", tags=["default"])
 async def run_processing(params: ConversionParams,
                          rinex_to_csv_processing_id: str | None = Cookie(default=None)):
     pass
 
 
-@app.get("/rinex_to_csv/get_result", tags=["defaultssss"])
+@app.get("/rinex_to_csv/get_result", tags=["default"])
+async def get_result():
+    pass
+
+@app.get("/rinex_to_csv/other_tags", tags=["other"])
 async def get_result():
     pass
