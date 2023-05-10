@@ -7,6 +7,9 @@
 <p align="center">
 
 <a href="https://github.com/xitowzys-ISZF/FastAPI-auto-generate-gateway/blob/dev/LICENSE)" target="_blank">
+    <img src="https://scrutinizer-ci.com/g/xitowzys-ISZF/FastAPI-auto-generate-gateway/badges/quality-score.png?b=dev" alt="Supported Python versions">    
+    <img src="https://scrutinizer-ci.com/g/xitowzys-ISZF/FastAPI-auto-generate-gateway/badges/code-intelligence.svg?b=dev" alt="Supported Python versions">
+    <img src="https://scrutinizer-ci.com/g/xitowzys-ISZF/FastAPI-auto-generate-gateway/badges/build.png?b=dev" alt="Supported Python versions">
     <img src="https://img.shields.io/github/license/xitowzys-ISZF/FastAPI-auto-generate-gateway" alt="Supported Python versions">
     <img src="./raw/coverage.svg" alt="Supported Python versions">
 </a>
