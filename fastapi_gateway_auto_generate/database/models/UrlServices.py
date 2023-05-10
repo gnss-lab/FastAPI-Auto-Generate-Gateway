@@ -9,4 +9,4 @@ class UrlServices(Base):
     id: Column = Column(INTEGER, primary_key=True, autoincrement=True)
     id_service: Column = Column(
         INTEGER, ForeignKey("services.id", onupdate="CASCADE", ondelete="CASCADE"))
-    url: Column = Column(TEXT, nullable=False, unique=True)
+    url: Column = Column(TEXT, nullable=False)
