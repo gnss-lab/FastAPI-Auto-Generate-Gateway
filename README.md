@@ -2,10 +2,6 @@
   <a href="https://fastapi.tiangolo.com"><img src="./raw/FastAPI-API-Gateway-Magic-logo.png" alt="FastAPI"></a>
 </p>
 
----
-
----
-
 <p align="center">
 <a href="https://www.python.org/"> <img src="https://img.shields.io/badge/made%20with-python%20%F0%9F%90%8D-brightgreen" alt="madewithpython" border="0"></a>
 </p>
@@ -39,10 +35,6 @@
         <img src="https://img.shields.io/badge/Source_code-0953dc?style=for-the-badge&logo=Github&logoColor=fffff" alt="Supported Python versions">
     </a>
 </p>
-
----
-
----
 
 # 🔥 FastAPI Auto Generate Gateway
 
