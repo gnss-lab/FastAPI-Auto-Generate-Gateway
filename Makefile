@@ -4,5 +4,5 @@ allure:
 
 coverage:
 	coverage erase
-	coverage run --source=./fastapi_gateway_auto_generate -m pytest
+	coverage run --source=./fastapi_gateway_auto_generate -m pytest -s
 	coverage html
