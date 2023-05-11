@@ -6,4 +6,4 @@ coverage:
 	coverage erase
 	coverage run --source=./fastapi_gateway_auto_generate -m pytest -s
 	coverage html
-	coverage-badge -o ./raw/coverage.svg
+	coverage-badge -f -o ./raw/coverage.svg

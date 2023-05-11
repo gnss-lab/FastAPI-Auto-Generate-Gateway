@@ -1,0 +1,2 @@
+[run]
+omit = fastapi_gateway_auto_generate/tmp/*, fastapi_gateway_auto_generate/migration/*
