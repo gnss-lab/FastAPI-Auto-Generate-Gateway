@@ -20,5 +20,5 @@ class DeleteTmpModelsFilesUsecase:
         filelist = glob.glob(os.path.join(
             f"{project_root}/tmp/models", "model_*"))
         for f in filelist:
-            logger.debug(f)
+            logger.debug(f"The file \"{os.path.basename(f)}\" has been deleted.")
             os.remove(f)
