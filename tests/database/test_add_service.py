@@ -9,9 +9,12 @@ from tests.fixtures.get_db_session import get_db_session
 
 
 def test_add_service(get_db_session):
+
+
     db_name = "testdb"
     db_path = os.path.abspath('./tmp/database/')
     db_url: str = f"sqlite:///{db_path}/{db_name}.db"
+
 
     InitDatabaseUsecase().execute(db_url=db_url, db_path=db_path)
 

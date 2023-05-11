@@ -79,6 +79,8 @@ class BuildRoutesUsecase:
         def func_impl(*args, **kwargs):
             pass
 
+        func_impl()
+
         arguments: list[dict[str, str]] = []
 
         queries = ""
