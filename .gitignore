@@ -168,4 +168,5 @@ test.py
 *.ipynb
 
 allureress/
+allure-report/
 main.py

@@ -4,5 +4,6 @@ allure:
 
 coverage:
 	coverage erase
-	coverage run --include=dadata/* -m pytest -ra
-	coverage report -m
+	coverage run --source=./fastapi_gateway_auto_generate -m pytest -s
+	coverage html
+	coverage-badge -f -o ./raw/coverage.svg

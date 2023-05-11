@@ -6,10 +6,20 @@ from alembic.config import Config as alembic_config
 
 
 class InitDatabaseUsecase:
+    """The usecase for initializing and verifying database migrations.
+    """
+
     def __init__(self) -> None:
         pass
 
-    def execute(self, db_url: str) -> None:
+    def execute(self, db_path:str, db_url: str) -> None:
+        """Launch execution of usecase
+        Args:
+            db_url (str): The path to the SQLite database.
+        """
+        if not os.path.exists(db_path):
+            os.makedirs(db_path)
+
         project_root = os.path.dirname(
             sys.modules['fastapi_gateway_auto_generate'].__file__)
 

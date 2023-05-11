@@ -16,15 +16,21 @@ import fastapi_gateway_auto_generate
 
 
 class BuildRoutesUsecase:
+    """The usecase responsible for adding services to the FastAPI object.
+    """
+
     def __init__(self) -> None:
         self.models_routes_vars = {}
         self.models_routes = {}
 
     def execute(self, services_result: list[dict[str, Any]], fast_api_app: FastAPI) -> None:
+        """Launch execution of usecase
+        Args:
+            services_result (list[dict[str, Any]): The Config object with its configuration.
+        """
 
         for service_result in services_result:
             for route_model in service_result["route_models"]:
-
                 # print(
                 #     exec(f"tmp.models.{service_result['models']}.ConversionParams()"))
 
@@ -55,15 +61,25 @@ class BuildRoutesUsecase:
         DeleteTmpModelsFilesUsecase().execute()
 
     def __import_model(self, service_model_name: str) -> str:
+        """Dynamic import of Pydantic models.
+        Args:
+            service_model_name (list[dict[str, Any]): The Config object with its configuration.
+        """
         _import: str = f"fastapi_gateway_auto_generate.tmp.models.{service_model_name}"
         importlib.import_module(_import)
 
         return _import
 
     def __factory_func(self, route_model: RouteModel, _import: str) -> FunctionType:
+        """Dynamic generation of functions for adding to the FastAPI object.
+        Args:
+            services_result (list[dict[str, Any]): The Config object with its configuration.
+        """
 
         def func_impl(*args, **kwargs):
             pass
+
+        func_impl()
 
         arguments: list[dict[str, str]] = []
 
@@ -75,7 +91,6 @@ class BuildRoutesUsecase:
         # Body
         if not route_model.body_params is None:
             for i, body in enumerate(route_model.body_params):
-
                 argument = {}
                 argument["name"] = body + f"{i}"
                 argument["type"] = f"{_import}.{body}"

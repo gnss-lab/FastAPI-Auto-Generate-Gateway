@@ -3,7 +3,7 @@ theme:
   name: "material"
   features:
     - content.code.annotate
-    - toc.integrate
+
     - navigation.tabs
   palette:
     - scheme: slate
@@ -17,13 +17,45 @@ theme:
         icon: material/toggle-switch
         name: Switch to Light Mode
 nav:
-    - Home: index.md
+    - Home:
+      - Overview: index.md
     - Usage:
       - Getting started: Usage/getting-started.md
+      - Tags for service: Usage/tags_for_service.md
       - Service management:
         - API: Usage/service-management.md
         - Using as module: Usage/using-as-module.md
+      - File Manipulation:
+          HTTP/HTTPS: Usage/FileManipulation/http-https.md
+      - Security: Usage/security.md
+#          Broker: index.md
     - FAQ: FAQ.md
+    - Code Reference:
+        - Main: CodeReference/index.md
+        - Domain:
+            - Models:
+                - RouteModel: CodeReference/domain/models/RouteModel.md
+            - Usecases:
+                - BuildRouteModelsUsecase: CodeReference/domain/usecases/BuildRouteModelsUsecase.md
+                - BuildRoutesUsecase: CodeReference/domain/usecases/BuildRoutesUsecase.md
+                - DeleteTmpModelsFilesUsecase: CodeReference/domain/usecases/DeleteTmpModelsFilesUsecase.md
+                - InitDatabaseUsecase: CodeReference/domain/usecases/InitDatabaseUsecase.md
+                - RefreshServicesUsecase: CodeReference/domain/usecases/RefreshServicesUsecase.md
+                - UpdateOpenApiSchemaUsecase: CodeReference/domain/usecases/UpdateOpenApiSchemaUsecase.md
+        - Management:
+            - Management: CodeReference/management/Management.md
+            - Routes:
+                - AddServiceRoute: CodeReference/management/routes/AddServiceRoute.md
+                - DeleteServiceRoute: CodeReference/management/routes/DeleteServiceRoute.md
+                - GetAllInfoServicesRoute: CodeReference/management/routes/GetAllInfoServicesRoute.md
+                - RefreshServicesRoute: CodeReference/management/routes/RefreshServicesRoute.md
+            - Models:
+                - AddService: CodeReference/management/models/AddService.md
+                - DeleteService: CodeReference/management/models/DeleteService.md
+                - GetAllInfoServices: CodeReference/management/models/GetAllInfoServices.md
+        - Exceptions:
+            - ConfigException: CodeReference/exceptions/ConfigException.md
+            - FastapiGatewayAutoGenerageException: CodeReference/exceptions/FastapiGatewayAutoGenerageException.md
 
 repo_name: fastapi-gateway-auto-generate
 repo_url: https://github.com/xitowzys-ISZF/FastAPI-auto-generate-gateway
@@ -38,6 +70,16 @@ extra_css:
 
 plugins:
   - search
+  - mkdocstrings:
+      handlers:
+        python:
+#          paths: [ fastapi_gateway_auto_generate ]
+          selection:
+            docstring_style: google
+            docstring_options:
+              ignore_init_summary: yes
+          rendering:
+            merge_init_into_class: yes
 
 markdown_extensions:
   - abbr

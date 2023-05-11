@@ -1,7 +1,7 @@
 import re
 import os
 import sys
-import string
+import json
 import shortuuid
 from typing import Any
 from pathlib import Path
@@ -10,19 +10,29 @@ from loguru import logger
 from fastapi import FastAPI, Depends
 from ...Config import Config
 from ..models import RouteModel
-from ...utils.OpenApiParser import OpenApiParser
+from fastapi_gateway_auto_generate.utils.APITags import APITags
+
+from openapi_parser import OpenApiParser
 from fastapi_gateway_auto_generate.management.models import GetAllInfoServices
 from datamodel_code_generator import InputFileType, generate
 from fastapi_gateway_auto_generate.database import GetAllServices, StatusService, UrlService
 
 
 class BuildRouteModelsUsecase:
+    """The usecase is responsible for creating an instance of the 'RouteModel' model and Pydantic models.
+    """
+
     def __init__(self) -> None:
         self.__open_api_parser: OpenApiParser = OpenApiParser()
 
     def execute(self, config: Config) -> list[dict[str, Any]]:
+        """Launch execution of usecase
+        Args:
+            config (Config): The Config object with its configuration.
 
-        routes_model: list[RouteModel] = []
+        Returns:
+            services_result (list[dict[str, Any]]): Return a list of services, each of which stores a list of RouteModel,Pydantic models, and the service URL.
+        """
 
         services_result: list[dict[str, Any]] = []
 
@@ -33,6 +43,7 @@ class BuildRouteModelsUsecase:
             get_all_info_services_model=get_all_info_services_model)
 
         if not err is None:
+            logger.warning(err)
             return services_result
 
         count_page: int = services["metadata"]["count_page"]
@@ -54,7 +65,7 @@ class BuildRouteModelsUsecase:
 
                     logger.debug(url)
 
-                    err, status_code = self.__open_api_parser.parse_from_service(
+                    status_code = self.__open_api_parser.parse_from_service(
                         url=url)
 
                     logger.debug(status_code)
@@ -64,12 +75,19 @@ class BuildRouteModelsUsecase:
                         status_code=status_code
                     )
 
-                    if err:
+                    if status_code == -1:
+                        logger.warning(f"Failed to establish connection with the \"{service['name']}\" service.")
+                        continue
+
+                    ## TODO: -2
+
+                    if status_code != 200:
+                        logger.warning(f"Code error with the \"{service['name']}\" service.")
                         continue
 
                     for path in self.__open_api_parser.get_paths():
 
-                        if self.__open_api_parser.check_auto_generate_in_api_gateway(path=path):
+                        if self.__open_api_parser.check_api_gateway_tags(path=path, tag_key=APITags.AUTO_GENERATE):
 
                             UrlService(db_url=config.db_url).set_url_service(
                                 id_service=service["id"],
@@ -81,8 +99,12 @@ class BuildRouteModelsUsecase:
 
                             dependencies = []
 
-                            if not config.jwt is None:
-                                dependencies.append(Depends(config.jwt(service["name"])))
+                            logger.debug(self.__open_api_parser.get_paths())
+
+                            if not (config.jwt is None) and self.__open_api_parser.check_api_gateway_tags(
+                                    path=path, tag_key=APITags.ENABLE_AUTH):
+                                dependencies.append(
+                                    Depends(config.jwt(service["name"], path, path_method)))
 
                             route_model: RouteModel = RouteModel(
                                 request_method=getattr(
@@ -117,11 +139,15 @@ class BuildRouteModelsUsecase:
 
                 get_all_info_services_model.page += 1
 
-        pprint(services_result)
-
         return services_result
 
     def __generate_models(self):
+        """Pydantic model generator from openapi.json."
+
+        Returns:
+            _uuid (str): Unique identifier as the file name.
+            classes (list[str]): List of class names.
+        """
 
         shortuuid.set_alphabet(
             "ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz")
@@ -129,15 +155,12 @@ class BuildRouteModelsUsecase:
         project_root = os.path.dirname(
             sys.modules['fastapi_gateway_auto_generate'].__file__)
 
-        letters = string.ascii_lowercase
         _uuid = f"model_{shortuuid.ShortUUID().random(length=10)}"
 
         output = Path(f'{project_root}/tmp/models/{_uuid}.py')
 
-        dir = Path(f'{project_root}/tmp/models/')
-
         generate(
-            input_=self.__open_api_parser.get_raw_resoponse_in_string(),
+            input_=json.dumps(self.__open_api_parser.get_raw_response_in_json()),
             input_file_type=InputFileType.OpenAPI,
             input_filename="example.json",
             output=output

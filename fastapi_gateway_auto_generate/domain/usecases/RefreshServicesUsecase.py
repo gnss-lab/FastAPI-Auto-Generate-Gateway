@@ -8,10 +8,17 @@ from fastapi_gateway_auto_generate.management.models import DeleteService as del
 
 
 class RefreshServicesUsecase:
+    """The usecase for updating and verifying all connected services.
+    """
+
     def __init__(self):
         pass
 
     def execute(self, config: Config) -> None:
+        """Launch execution of usecase
+        Args:
+            config (Config): The Config object with its configuration.
+        """
 
         get_all_info_services_model: GetAllInfoServices = GetAllInfoServices(
             page=1)
