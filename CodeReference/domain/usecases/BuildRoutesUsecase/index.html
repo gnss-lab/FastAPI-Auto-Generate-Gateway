@@ -9,7 +9,7 @@
       
       
       <link rel="icon" href="../../../../assets/images/favicon.png">
-      <meta name="generator" content="mkdocs-1.4.2, mkdocs-material-8.5.10">
+      <meta name="generator" content="mkdocs-1.4.3, mkdocs-material-8.5.10">
     
     
       
@@ -1371,7 +1371,9 @@
 <span class="normal"><a href="#__codelineno-0-147">147</a></span>
 <span class="normal"><a href="#__codelineno-0-148">148</a></span>
 <span class="normal"><a href="#__codelineno-0-149">149</a></span>
-<span class="normal"><a href="#__codelineno-0-150">150</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-0-73" name="__codelineno-0-73"></a><span class="k">def</span> <span class="nf">__factory_func</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">route_model</span><span class="p">:</span> <span class="n">RouteModel</span><span class="p">,</span> <span class="n">_import</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">FunctionType</span><span class="p">:</span>
+<span class="normal"><a href="#__codelineno-0-150">150</a></span>
+<span class="normal"><a href="#__codelineno-0-151">151</a></span>
+<span class="normal"><a href="#__codelineno-0-152">152</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-0-73" name="__codelineno-0-73"></a><span class="k">def</span> <span class="nf">__factory_func</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">route_model</span><span class="p">:</span> <span class="n">RouteModel</span><span class="p">,</span> <span class="n">_import</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">FunctionType</span><span class="p">:</span>
 <a id="__codelineno-0-74" name="__codelineno-0-74"></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;Dynamic generation of functions for adding to the FastAPI object.</span>
 <a id="__codelineno-0-75" name="__codelineno-0-75"></a><span class="sd">    Args:</span>
 <a id="__codelineno-0-76" name="__codelineno-0-76"></a><span class="sd">        services_result (list[dict[str, Any]): The Config object with its configuration.</span>
@@ -1380,75 +1382,77 @@
 <a id="__codelineno-0-79" name="__codelineno-0-79"></a>    <span class="k">def</span> <span class="nf">func_impl</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
 <a id="__codelineno-0-80" name="__codelineno-0-80"></a>        <span class="k">pass</span>
 <a id="__codelineno-0-81" name="__codelineno-0-81"></a>
-<a id="__codelineno-0-82" name="__codelineno-0-82"></a>    <span class="n">arguments</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">str</span><span class="p">]]</span> <span class="o">=</span> <span class="p">[]</span>
+<a id="__codelineno-0-82" name="__codelineno-0-82"></a>    <span class="n">func_impl</span><span class="p">()</span>
 <a id="__codelineno-0-83" name="__codelineno-0-83"></a>
-<a id="__codelineno-0-84" name="__codelineno-0-84"></a>    <span class="n">queries</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
-<a id="__codelineno-0-85" name="__codelineno-0-85"></a>    <span class="n">files</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
-<a id="__codelineno-0-86" name="__codelineno-0-86"></a>
-<a id="__codelineno-0-87" name="__codelineno-0-87"></a>    <span class="n">body_list</span> <span class="o">=</span> <span class="p">[]</span>
+<a id="__codelineno-0-84" name="__codelineno-0-84"></a>    <span class="n">arguments</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">str</span><span class="p">]]</span> <span class="o">=</span> <span class="p">[]</span>
+<a id="__codelineno-0-85" name="__codelineno-0-85"></a>
+<a id="__codelineno-0-86" name="__codelineno-0-86"></a>    <span class="n">queries</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+<a id="__codelineno-0-87" name="__codelineno-0-87"></a>    <span class="n">files</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
 <a id="__codelineno-0-88" name="__codelineno-0-88"></a>
-<a id="__codelineno-0-89" name="__codelineno-0-89"></a>    <span class="c1"># Body</span>
-<a id="__codelineno-0-90" name="__codelineno-0-90"></a>    <span class="k">if</span> <span class="ow">not</span> <span class="n">route_model</span><span class="o">.</span><span class="n">body_params</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-<a id="__codelineno-0-91" name="__codelineno-0-91"></a>        <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">body</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">route_model</span><span class="o">.</span><span class="n">body_params</span><span class="p">):</span>
-<a id="__codelineno-0-92" name="__codelineno-0-92"></a>            <span class="n">argument</span> <span class="o">=</span> <span class="p">{}</span>
-<a id="__codelineno-0-93" name="__codelineno-0-93"></a>            <span class="n">argument</span><span class="p">[</span><span class="s2">&quot;name&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">body</span> <span class="o">+</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s2">&quot;</span>
-<a id="__codelineno-0-94" name="__codelineno-0-94"></a>            <span class="n">argument</span><span class="p">[</span><span class="s2">&quot;type&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">_import</span><span class="si">}</span><span class="s2">.</span><span class="si">{</span><span class="n">body</span><span class="si">}</span><span class="s2">&quot;</span>
-<a id="__codelineno-0-95" name="__codelineno-0-95"></a>
-<a id="__codelineno-0-96" name="__codelineno-0-96"></a>            <span class="c1"># if not route_model.query_required[i]:</span>
-<a id="__codelineno-0-97" name="__codelineno-0-97"></a>            <span class="c1">#     argument[&quot;value&quot;] = &quot;None&quot;</span>
-<a id="__codelineno-0-98" name="__codelineno-0-98"></a>            <span class="c1">#     argument[&quot;type&quot;] = &quot;str | None&quot;</span>
-<a id="__codelineno-0-99" name="__codelineno-0-99"></a>
-<a id="__codelineno-0-100" name="__codelineno-0-100"></a>            <span class="c1"># if route_model.query_is_cookie[i]:</span>
-<a id="__codelineno-0-101" name="__codelineno-0-101"></a>            <span class="c1">#     argument[&quot;value&quot;] = &quot;fastapi.Cookie(default=None)&quot;</span>
-<a id="__codelineno-0-102" name="__codelineno-0-102"></a>
-<a id="__codelineno-0-103" name="__codelineno-0-103"></a>            <span class="n">body_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">body</span> <span class="o">+</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
-<a id="__codelineno-0-104" name="__codelineno-0-104"></a>            <span class="n">arguments</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">argument</span><span class="p">)</span>
-<a id="__codelineno-0-105" name="__codelineno-0-105"></a>
-<a id="__codelineno-0-106" name="__codelineno-0-106"></a>    <span class="c1"># Queries</span>
-<a id="__codelineno-0-107" name="__codelineno-0-107"></a>    <span class="k">if</span> <span class="ow">not</span> <span class="n">route_model</span><span class="o">.</span><span class="n">query_params</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-<a id="__codelineno-0-108" name="__codelineno-0-108"></a>        <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">query</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">route_model</span><span class="o">.</span><span class="n">query_params</span><span class="p">):</span>
-<a id="__codelineno-0-109" name="__codelineno-0-109"></a>
-<a id="__codelineno-0-110" name="__codelineno-0-110"></a>            <span class="n">argument</span> <span class="o">=</span> <span class="p">{}</span>
-<a id="__codelineno-0-111" name="__codelineno-0-111"></a>            <span class="n">argument</span><span class="p">[</span><span class="s2">&quot;name&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">query</span>
-<a id="__codelineno-0-112" name="__codelineno-0-112"></a>            <span class="n">argument</span><span class="p">[</span><span class="s2">&quot;type&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;str&quot;</span>
-<a id="__codelineno-0-113" name="__codelineno-0-113"></a>
-<a id="__codelineno-0-114" name="__codelineno-0-114"></a>            <span class="k">if</span> <span class="ow">not</span> <span class="n">route_model</span><span class="o">.</span><span class="n">query_required</span><span class="p">[</span><span class="n">i</span><span class="p">]:</span>
-<a id="__codelineno-0-115" name="__codelineno-0-115"></a>                <span class="n">argument</span><span class="p">[</span><span class="s2">&quot;value&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;None&quot;</span>
-<a id="__codelineno-0-116" name="__codelineno-0-116"></a>                <span class="n">argument</span><span class="p">[</span><span class="s2">&quot;type&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;str | None&quot;</span>
-<a id="__codelineno-0-117" name="__codelineno-0-117"></a>
-<a id="__codelineno-0-118" name="__codelineno-0-118"></a>            <span class="k">if</span> <span class="n">route_model</span><span class="o">.</span><span class="n">query_is_cookie</span><span class="p">[</span><span class="n">i</span><span class="p">]:</span>
-<a id="__codelineno-0-119" name="__codelineno-0-119"></a>                <span class="n">argument</span><span class="p">[</span><span class="s2">&quot;value&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;fastapi.Cookie(default=None)&quot;</span>
-<a id="__codelineno-0-120" name="__codelineno-0-120"></a>
-<a id="__codelineno-0-121" name="__codelineno-0-121"></a>            <span class="n">arguments</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">argument</span><span class="p">)</span>
+<a id="__codelineno-0-89" name="__codelineno-0-89"></a>    <span class="n">body_list</span> <span class="o">=</span> <span class="p">[]</span>
+<a id="__codelineno-0-90" name="__codelineno-0-90"></a>
+<a id="__codelineno-0-91" name="__codelineno-0-91"></a>    <span class="c1"># Body</span>
+<a id="__codelineno-0-92" name="__codelineno-0-92"></a>    <span class="k">if</span> <span class="ow">not</span> <span class="n">route_model</span><span class="o">.</span><span class="n">body_params</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+<a id="__codelineno-0-93" name="__codelineno-0-93"></a>        <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">body</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">route_model</span><span class="o">.</span><span class="n">body_params</span><span class="p">):</span>
+<a id="__codelineno-0-94" name="__codelineno-0-94"></a>            <span class="n">argument</span> <span class="o">=</span> <span class="p">{}</span>
+<a id="__codelineno-0-95" name="__codelineno-0-95"></a>            <span class="n">argument</span><span class="p">[</span><span class="s2">&quot;name&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">body</span> <span class="o">+</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s2">&quot;</span>
+<a id="__codelineno-0-96" name="__codelineno-0-96"></a>            <span class="n">argument</span><span class="p">[</span><span class="s2">&quot;type&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">_import</span><span class="si">}</span><span class="s2">.</span><span class="si">{</span><span class="n">body</span><span class="si">}</span><span class="s2">&quot;</span>
+<a id="__codelineno-0-97" name="__codelineno-0-97"></a>
+<a id="__codelineno-0-98" name="__codelineno-0-98"></a>            <span class="c1"># if not route_model.query_required[i]:</span>
+<a id="__codelineno-0-99" name="__codelineno-0-99"></a>            <span class="c1">#     argument[&quot;value&quot;] = &quot;None&quot;</span>
+<a id="__codelineno-0-100" name="__codelineno-0-100"></a>            <span class="c1">#     argument[&quot;type&quot;] = &quot;str | None&quot;</span>
+<a id="__codelineno-0-101" name="__codelineno-0-101"></a>
+<a id="__codelineno-0-102" name="__codelineno-0-102"></a>            <span class="c1"># if route_model.query_is_cookie[i]:</span>
+<a id="__codelineno-0-103" name="__codelineno-0-103"></a>            <span class="c1">#     argument[&quot;value&quot;] = &quot;fastapi.Cookie(default=None)&quot;</span>
+<a id="__codelineno-0-104" name="__codelineno-0-104"></a>
+<a id="__codelineno-0-105" name="__codelineno-0-105"></a>            <span class="n">body_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">body</span> <span class="o">+</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<a id="__codelineno-0-106" name="__codelineno-0-106"></a>            <span class="n">arguments</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">argument</span><span class="p">)</span>
+<a id="__codelineno-0-107" name="__codelineno-0-107"></a>
+<a id="__codelineno-0-108" name="__codelineno-0-108"></a>    <span class="c1"># Queries</span>
+<a id="__codelineno-0-109" name="__codelineno-0-109"></a>    <span class="k">if</span> <span class="ow">not</span> <span class="n">route_model</span><span class="o">.</span><span class="n">query_params</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+<a id="__codelineno-0-110" name="__codelineno-0-110"></a>        <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">query</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">route_model</span><span class="o">.</span><span class="n">query_params</span><span class="p">):</span>
+<a id="__codelineno-0-111" name="__codelineno-0-111"></a>
+<a id="__codelineno-0-112" name="__codelineno-0-112"></a>            <span class="n">argument</span> <span class="o">=</span> <span class="p">{}</span>
+<a id="__codelineno-0-113" name="__codelineno-0-113"></a>            <span class="n">argument</span><span class="p">[</span><span class="s2">&quot;name&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">query</span>
+<a id="__codelineno-0-114" name="__codelineno-0-114"></a>            <span class="n">argument</span><span class="p">[</span><span class="s2">&quot;type&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;str&quot;</span>
+<a id="__codelineno-0-115" name="__codelineno-0-115"></a>
+<a id="__codelineno-0-116" name="__codelineno-0-116"></a>            <span class="k">if</span> <span class="ow">not</span> <span class="n">route_model</span><span class="o">.</span><span class="n">query_required</span><span class="p">[</span><span class="n">i</span><span class="p">]:</span>
+<a id="__codelineno-0-117" name="__codelineno-0-117"></a>                <span class="n">argument</span><span class="p">[</span><span class="s2">&quot;value&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;None&quot;</span>
+<a id="__codelineno-0-118" name="__codelineno-0-118"></a>                <span class="n">argument</span><span class="p">[</span><span class="s2">&quot;type&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;str | None&quot;</span>
+<a id="__codelineno-0-119" name="__codelineno-0-119"></a>
+<a id="__codelineno-0-120" name="__codelineno-0-120"></a>            <span class="k">if</span> <span class="n">route_model</span><span class="o">.</span><span class="n">query_is_cookie</span><span class="p">[</span><span class="n">i</span><span class="p">]:</span>
+<a id="__codelineno-0-121" name="__codelineno-0-121"></a>                <span class="n">argument</span><span class="p">[</span><span class="s2">&quot;value&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;fastapi.Cookie(default=None)&quot;</span>
 <a id="__codelineno-0-122" name="__codelineno-0-122"></a>
-<a id="__codelineno-0-123" name="__codelineno-0-123"></a>    <span class="c1"># Files</span>
-<a id="__codelineno-0-124" name="__codelineno-0-124"></a>    <span class="k">if</span> <span class="ow">not</span> <span class="n">route_model</span><span class="o">.</span><span class="n">form_params</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-<a id="__codelineno-0-125" name="__codelineno-0-125"></a>        <span class="k">for</span> <span class="n">file</span> <span class="ow">in</span> <span class="n">route_model</span><span class="o">.</span><span class="n">form_params</span><span class="p">:</span>
-<a id="__codelineno-0-126" name="__codelineno-0-126"></a>            <span class="n">argument</span> <span class="o">=</span> <span class="p">{}</span>
-<a id="__codelineno-0-127" name="__codelineno-0-127"></a>            <span class="n">argument</span><span class="p">[</span><span class="s2">&quot;name&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">file</span>
-<a id="__codelineno-0-128" name="__codelineno-0-128"></a>            <span class="n">argument</span><span class="p">[</span><span class="s2">&quot;type&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;fastapi.UploadFile&quot;</span>
-<a id="__codelineno-0-129" name="__codelineno-0-129"></a>            <span class="n">argument</span><span class="p">[</span><span class="s2">&quot;value&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;fastapi.File()&quot;</span>
-<a id="__codelineno-0-130" name="__codelineno-0-130"></a>            <span class="n">arguments</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">argument</span><span class="p">)</span>
-<a id="__codelineno-0-131" name="__codelineno-0-131"></a>
-<a id="__codelineno-0-132" name="__codelineno-0-132"></a>    <span class="n">func_sig</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;func(request: fastapi.Request, response: fastapi.Response, &quot;</span>
-<a id="__codelineno-0-133" name="__codelineno-0-133"></a>    <span class="k">for</span> <span class="n">argument</span> <span class="ow">in</span> <span class="n">arguments</span><span class="p">:</span>
-<a id="__codelineno-0-134" name="__codelineno-0-134"></a>        <span class="n">func_sig</span> <span class="o">+=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">argument</span><span class="p">[</span><span class="s1">&#39;name&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2">: </span><span class="si">{</span><span class="n">argument</span><span class="p">[</span><span class="s1">&#39;type&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2">&quot;</span>
-<a id="__codelineno-0-135" name="__codelineno-0-135"></a>
-<a id="__codelineno-0-136" name="__codelineno-0-136"></a>        <span class="k">if</span> <span class="ow">not</span> <span class="n">argument</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;value&quot;</span><span class="p">)</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-<a id="__codelineno-0-137" name="__codelineno-0-137"></a>            <span class="n">func_sig</span> <span class="o">+=</span> <span class="sa">f</span><span class="s2">&quot; = </span><span class="si">{</span><span class="n">argument</span><span class="p">[</span><span class="s1">&#39;value&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2">, &quot;</span>
-<a id="__codelineno-0-138" name="__codelineno-0-138"></a>        <span class="k">else</span><span class="p">:</span>
-<a id="__codelineno-0-139" name="__codelineno-0-139"></a>            <span class="n">func_sig</span> <span class="o">+=</span> <span class="s2">&quot;, &quot;</span>
-<a id="__codelineno-0-140" name="__codelineno-0-140"></a>
-<a id="__codelineno-0-141" name="__codelineno-0-141"></a>    <span class="n">func_sig</span> <span class="o">+=</span> <span class="s2">&quot;)&quot;</span>
+<a id="__codelineno-0-123" name="__codelineno-0-123"></a>            <span class="n">arguments</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">argument</span><span class="p">)</span>
+<a id="__codelineno-0-124" name="__codelineno-0-124"></a>
+<a id="__codelineno-0-125" name="__codelineno-0-125"></a>    <span class="c1"># Files</span>
+<a id="__codelineno-0-126" name="__codelineno-0-126"></a>    <span class="k">if</span> <span class="ow">not</span> <span class="n">route_model</span><span class="o">.</span><span class="n">form_params</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+<a id="__codelineno-0-127" name="__codelineno-0-127"></a>        <span class="k">for</span> <span class="n">file</span> <span class="ow">in</span> <span class="n">route_model</span><span class="o">.</span><span class="n">form_params</span><span class="p">:</span>
+<a id="__codelineno-0-128" name="__codelineno-0-128"></a>            <span class="n">argument</span> <span class="o">=</span> <span class="p">{}</span>
+<a id="__codelineno-0-129" name="__codelineno-0-129"></a>            <span class="n">argument</span><span class="p">[</span><span class="s2">&quot;name&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">file</span>
+<a id="__codelineno-0-130" name="__codelineno-0-130"></a>            <span class="n">argument</span><span class="p">[</span><span class="s2">&quot;type&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;fastapi.UploadFile&quot;</span>
+<a id="__codelineno-0-131" name="__codelineno-0-131"></a>            <span class="n">argument</span><span class="p">[</span><span class="s2">&quot;value&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;fastapi.File()&quot;</span>
+<a id="__codelineno-0-132" name="__codelineno-0-132"></a>            <span class="n">arguments</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">argument</span><span class="p">)</span>
+<a id="__codelineno-0-133" name="__codelineno-0-133"></a>
+<a id="__codelineno-0-134" name="__codelineno-0-134"></a>    <span class="n">func_sig</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;func(request: fastapi.Request, response: fastapi.Response, &quot;</span>
+<a id="__codelineno-0-135" name="__codelineno-0-135"></a>    <span class="k">for</span> <span class="n">argument</span> <span class="ow">in</span> <span class="n">arguments</span><span class="p">:</span>
+<a id="__codelineno-0-136" name="__codelineno-0-136"></a>        <span class="n">func_sig</span> <span class="o">+=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">argument</span><span class="p">[</span><span class="s1">&#39;name&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2">: </span><span class="si">{</span><span class="n">argument</span><span class="p">[</span><span class="s1">&#39;type&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2">&quot;</span>
+<a id="__codelineno-0-137" name="__codelineno-0-137"></a>
+<a id="__codelineno-0-138" name="__codelineno-0-138"></a>        <span class="k">if</span> <span class="ow">not</span> <span class="n">argument</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;value&quot;</span><span class="p">)</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+<a id="__codelineno-0-139" name="__codelineno-0-139"></a>            <span class="n">func_sig</span> <span class="o">+=</span> <span class="sa">f</span><span class="s2">&quot; = </span><span class="si">{</span><span class="n">argument</span><span class="p">[</span><span class="s1">&#39;value&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2">, &quot;</span>
+<a id="__codelineno-0-140" name="__codelineno-0-140"></a>        <span class="k">else</span><span class="p">:</span>
+<a id="__codelineno-0-141" name="__codelineno-0-141"></a>            <span class="n">func_sig</span> <span class="o">+=</span> <span class="s2">&quot;, &quot;</span>
 <a id="__codelineno-0-142" name="__codelineno-0-142"></a>
-<a id="__codelineno-0-143" name="__codelineno-0-143"></a>    <span class="c1"># Cookie</span>
+<a id="__codelineno-0-143" name="__codelineno-0-143"></a>    <span class="n">func_sig</span> <span class="o">+=</span> <span class="s2">&quot;)&quot;</span>
 <a id="__codelineno-0-144" name="__codelineno-0-144"></a>
-<a id="__codelineno-0-145" name="__codelineno-0-145"></a>    <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="n">func_sig</span><span class="p">)</span>
+<a id="__codelineno-0-145" name="__codelineno-0-145"></a>    <span class="c1"># Cookie</span>
 <a id="__codelineno-0-146" name="__codelineno-0-146"></a>
-<a id="__codelineno-0-147" name="__codelineno-0-147"></a>    <span class="n">test</span> <span class="o">=</span> <span class="n">create_function</span><span class="p">(</span><span class="n">func_sig</span><span class="p">,</span> <span class="n">func_impl</span><span class="p">)</span>
+<a id="__codelineno-0-147" name="__codelineno-0-147"></a>    <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="n">func_sig</span><span class="p">)</span>
 <a id="__codelineno-0-148" name="__codelineno-0-148"></a>
-<a id="__codelineno-0-149" name="__codelineno-0-149"></a>    <span class="c1"># exit()</span>
-<a id="__codelineno-0-150" name="__codelineno-0-150"></a>    <span class="k">return</span> <span class="n">test</span><span class="p">,</span> <span class="n">body_list</span>
+<a id="__codelineno-0-149" name="__codelineno-0-149"></a>    <span class="n">test</span> <span class="o">=</span> <span class="n">create_function</span><span class="p">(</span><span class="n">func_sig</span><span class="p">,</span> <span class="n">func_impl</span><span class="p">)</span>
+<a id="__codelineno-0-150" name="__codelineno-0-150"></a>
+<a id="__codelineno-0-151" name="__codelineno-0-151"></a>    <span class="c1"># exit()</span>
+<a id="__codelineno-0-152" name="__codelineno-0-152"></a>    <span class="k">return</span> <span class="n">test</span><span class="p">,</span> <span class="n">body_list</span>
 </code></pre></div></td></tr></table></div>
       </details>
   </div>

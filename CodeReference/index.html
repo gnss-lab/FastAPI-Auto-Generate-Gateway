@@ -9,7 +9,7 @@
       
       
       <link rel="icon" href="../assets/images/favicon.png">
-      <meta name="generator" content="mkdocs-1.4.2, mkdocs-material-8.5.10">
+      <meta name="generator" content="mkdocs-1.4.3, mkdocs-material-8.5.10">
     
     
       
@@ -1342,7 +1342,7 @@
 <a id="__codelineno-0-14" name="__codelineno-0-14"></a>    <span class="bp">self</span><span class="o">.</span><span class="n">__config</span> <span class="o">=</span> <span class="n">config</span>
 <a id="__codelineno-0-15" name="__codelineno-0-15"></a>
 <a id="__codelineno-0-16" name="__codelineno-0-16"></a>    <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isfile</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__config</span><span class="o">.</span><span class="n">db_path</span><span class="p">):</span>
-<a id="__codelineno-0-17" name="__codelineno-0-17"></a>        <span class="n">InitDatabaseUsecase</span><span class="p">()</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="n">db_url</span><span class="o">=</span><span class="n">config</span><span class="o">.</span><span class="n">db_url</span><span class="p">)</span>
+<a id="__codelineno-0-17" name="__codelineno-0-17"></a>        <span class="n">InitDatabaseUsecase</span><span class="p">()</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="n">db_url</span><span class="o">=</span><span class="n">config</span><span class="o">.</span><span class="n">db_url</span><span class="p">,</span> <span class="n">db_path</span><span class="o">=</span><span class="n">config</span><span class="o">.</span><span class="n">db_path</span><span class="p">)</span>
 <a id="__codelineno-0-18" name="__codelineno-0-18"></a>
 <a id="__codelineno-0-19" name="__codelineno-0-19"></a>    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">__config</span><span class="o">.</span><span class="n">service_management</span><span class="p">:</span>
 <a id="__codelineno-0-20" name="__codelineno-0-20"></a>        <span class="bp">self</span><span class="o">.</span><span class="n">__init_management_urls</span><span class="p">()</span>
@@ -1482,7 +1482,7 @@
 
 
 <h3 id="fastapi_gateway_auto_generate.Config.Config" class="doc doc-heading">
-<code class="highlight language-python"><span class="n">Config</span><span class="p">(</span><span class="n">fast_api_app</span><span class="p">,</span> <span class="n">service_management</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">db_path</span><span class="o">=</span><span class="s1">&#39;./database.db&#39;</span><span class="p">,</span> <span class="n">jwt</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">allow_large_files</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">broker_url</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">)</span></code>
+<code class="highlight language-python"><span class="n">Config</span><span class="p">(</span><span class="n">fast_api_app</span><span class="p">,</span> <span class="n">service_management</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">db_path</span><span class="o">=</span><span class="s1">&#39;./&#39;</span><span class="p">,</span> <span class="n">db_name</span><span class="o">=</span><span class="s1">&#39;database&#39;</span><span class="p">,</span> <span class="n">jwt</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">allow_large_files</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">broker_url</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">)</span></code>
 
 <a href="#fastapi_gateway_auto_generate.Config.Config" class="headerlink" title="Permanent link">&para;</a></h3>
 
@@ -1530,7 +1530,7 @@
           </td>
           <td><p>The path to the SQLite database.</p></td>
           <td>
-                <code>&#39;./database.db&#39;</code>
+                <code>&#39;./&#39;</code>
           </td>
         </tr>
         <tr>
@@ -1587,35 +1587,47 @@
 <span class="normal"><a href="#__codelineno-0-47">47</a></span>
 <span class="normal"><a href="#__codelineno-0-48">48</a></span>
 <span class="normal"><a href="#__codelineno-0-49">49</a></span>
-<span class="normal"><a href="#__codelineno-0-50">50</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-0-22" name="__codelineno-0-22"></a><span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span>
+<span class="normal"><a href="#__codelineno-0-50">50</a></span>
+<span class="normal"><a href="#__codelineno-0-51">51</a></span>
+<span class="normal"><a href="#__codelineno-0-52">52</a></span>
+<span class="normal"><a href="#__codelineno-0-53">53</a></span>
+<span class="normal"><a href="#__codelineno-0-54">54</a></span>
+<span class="normal"><a href="#__codelineno-0-55">55</a></span>
+<span class="normal"><a href="#__codelineno-0-56">56</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-0-22" name="__codelineno-0-22"></a><span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span>
 <a id="__codelineno-0-23" name="__codelineno-0-23"></a>        <span class="bp">self</span><span class="p">,</span>
 <a id="__codelineno-0-24" name="__codelineno-0-24"></a>        <span class="n">fast_api_app</span><span class="p">:</span> <span class="n">FastAPI</span><span class="p">,</span>
 <a id="__codelineno-0-25" name="__codelineno-0-25"></a>        <span class="n">service_management</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
-<a id="__codelineno-0-26" name="__codelineno-0-26"></a>        <span class="n">db_path</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;./database.db&quot;</span><span class="p">,</span>
-<a id="__codelineno-0-27" name="__codelineno-0-27"></a>        <span class="n">jwt</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Type</span><span class="p">[</span><span class="n">T</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-<a id="__codelineno-0-28" name="__codelineno-0-28"></a>        <span class="n">allow_large_files</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
-<a id="__codelineno-0-29" name="__codelineno-0-29"></a>        <span class="n">broker_url</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
-<a id="__codelineno-0-30" name="__codelineno-0-30"></a><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-<a id="__codelineno-0-31" name="__codelineno-0-31"></a>    <span class="bp">self</span><span class="o">.</span><span class="n">fast_api_app</span><span class="p">:</span> <span class="n">FastAPI</span> <span class="o">=</span> <span class="n">fast_api_app</span>
-<a id="__codelineno-0-32" name="__codelineno-0-32"></a>    <span class="bp">self</span><span class="o">.</span><span class="n">service_management</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="n">service_management</span>
-<a id="__codelineno-0-33" name="__codelineno-0-33"></a>    <span class="bp">self</span><span class="o">.</span><span class="n">jwt</span> <span class="o">=</span> <span class="n">jwt</span>
-<a id="__codelineno-0-34" name="__codelineno-0-34"></a>    <span class="bp">self</span><span class="o">.</span><span class="n">service_name</span> <span class="o">=</span> <span class="s2">&quot;API-Gateway&quot;</span>
-<a id="__codelineno-0-35" name="__codelineno-0-35"></a>
-<a id="__codelineno-0-36" name="__codelineno-0-36"></a>    <span class="k">if</span> <span class="n">db_path</span> <span class="o">!=</span> <span class="s2">&quot;./database.db&quot;</span><span class="p">:</span>
-<a id="__codelineno-0-37" name="__codelineno-0-37"></a>        <span class="bp">self</span><span class="o">.</span><span class="n">db_path</span> <span class="o">=</span> <span class="n">db_path</span>
-<a id="__codelineno-0-38" name="__codelineno-0-38"></a>    <span class="k">else</span><span class="p">:</span>
-<a id="__codelineno-0-39" name="__codelineno-0-39"></a>        <span class="bp">self</span><span class="o">.</span><span class="n">db_path</span> <span class="o">=</span> <span class="s2">&quot;./database.db&quot;</span>
-<a id="__codelineno-0-40" name="__codelineno-0-40"></a>
-<a id="__codelineno-0-41" name="__codelineno-0-41"></a>    <span class="c1"># self.db_path = &quot;./database.db&quot; if db_path is None else db_path</span>
-<a id="__codelineno-0-42" name="__codelineno-0-42"></a>    <span class="bp">self</span><span class="o">.</span><span class="n">db_url</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;sqlite:///</span><span class="si">{</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">abspath</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">db_path</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span>
-<a id="__codelineno-0-43" name="__codelineno-0-43"></a>
-<a id="__codelineno-0-44" name="__codelineno-0-44"></a>    <span class="c1"># try:</span>
-<a id="__codelineno-0-45" name="__codelineno-0-45"></a>    <span class="c1">#     if not (allow_large_files and broker_url):</span>
-<a id="__codelineno-0-46" name="__codelineno-0-46"></a>    <span class="c1">#         raise ConfigException(&quot;Broker URL was not specified&quot;)</span>
-<a id="__codelineno-0-47" name="__codelineno-0-47"></a>    <span class="c1"># except Exception as e:</span>
-<a id="__codelineno-0-48" name="__codelineno-0-48"></a>    <span class="c1">#     RichTraceback().console_call_exception()</span>
+<a id="__codelineno-0-26" name="__codelineno-0-26"></a>        <span class="n">db_path</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;./&quot;</span><span class="p">,</span>
+<a id="__codelineno-0-27" name="__codelineno-0-27"></a>        <span class="n">db_name</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;database&quot;</span><span class="p">,</span>
+<a id="__codelineno-0-28" name="__codelineno-0-28"></a>        <span class="n">jwt</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Type</span><span class="p">[</span><span class="n">T</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+<a id="__codelineno-0-29" name="__codelineno-0-29"></a>        <span class="n">allow_large_files</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+<a id="__codelineno-0-30" name="__codelineno-0-30"></a>        <span class="n">broker_url</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+<a id="__codelineno-0-31" name="__codelineno-0-31"></a><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<a id="__codelineno-0-32" name="__codelineno-0-32"></a>    <span class="bp">self</span><span class="o">.</span><span class="n">fast_api_app</span><span class="p">:</span> <span class="n">FastAPI</span> <span class="o">=</span> <span class="n">fast_api_app</span>
+<a id="__codelineno-0-33" name="__codelineno-0-33"></a>    <span class="bp">self</span><span class="o">.</span><span class="n">service_management</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="n">service_management</span>
+<a id="__codelineno-0-34" name="__codelineno-0-34"></a>    <span class="bp">self</span><span class="o">.</span><span class="n">jwt</span> <span class="o">=</span> <span class="n">jwt</span>
+<a id="__codelineno-0-35" name="__codelineno-0-35"></a>    <span class="bp">self</span><span class="o">.</span><span class="n">service_name</span> <span class="o">=</span> <span class="s2">&quot;API-Gateway&quot;</span>
+<a id="__codelineno-0-36" name="__codelineno-0-36"></a>
+<a id="__codelineno-0-37" name="__codelineno-0-37"></a>    <span class="k">if</span> <span class="n">db_name</span> <span class="o">!=</span> <span class="s2">&quot;database&quot;</span><span class="p">:</span>
+<a id="__codelineno-0-38" name="__codelineno-0-38"></a>        <span class="bp">self</span><span class="o">.</span><span class="n">db_name</span> <span class="o">=</span> <span class="n">db_name</span>
+<a id="__codelineno-0-39" name="__codelineno-0-39"></a>    <span class="k">else</span><span class="p">:</span>
+<a id="__codelineno-0-40" name="__codelineno-0-40"></a>        <span class="bp">self</span><span class="o">.</span><span class="n">db_name</span> <span class="o">=</span> <span class="s2">&quot;database&quot;</span>
+<a id="__codelineno-0-41" name="__codelineno-0-41"></a>
+<a id="__codelineno-0-42" name="__codelineno-0-42"></a>    <span class="k">if</span> <span class="n">db_path</span> <span class="o">!=</span> <span class="s2">&quot;./&quot;</span><span class="p">:</span>
+<a id="__codelineno-0-43" name="__codelineno-0-43"></a>        <span class="bp">self</span><span class="o">.</span><span class="n">db_path</span> <span class="o">=</span> <span class="n">db_path</span>
+<a id="__codelineno-0-44" name="__codelineno-0-44"></a>    <span class="k">else</span><span class="p">:</span>
+<a id="__codelineno-0-45" name="__codelineno-0-45"></a>        <span class="bp">self</span><span class="o">.</span><span class="n">db_path</span> <span class="o">=</span> <span class="s2">&quot;./&quot;</span>
+<a id="__codelineno-0-46" name="__codelineno-0-46"></a>
+<a id="__codelineno-0-47" name="__codelineno-0-47"></a>    <span class="c1"># self.db_path = &quot;./database.db&quot; if db_path is None else db_path</span>
+<a id="__codelineno-0-48" name="__codelineno-0-48"></a>    <span class="bp">self</span><span class="o">.</span><span class="n">db_url</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;sqlite:///</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">get_database_absolute_path</span><span class="p">()</span><span class="si">}</span><span class="s2">&quot;</span>
 <a id="__codelineno-0-49" name="__codelineno-0-49"></a>
-<a id="__codelineno-0-50" name="__codelineno-0-50"></a>    <span class="bp">self</span><span class="o">.</span><span class="n">allow_large_files</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="n">allow_large_files</span>
+<a id="__codelineno-0-50" name="__codelineno-0-50"></a>    <span class="c1"># try:</span>
+<a id="__codelineno-0-51" name="__codelineno-0-51"></a>    <span class="c1">#     if not (allow_large_files and broker_url):</span>
+<a id="__codelineno-0-52" name="__codelineno-0-52"></a>    <span class="c1">#         raise ConfigException(&quot;Broker URL was not specified&quot;)</span>
+<a id="__codelineno-0-53" name="__codelineno-0-53"></a>    <span class="c1"># except Exception as e:</span>
+<a id="__codelineno-0-54" name="__codelineno-0-54"></a>    <span class="c1">#     RichTraceback().console_call_exception()</span>
+<a id="__codelineno-0-55" name="__codelineno-0-55"></a>
+<a id="__codelineno-0-56" name="__codelineno-0-56"></a>    <span class="bp">self</span><span class="o">.</span><span class="n">allow_large_files</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="n">allow_large_files</span>
 </code></pre></div></td></tr></table></div>
           </details>
 
