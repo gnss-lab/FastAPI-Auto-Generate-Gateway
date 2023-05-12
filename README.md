@@ -1,5 +1,5 @@
 <p align="center">
-  <a href="https://fastapi.tiangolo.com"><img src="./raw/FastAPI-API-Gateway-Magic-logo.png" alt="FastAPI"></a>
+  <a href="https://fastapi.tiangolo.com"><img src="https://raw.githubusercontent.com/xitowzys-ISZF/FastAPI-Auto-Generate-Gateway/main/raw/FastAPI-API-Gateway-Magic-logo.png" alt="FastAPI"></a>
 </p>
 
 <p align="center">
@@ -19,7 +19,7 @@
 
 <a href="https://github.com/xitowzys-ISZF/FastAPI-auto-generate-gateway/blob/dev/LICENSE)" target="_blank">
     <img src="https://img.shields.io/github/license/xitowzys-ISZF/FastAPI-auto-generate-gateway" alt="Supported Python versions">
-    <img src="./raw/coverage.svg" alt="Supported Python versions">
+    <img src="https://raw.githubusercontent.com/xitowzys-ISZF/FastAPI-Auto-Generate-Gateway/main/raw/coverage.svg" alt="Supported Python versions">
     <img alt="GitHub release (latest by date)" src="https://img.shields.io/github/v/release/xitowzys-ISZF/FastAPI-auto-generate-gateway">
     <img alt="GitHub all releases" src="https://img.shields.io/github/downloads/xitowzys-ISZF/FastAPI-auto-generate-gateway/total">
 
@@ -28,7 +28,7 @@
 </p>
 
 <p align="center">
-    <a href="https://xitowzys-iszf.github.io/FastAPI-auto-generate-gateway/" target="_blank">
+    <a href="https://xitowzys-iszf.github.io/FastAPI-Auto-Generate-Gateway/" target="_blank">
         <img src="https://img.shields.io/badge/Documentation-ef5552?style=for-the-badge&logo=Read the Docs&logoColor=ffffff" alt="Supported Python versions">
     </a>
     <a href="https://github.com/xitowzys-ISZF/FastAPI-auto-generate-gateway/tree/dev/fastapi_gateway_auto_generate" target="_blank">
@@ -36,11 +36,11 @@
     </a>
 </p>
 
-# 🔥 FastAPI Auto Generate Gateway
+## 🔥 FastAPI Auto Generate Gateway
 
 A library that allows you to automate the process of creating an API Gateway
 
-# 📚 About
+## 📚 About
 
 This is a library that enables the automation of the process of creating an API Gateway. 
 With its help, you can quickly and easily configure and deploy an API Gateway for your microservices architecture.
@@ -48,10 +48,12 @@ The library provides a simple and intuitive interface for configuration,
 which reduces the time and effort required to manually set up the API Gateway.
 
 
+## 🛠️ Installation
 
 
+To install `fastapi-gateway-auto-generate`:
 
 
-
-
-
+```bash
+pip install fastapi-gateway-auto-generate
+```
