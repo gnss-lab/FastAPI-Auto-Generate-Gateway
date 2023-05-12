@@ -1,6 +1,6 @@
 from ..models import RouteModel
 from types import FunctionType
-from fastapi_gateway import route
+from fastapi_gateway_ultra import route
 from .UpdateOpenApiSchemaUsecase import UpdateOpenApiSchemaUsecase
 from .DeleteTmpModelsFilesUsecase import DeleteTmpModelsFilesUsecase
 from fastapi import FastAPI

@@ -12,7 +12,7 @@ from ...Config import Config
 from ..models import RouteModel
 from fastapi_gateway_auto_generate.utils.APITags import APITags
 
-from openapi_parser import OpenApiParser
+from fastapi_openapi_parser import OpenApiParser
 from fastapi_gateway_auto_generate.management.models import GetAllInfoServices
 from datamodel_code_generator import InputFileType, generate
 from fastapi_gateway_auto_generate.database import GetAllServices, StatusService, UrlService

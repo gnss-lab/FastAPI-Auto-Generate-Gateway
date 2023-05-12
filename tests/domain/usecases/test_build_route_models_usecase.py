@@ -2,7 +2,7 @@ import os
 from pprint import pprint
 from unittest.mock import Mock, patch
 
-from openapi_parser import OpenApiParser
+from fastapi_openapi_parser import OpenApiParser
 
 from fastapi_gateway_auto_generate import Config
 from fastapi_gateway_auto_generate.domain.usecases import BuildRouteModelsUsecase, InitDatabaseUsecase
@@ -44,7 +44,7 @@ def test_build_route_models_usecase(openapi_json_rinex_to_csv_fixture):
     )
     add_service_database(db_url=config.db_url).add_service(add_service_model=add_service_model_fail)
 
-    with patch('openapi_parser.OpenApiParser.requests.get') as mock_get:
+    with patch('fastapi_openapi_parser.OpenApiParser.requests.get') as mock_get:
         mock_parse = Mock()
         mock_parse.status_code = 200
         mock_parse.content = openapi.encode()
@@ -73,7 +73,7 @@ def test_build_route_models_usecase(openapi_json_rinex_to_csv_fixture):
             'HTTPValidationError']
                    )
 
-    with patch('openapi_parser.OpenApiParser.requests.get') as mock_get:
+    with patch('fastapi_openapi_parser.OpenApiParser.requests.get') as mock_get:
         mock_parse = Mock()
         mock_parse.status_code = -1
         mock_parse.content = openapi.encode()
@@ -83,7 +83,7 @@ def test_build_route_models_usecase(openapi_json_rinex_to_csv_fixture):
         result = usecase.execute(config=config)
         assert result == []
 
-    with patch('openapi_parser.OpenApiParser.requests.get') as mock_get:
+    with patch('fastapi_openapi_parser.OpenApiParser.requests.get') as mock_get:
         mock_parse = Mock()
         mock_parse.status_code = 505
         mock_parse.content = openapi.encode()

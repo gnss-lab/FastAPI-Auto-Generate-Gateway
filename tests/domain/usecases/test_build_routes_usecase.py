@@ -3,7 +3,7 @@ from pprint import pprint
 from unittest.mock import Mock, patch
 import json
 from fastapi import openapi, FastAPI
-from openapi_parser import OpenApiParser
+from fastapi_openapi_parser import OpenApiParser
 from fastapi.testclient import TestClient
 
 from fastapi_gateway_auto_generate import Config
@@ -39,7 +39,7 @@ def test_build_routes_usecase(openapi_json_rinex_to_csv_fixture):
     )
     add_service_database(db_url=config.db_url).add_service(add_service_model=add_service_model)
 
-    with patch('openapi_parser.OpenApiParser.requests.get') as mock_get:
+    with patch('fastapi_openapi_parser.OpenApiParser.requests.get') as mock_get:
         mock_parse = Mock()
         mock_parse.status_code = 200
         mock_parse.content = openapi.encode()
@@ -52,7 +52,7 @@ def test_build_routes_usecase(openapi_json_rinex_to_csv_fixture):
 
     response = client.get("/openapi.json")
 
-    with patch('openapi_parser.OpenApiParser.requests.get') as mock_get:
+    with patch('fastapi_openapi_parser.OpenApiParser.requests.get') as mock_get:
         mock_parse = Mock()
         mock_parse.status_code = 200
         mock_parse.content = response.text

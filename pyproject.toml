@@ -19,11 +19,11 @@ sqlalchemy = "^1.4.44"
 validators = "^0.20.0"
 alembic = "^1.8.1"
 makefun = "^1.15.0"
-fastapi-gateway = {git = "https://github.com/xitowzys-ISZF/fastapi-gateway"}
+fastapi-gateway-ultra = {git = "https://github.com/xitowzys-ISZF/FastAPI-Gateway-Ultra.git", rev = '0.1.0-SNAPSHOT'}
 python-multipart = "^0.0.5"
 shortuuid = "^1.0.11"
 rich = "^13.3.2"
-openapi-parser = {git = "https://github.com/xitowzys-ISZF/OpenAPI-Parser.git", rev = "1.0.0-SNAPSHOT"}
+fastapi-openapi-parser = {git = "https://github.com/xitowzys-ISZF/FastAPI-OpenAPI-Parser.git", rev = "1.0.1-SNAPSHOT"}
 
 [tool.poetry.group.dev.dependencies]
 uvicorn = "^0.20.0"
