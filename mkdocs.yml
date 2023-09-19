@@ -58,7 +58,7 @@ nav:
             - FastapiGatewayAutoGenerageException: CodeReference/exceptions/FastapiGatewayAutoGenerageException.md
 
 repo_name: fastapi-gateway-auto-generate
-repo_url: https://github.com/xitowzys-ISZF/FastAPI-auto-generate-gateway
+repo_url: https://github.com/gnss-lab/FastAPI-Auto-Generate-Gateway
 edit_uri: edit/master/docs
 docs_dir: docs
 

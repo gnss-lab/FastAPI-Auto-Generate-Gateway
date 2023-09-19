@@ -4,9 +4,16 @@ version = "0.3.1"
 description = "This library allows you to automatically generate requests for the API Gateway."
 authors = ["Kalinka George <xitowzys@gmail.com>"]
 license = "MIT License"
-keywords = ["python", "fastapi", "gateway", "api", "microservice", "microservices"]
-homepage = "https://github.com/xitowzys-ISZF/FastAPI-Auto-Generate-Gateway"
-repository = "https://github.com/xitowzys-ISZF/FastAPI-Auto-Generate-Gateway"
+keywords = [
+    "python",
+    "fastapi",
+    "gateway",
+    "api",
+    "microservice",
+    "microservices",
+]
+homepage = "https://github.com/gnss-lab/FastAPI-Auto-Generate-Gateway"
+repository = "https://github.com/gnss-lab/FastAPI-Auto-Generate-Gateway"
 readme = "README.md"
 
 
@@ -31,7 +38,7 @@ autopep8 = "^2.0.0"
 mkdocs-material = "^8.5.11"
 termynal = "^0.2.0"
 #mkdocstrings = "^0.21.2"
-mkdocstrings = {extras = ["python"], version = "^0.21.2"}
+mkdocstrings = { extras = ["python"], version = "^0.21.2" }
 
 
 [tool.poetry.group.tests.dependencies]
@@ -46,5 +53,10 @@ coverage-badge = "^1.1.0"
 
 
 [build-system]
-requires = ["poetry-core>=1.0.0", "wheel>=0.36,<1.0", "poetry>=1.1,<2", "virtualenv==20.0.33"]
+requires = [
+    "poetry-core>=1.0.0",
+    "wheel>=0.36,<1.0",
+    "poetry>=1.1,<2",
+    "virtualenv==20.0.33",
+]
 build-backend = "poetry.core.masonry.api"
