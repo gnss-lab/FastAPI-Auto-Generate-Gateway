@@ -3,6 +3,7 @@ from types import FunctionType
 from fastapi_gateway_ultra import route
 from .UpdateOpenApiSchemaUsecase import UpdateOpenApiSchemaUsecase
 from .DeleteTmpModelsFilesUsecase import DeleteTmpModelsFilesUsecase
+from fastapi_openapi_parser import OpenApiParser
 from fastapi import FastAPI
 from makefun import create_function
 from loguru import logger
@@ -22,6 +23,7 @@ class BuildRoutesUsecase:
     def __init__(self) -> None:
         self.models_routes_vars = {}
         self.models_routes = {}
+        self.__open_api_parser: OpenApiParser = OpenApiParser()
 
     def execute(self, services_result: list[dict[str, Any]], fast_api_app: FastAPI) -> None:
         """Launch execution of usecase
@@ -83,6 +85,8 @@ class BuildRoutesUsecase:
 
         arguments: list[dict[str, str]] = []
 
+        self.__open_api_parser.parse_from_service(url=route_model.service_url)
+
         queries = ""
         files = ""
 
@@ -106,12 +110,17 @@ class BuildRoutesUsecase:
                 arguments.append(argument)
 
         # Queries
+
         if not route_model.query_params is None:
+            parameters = self.__open_api_parser.get_parameters_with_types(route_model.service_path, self.__open_api_parser.get_path_method(route_model.service_path))
             for i, query in enumerate(route_model.query_params):
+
+                param_type = next((param["type"] for param in parameters if param["name"] == query), None)
 
                 argument = {}
                 argument["name"] = query
-                argument["type"] = "str"
+                argument["type"] = param_type
+
 
                 if not route_model.query_required[i]:
                     argument["value"] = "None"
@@ -134,7 +143,6 @@ class BuildRoutesUsecase:
         func_sig: str = "func(request: fastapi.Request, response: fastapi.Response, "
         for argument in arguments:
             func_sig += f"{argument['name']}: {argument['type']}"
-
             if not argument.get("value") is None:
                 func_sig += f" = {argument['value']}, "
             else:
