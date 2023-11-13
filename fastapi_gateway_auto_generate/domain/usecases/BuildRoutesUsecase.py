@@ -81,6 +81,12 @@ class BuildRoutesUsecase:
         def func_impl(*args, **kwargs):
             pass
 
+        def sort_elements_by_value(arguments):
+            """
+                Sort elements with value in arguments array.
+            """
+            return sorted(arguments, key=lambda x: x.get('value') is not None)
+
         func_impl()
 
         arguments: list[dict[str, str]] = []
@@ -112,7 +118,10 @@ class BuildRoutesUsecase:
         # Queries
 
         if not route_model.query_params is None:
-            parameters = self.__open_api_parser.get_parameters_with_types(route_model.service_path, self.__open_api_parser.get_path_method(route_model.service_path))
+            parameters = self.__open_api_parser.get_parameters_with_types(route_model.service_path,
+                                                                          self.__open_api_parser.get_path_method(
+                                                                              route_model.service_path))
+            logger.error(parameters)
             for i, query in enumerate(route_model.query_params):
 
                 param_type = next((param["type"] for param in parameters if param["name"] == query), None)
@@ -121,10 +130,9 @@ class BuildRoutesUsecase:
                 argument["name"] = query
                 argument["type"] = param_type
 
-
                 if not route_model.query_required[i]:
                     argument["value"] = "None"
-                    argument["type"] = "str | None"
+                    argument["type"] = f"{param_type} | None"
 
                 if route_model.query_is_cookie[i]:
                     argument["value"] = "fastapi.Cookie(default=None)"
@@ -140,7 +148,9 @@ class BuildRoutesUsecase:
                 argument["value"] = "fastapi.File()"
                 arguments.append(argument)
 
+        arguments = sort_elements_by_value(arguments)
         func_sig: str = "func(request: fastapi.Request, response: fastapi.Response, "
+
         for argument in arguments:
             func_sig += f"{argument['name']}: {argument['type']}"
             if not argument.get("value") is None:
