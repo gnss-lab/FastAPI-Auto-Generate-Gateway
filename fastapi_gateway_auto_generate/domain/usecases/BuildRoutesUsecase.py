@@ -121,7 +121,8 @@ class BuildRoutesUsecase:
             parameters = self.__open_api_parser.get_parameters_with_types(route_model.service_path,
                                                                           self.__open_api_parser.get_path_method(
                                                                               route_model.service_path))
-            logger.error(parameters)
+            default_values = self.__open_api_parser.get_path_default_values(route_model.service_path)
+
             for i, query in enumerate(route_model.query_params):
 
                 param_type = next((param["type"] for param in parameters if param["name"] == query), None)
@@ -131,7 +132,7 @@ class BuildRoutesUsecase:
                 argument["type"] = param_type
 
                 if not route_model.query_required[i]:
-                    argument["value"] = "None"
+                    argument["value"] = default_values[query]
                     argument["type"] = f"{param_type} | None"
 
                 if route_model.query_is_cookie[i]:
