@@ -3,6 +3,7 @@ from types import FunctionType
 from fastapi_gateway_ultra import route
 from .UpdateOpenApiSchemaUsecase import UpdateOpenApiSchemaUsecase
 from .DeleteTmpModelsFilesUsecase import DeleteTmpModelsFilesUsecase
+from fastapi_openapi_parser import OpenApiParser
 from fastapi import FastAPI
 from makefun import create_function
 from loguru import logger
@@ -22,6 +23,7 @@ class BuildRoutesUsecase:
     def __init__(self) -> None:
         self.models_routes_vars = {}
         self.models_routes = {}
+        self.__open_api_parser: OpenApiParser = OpenApiParser()
 
     def execute(self, services_result: list[dict[str, Any]], fast_api_app: FastAPI) -> None:
         """Launch execution of usecase
@@ -79,9 +81,17 @@ class BuildRoutesUsecase:
         def func_impl(*args, **kwargs):
             pass
 
+        def sort_elements_by_value(arguments):
+            """
+                Sort elements with value in arguments array.
+            """
+            return sorted(arguments, key=lambda x: x.get('value') is not None)
+
         func_impl()
 
         arguments: list[dict[str, str]] = []
+
+        self.__open_api_parser.parse_from_service(url=route_model.service_url)
 
         queries = ""
         files = ""
@@ -106,16 +116,24 @@ class BuildRoutesUsecase:
                 arguments.append(argument)
 
         # Queries
+
         if not route_model.query_params is None:
+            parameters = self.__open_api_parser.get_parameters_with_types(route_model.service_path,
+                                                                          self.__open_api_parser.get_path_method(
+                                                                              route_model.service_path))
+            default_values = self.__open_api_parser.get_path_default_values(route_model.service_path)
+
             for i, query in enumerate(route_model.query_params):
+
+                param_type = next((param["type"] for param in parameters if param["name"] == query), None)
 
                 argument = {}
                 argument["name"] = query
-                argument["type"] = "str"
+                argument["type"] = param_type
 
                 if not route_model.query_required[i]:
-                    argument["value"] = "None"
-                    argument["type"] = "str | None"
+                    argument["value"] = default_values[query]
+                    argument["type"] = f"{param_type} | None"
 
                 if route_model.query_is_cookie[i]:
                     argument["value"] = "fastapi.Cookie(default=None)"
@@ -131,10 +149,11 @@ class BuildRoutesUsecase:
                 argument["value"] = "fastapi.File()"
                 arguments.append(argument)
 
+        arguments = sort_elements_by_value(arguments)
         func_sig: str = "func(request: fastapi.Request, response: fastapi.Response, "
+
         for argument in arguments:
             func_sig += f"{argument['name']}: {argument['type']}"
-
             if not argument.get("value") is None:
                 func_sig += f" = {argument['value']}, "
             else:

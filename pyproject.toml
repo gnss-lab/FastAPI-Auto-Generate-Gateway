@@ -1,29 +1,36 @@
 [tool.poetry]
 name = "fastapi_gateway_auto_generate"
-version = "0.3.0"
+version = "0.3.1"
 description = "This library allows you to automatically generate requests for the API Gateway."
 authors = ["Kalinka George <xitowzys@gmail.com>"]
 license = "MIT License"
-keywords = ["python", "fastapi", "gateway", "api", "microservice", "microservices"]
-homepage = "https://github.com/xitowzys-ISZF/FastAPI-auto-generate-gateway"
-repository = "https://github.com/xitowzys-ISZF/FastAPI-auto-generate-gateway"
+keywords = [
+    "python",
+    "fastapi",
+    "gateway",
+    "api",
+    "microservice",
+    "microservices",
+]
+homepage = "https://github.com/gnss-lab/FastAPI-Auto-Generate-Gateway"
+repository = "https://github.com/gnss-lab/FastAPI-Auto-Generate-Gateway"
 readme = "README.md"
 
 
 [tool.poetry.dependencies]
 python = "^3.11"
 datamodel-code-generator = "^0.14.0"
-loguru = "^0.6.0"
+loguru = "^0.7.0"
 fastapi = "^0.88.0"
 sqlalchemy = "^1.4.44"
 validators = "^0.20.0"
 alembic = "^1.8.1"
 makefun = "^1.15.0"
-fastapi-gateway-ultra = {git = "https://github.com/xitowzys-ISZF/FastAPI-Gateway-Ultra.git", rev = '0.1.0-SNAPSHOT'}
+fastapi-gateway-ultra = "^0.1.1"
 python-multipart = "^0.0.5"
 shortuuid = "^1.0.11"
 rich = "^13.3.2"
-fastapi-openapi-parser = {git = "https://github.com/xitowzys-ISZF/FastAPI-OpenAPI-Parser.git", rev = "1.0.1-SNAPSHOT"}
+fastapi-openapi-parser = "^1.0.1"
 
 [tool.poetry.group.dev.dependencies]
 uvicorn = "^0.20.0"
@@ -31,7 +38,7 @@ autopep8 = "^2.0.0"
 mkdocs-material = "^8.5.11"
 termynal = "^0.2.0"
 #mkdocstrings = "^0.21.2"
-mkdocstrings = {extras = ["python"], version = "^0.21.2"}
+mkdocstrings = { extras = ["python"], version = "^0.21.2" }
 
 
 [tool.poetry.group.tests.dependencies]
@@ -46,5 +53,10 @@ coverage-badge = "^1.1.0"
 
 
 [build-system]
-requires = ["poetry-core>=1.0.0", "wheel>=0.36,<1.0", "poetry>=1.1,<2", "virtualenv==20.0.33"]
+requires = [
+    "poetry-core>=1.0.0",
+    "wheel>=0.36,<1.0",
+    "poetry>=1.1,<2",
+    "virtualenv==20.0.33",
+]
 build-backend = "poetry.core.masonry.api"
