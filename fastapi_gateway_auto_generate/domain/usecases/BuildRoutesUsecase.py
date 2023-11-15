@@ -132,7 +132,7 @@ class BuildRoutesUsecase:
                 argument["type"] = param_type
 
                 if not route_model.query_required[i]:
-                    argument["value"] = default_values[query]
+                    argument["value"] = default_values.get(query, None)
                     argument["type"] = f"{param_type} | None"
 
                 if route_model.query_is_cookie[i]:
