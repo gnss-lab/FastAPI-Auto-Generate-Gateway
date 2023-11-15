@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "fastapi_gateway_auto_generate"
-version = "0.3.1"
+version = "0.3.2"
 description = "This library allows you to automatically generate requests for the API Gateway."
 authors = ["Kalinka George <xitowzys@gmail.com>"]
 license = "MIT License"
