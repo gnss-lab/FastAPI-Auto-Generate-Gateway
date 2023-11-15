@@ -25,12 +25,11 @@ fastapi = "^0.88.0"
 sqlalchemy = "^1.4.44"
 validators = "^0.20.0"
 alembic = "^1.8.1"
-makefun = "^1.15.0"
 fastapi-gateway-ultra = "^0.1.1"
 python-multipart = "^0.0.5"
 shortuuid = "^1.0.11"
 rich = "^13.3.2"
-fastapi-openapi-parser = "^1.0.1"
+fastapi-openapi-parser = { git = "https://github.com/gnss-lab/FastAPI-OpenAPI-Parser.git", tag = "1.1.1-SNAPSHOT" }
 
 [tool.poetry.group.dev.dependencies]
 uvicorn = "^0.20.0"
